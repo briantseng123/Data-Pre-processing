@@ -20,9 +20,9 @@ library(stars)
 library(magick)
 library(av)
 
-df <- read_fst("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ğ¸ê®Æ/2024¨C¤p®É®ğ¶H¸ê®Æ(±N¯S®í­ÈÂà¬°NA_v3)2.fst",as.data.table = TRUE)
-df <- read_fst("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ğ¸ê®Æ/2023¨C¤p®É®ğ¶H¸ê®Æ(±N¯S®í­ÈÂà¬°NA_v3)2.fst",as.data.table = TRUE)
-df <- read_fst("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ğ¸ê®Æ/2022¨C¤p®É®ğ¶H¸ê®Æ(±N¯S®í­ÈÂà¬°NA_v3)2.fst",as.data.table = TRUE)
+df <- read_fst("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/2024æ¯å°æ™‚æ°£è±¡è³‡æ–™(å°‡ç‰¹æ®Šå€¼è½‰ç‚ºNA_v3)2.fst",as.data.table = TRUE)
+df <- read_fst("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/2023æ¯å°æ™‚æ°£è±¡è³‡æ–™(å°‡ç‰¹æ®Šå€¼è½‰ç‚ºNA_v3)2.fst",as.data.table = TRUE)
+df <- read_fst("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/2022æ¯å°æ™‚æ°£è±¡è³‡æ–™(å°‡ç‰¹æ®Šå€¼è½‰ç‚ºNA_v3)2.fst",as.data.table = TRUE)
 
 df$StationLongitude <- as.numeric(df$StationLongitude)
 df$StationLatitude  <- as.numeric(df$StationLatitude)
@@ -30,58 +30,58 @@ coordinates(df) <- ~ StationLongitude + StationLatitude
 proj4string(df) <- CRS("+proj=longlat +datum=WGS84 +no_defs")
 df_utm <- spTransform(df, CRS("+proj=utm +zone=51 +datum=WGS84 +units=m +no_defs"))
 
-# 4. ¸ü¤J¥xÆWÃä¬É (Natural Earth) ¨Ã§ë¼v
+# 4. è¼‰å…¥å°ç£é‚Šç•Œ (Natural Earth) ä¸¦æŠ•å½±
 #devtools::install_github("ropensci/rnaturalearthhires")
 taiwan_ll <- ne_countries(scale = "large", country = "Taiwan", returnclass = "sf")
 taiwan_utm <- st_transform(taiwan_ll, crs = st_crs(df_utm))
-# Âà sf ¦¨ Spatial ¥H«K¥Î sp µe¹Ï
+# è½‰ sf æˆ Spatial ä»¥ä¾¿ç”¨ sp ç•«åœ–
 taiwan_sp <- as(taiwan_utm, "Spatial")
 
 taiwan_islands <- taiwan_utm %>%
-  st_cast("POLYGON") # ±N MULTIPOLYGON ©î¸Ñ¦¨¦h­Ó POLYGON
+  st_cast("POLYGON") # å°‡ MULTIPOLYGON æ‹†è§£æˆå¤šå€‹ POLYGON
 
-# --- 2. ­pºâ¨C­Ó¿W¥ß®qÀ¬ªº­±¿n¡A¨Ã§ä¥X³Ì¤jªº¨º­Ó ---
+# --- 2. è¨ˆç®—æ¯å€‹ç¨ç«‹å³¶å¶¼çš„é¢ç©ï¼Œä¸¦æ‰¾å‡ºæœ€å¤§çš„é‚£å€‹ ---
 taiwan_main_island <- taiwan_islands %>%
-  mutate(area = st_area(.)) %>% # ·s¼W¤@Äæ¥s area¡A­pºâ¨C­Ó®qÀ¬ªº­±¿n
-  arrange(desc(area)) %>%      # ¨Ì¾Ú­±¿n¥Ñ¤j¨ì¤p±Æ§Ç
+  mutate(area = st_area(.)) %>% # æ–°å¢ä¸€æ¬„å« areaï¼Œè¨ˆç®—æ¯å€‹å³¶å¶¼çš„é¢ç©
+  arrange(desc(area)) %>%      # ä¾æ“šé¢ç©ç”±å¤§åˆ°å°æ’åº
   slice(1)      
 
-# «Ø¥ß 5km µ¥¶Zºô®æ
+# å»ºç«‹ 5km ç­‰è·ç¶²æ ¼
 grid_sf <- st_make_grid(
-  taiwan_main_island,     # ¥H¥xÆW¦a¹Ï¬°½d³ò
-  cellsize = 5000,  # ºô®æ¤j¤p 5000x5000 ¤½¤Ø
-  what = "centers"  # §Ú­Ì»İ­nºô®æªº¤¤¤ßÂI
+  taiwan_main_island,     # ä»¥å°ç£åœ°åœ–ç‚ºç¯„åœ
+  cellsize = 5000,  # ç¶²æ ¼å¤§å° 5000x5000 å…¬å°º
+  what = "centers"  # æˆ‘å€‘éœ€è¦ç¶²æ ¼çš„ä¸­å¿ƒé»
 )
 
-# 3. (¥i¿ï) st_make_grid ¹w³]¥u¦^¶Ç´X¦ó¸ê°T¡A§Ú­Ì¥i¥H§â¥¦Âà¦¨§¹¾ãªº sf ª«¥ó
+# 3. (å¯é¸) st_make_grid é è¨­åªå›å‚³å¹¾ä½•è³‡è¨Šï¼Œæˆ‘å€‘å¯ä»¥æŠŠå®ƒè½‰æˆå®Œæ•´çš„ sf ç‰©ä»¶
 grid_sf <- st_sf(geometry = grid_sf)
 
-# ²{¦b grid_sf ´N¬O±z»İ­nªº¡BÂĞ»\¥ş¥xÆWªººô®æÂI (sf ®æ¦¡)
-# ¦pªG«áÄòªº krige ¨ç¼Æ»İ­n sp ®æ¦¡¡A¥i¥H¦AÂà´«
+# ç¾åœ¨ grid_sf å°±æ˜¯æ‚¨éœ€è¦çš„ã€è¦†è“‹å…¨å°ç£çš„ç¶²æ ¼é» (sf æ ¼å¼)
+# å¦‚æœå¾ŒçºŒçš„ krige å‡½æ•¸éœ€è¦ sp æ ¼å¼ï¼Œå¯ä»¥å†è½‰æ›
 grid_utm_from_sf <- as(grid_sf, "Spatial")
 
 df_utm_sf <- st_as_sf(df_utm)
 
-# --- 2. ¨Ï¥Î ggplot2 Ã¸¹Ï ---
-# ²{¦b©Ò¦³¶Ç¤J geom_sf ªº¸ê®Æ³£¬O sf ®æ¦¡¤F
+# --- 2. ä½¿ç”¨ ggplot2 ç¹ªåœ– ---
+# ç¾åœ¨æ‰€æœ‰å‚³å…¥ geom_sf çš„è³‡æ–™éƒ½æ˜¯ sf æ ¼å¼äº†
 ggplot() +
-  # µe¥X·sªº¡B§¹¾ãªººô®æÂI (¦Ç¦â)
+  # ç•«å‡ºæ–°çš„ã€å®Œæ•´çš„ç¶²æ ¼é» (ç°è‰²)
   geom_sf(data = grid_sf, color = "grey80", size = 0.5) +
   
-  # Å|¤W¥xÆWªº½ü¹ø (¶Â¦â®Ø½u)
+  # ç–Šä¸Šå°ç£çš„è¼ªå»“ (é»‘è‰²æ¡†ç·š)
   geom_sf(data = taiwan_main_island, fill = NA, color = "black") +
   
-  # Å|¤W±z­ì©lªº¸ê®ÆÂI (¬õ¦â)¡Aª`·N³o¸Ì¨Ï¥Îªº¬OÂà´««áªº df_utm_sf
+  # ç–Šä¸Šæ‚¨åŸå§‹çš„è³‡æ–™é» (ç´…è‰²)ï¼Œæ³¨æ„é€™è£¡ä½¿ç”¨çš„æ˜¯è½‰æ›å¾Œçš„ df_utm_sf
   geom_sf(data = df_utm_sf, color = "red", size = 1.5) +
   
-  # coord_sf(crs = st_crs(df_utm)) + # ³o¦æ³q±`¥i¥H¬Ù²¤¡A¦]¬° geom_sf ·|¦Û°Ê³B²z
+  # coord_sf(crs = st_crs(df_utm)) + # é€™è¡Œé€šå¸¸å¯ä»¥çœç•¥ï¼Œå› ç‚º geom_sf æœƒè‡ªå‹•è™•ç†
   labs(
-    title = "ºô®æÂĞ»\½d³òÀË¬d",
-    subtitle = "·sºô®æ (¦Ç¦â) §¹¾ãÂĞ»\¥xÆW¡A¦Ó­ì©l¸ê®ÆÂI (¬õ¦â) «h¨S¦³"
+    title = "ç¶²æ ¼è¦†è“‹ç¯„åœæª¢æŸ¥",
+    subtitle = "æ–°ç¶²æ ¼ (ç°è‰²) å®Œæ•´è¦†è“‹å°ç£ï¼Œè€ŒåŸå§‹è³‡æ–™é» (ç´…è‰²) å‰‡æ²’æœ‰"
   ) +
   theme_bw()
 
-# «ö¤p®É°j°é¡Gvariogram + kriging
+# æŒ‰å°æ™‚è¿´åœˆï¼švariogram + kriging
 df@data <- df@data %>%
   mutate(datetime = as.POSIXct(datetime),
          hour = format(datetime, "%Y-%m-%d %H"))
@@ -93,7 +93,7 @@ all_hours <- sort(unique(df_utm$hour))
 names(df_utm)
 vars <- c("temperature_c", "relative_humidity_percent", "wind_speed_m_s",
           "precipitation_mm","uv_index") 
-# ªì©l¤ÆÀx¦s®e¾¹
+# åˆå§‹åŒ–å„²å­˜å®¹å™¨
 filled_results <- list()
 #non parallel
 for (h in all_hours) {
@@ -130,7 +130,7 @@ for (h in all_hours) {
                                vgm(psill = var(obs@data[[v]]), model = "Exp",
                                    range = max_dist, nugget = 0))
     
-    # Kriging ¾ã±i 5km ºô®æ
+    # Kriging æ•´å¼µ 5km ç¶²æ ¼
     kr <- krige(as.formula(paste0(v, " ~ 1")), locations = obs,
                 newdata = grid_utm_from_sf, model = vgm_fit)
     filled_results[[h_str]][[v]] <- kr
@@ -138,8 +138,8 @@ for (h in all_hours) {
 }
 
 
-saveRDS(filled_results,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ğ¸ê®Æ/Kriging ¤Ñ®ğ¯¸®æÂI/2022¤Ñ®ğ¯¸®æÂI(Kriging).rds")
-filled_results <- readRDS("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ğ¸ê®Æ/Kriging ¤Ñ®ğ¯¸®æÂI/2022¤Ñ®ğ¯¸®æÂI(Kriging).rds")
+saveRDS(filled_results,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/Kriging å¤©æ°£ç«™æ ¼é»/2022å¤©æ°£ç«™æ ¼é»(Kriging).rds")
+filled_results <- readRDS("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/Kriging å¤©æ°£ç«™æ ¼é»/2022å¤©æ°£ç«™æ ¼é»(Kriging).rds")
 
 filled_results_clean <- purrr::compact(filled_results)
 names(filled_results_clean)
@@ -159,15 +159,15 @@ global_ranges_df <- hourly_ranges_df %>%
 plot_kriging_map <- function(v_to_plot, h_to_plot, 
                              kriging_results, global_ranges, map_outline) {
   
-  # --- «Ø¥ß¤@­ÓÅÜ¼Æ¦WºÙ»P¤¤¤å¼ĞÅÒªº¹ï·Óªí ---
+  # --- å»ºç«‹ä¸€å€‹è®Šæ•¸åç¨±èˆ‡ä¸­æ–‡æ¨™ç±¤çš„å°ç…§è¡¨ ---
   label_map <- c(
-    "temperature_c" = "·Å«× (¢XC)",
-    "relative_humidity_percent" = "¬Û¹ï·Ã«× (%)",
-    "wind_speed_m_s" = "­·³t (m/s)",
-    "precipitation_mm" = "­°«B¶q (mm)",
-    "uv_index" = "µµ¥~½u«ü¼Æ"
+    "temperature_c" = "æº«åº¦ (Â°C)",
+    "relative_humidity_percent" = "ç›¸å°æº¼åº¦ (%)",
+    "wind_speed_m_s" = "é¢¨é€Ÿ (m/s)",
+    "precipitation_mm" = "é™é›¨é‡ (mm)",
+    "uv_index" = "ç´«å¤–ç·šæŒ‡æ•¸"
   )
-  # ¨Ï¥Î¹ï·Óªí¨Ó¨ú±o¥¿½Tªº¼ĞÅÒ¡A¦pªG§ä¤£¨ì¡A´N¥Î­ì©lÅÜ¼Æ¦WºÙ
+  # ä½¿ç”¨å°ç…§è¡¨ä¾†å–å¾—æ­£ç¢ºçš„æ¨™ç±¤ï¼Œå¦‚æœæ‰¾ä¸åˆ°ï¼Œå°±ç”¨åŸå§‹è®Šæ•¸åç¨±
   v_label <- ifelse(v_to_plot %in% names(label_map), label_map[v_to_plot], v_to_plot)
   
   h_key <- gsub("[: ]", "_", h_to_plot)
@@ -183,10 +183,10 @@ plot_kriging_map <- function(v_to_plot, h_to_plot,
       return(invisible(NULL)) 
     }
     
-    # === ÃöÁä­×¥¿ 1¡GÃ­°·ªº¸ê®Æ·Ç³Æ¡A±j¨î©R¦W®y¼Ğ ===
+    # === é—œéµä¿®æ­£ 1ï¼šç©©å¥çš„è³‡æ–™æº–å‚™ï¼Œå¼·åˆ¶å‘½ååº§æ¨™ ===
     plot_data_values <- kr_result@data
     plot_coords <- as.data.frame(sp::coordinates(kr_result))
-    names(plot_coords)[1:2] <- c("x", "y") # ±j¨î©R¦W
+    names(plot_coords)[1:2] <- c("x", "y") # å¼·åˆ¶å‘½å
     plot_df <- dplyr::bind_cols(plot_data_values, plot_coords) %>%
       dplyr::rename(prediction = var1.pred)
     
@@ -199,57 +199,57 @@ plot_kriging_map <- function(v_to_plot, h_to_plot,
       ggplot2::geom_sf(data = map_outline, fill = NA, color = "black", linewidth = 0.5) +
       viridis::scale_fill_viridis(
         option = "plasma", 
-        name = v_label, # ª½±µ¨Ï¥Î v_label §@¬°¹Ï¨Ò¦WºÙ
+        name = v_label, # ç›´æ¥ä½¿ç”¨ v_label ä½œç‚ºåœ–ä¾‹åç¨±
         limits = c(min_val, max_val),
         na.value = "transparent"
       ) +
-      # === ÃöÁä­×¥¿ 2¡G¨Ï¥Î­×¥¿«áªº v_label ===
+      # === é—œéµä¿®æ­£ 2ï¼šä½¿ç”¨ä¿®æ­£å¾Œçš„ v_label ===
       ggplot2::labs(
         title = paste("Kriging -", v_label),
-        subtitle = paste("®É¶¡:", h_to_plot)
+        subtitle = paste("æ™‚é–“:", h_to_plot)
       ) +
       ggplot2::theme_void() +
       ggplot2::theme(
         plot.background = ggplot2::element_rect(fill = "white", color = NA),
         plot.title = ggplot2::element_text(hjust = 0.5, size = 16, face = "bold"),
         plot.subtitle = ggplot2::element_text(hjust = 0.5, size = 12),
-        legend.title = ggplot2::element_text(size = 10) # Åı¹Ï¨Ò¼ĞÃD²M·¡¨Ç
+        legend.title = ggplot2::element_text(size = 10) # è®“åœ–ä¾‹æ¨™é¡Œæ¸…æ¥šäº›
       ) +
       ggplot2::coord_sf(datum = sf::st_crs(map_outline))
     
-    return(p) # ª`·N¡G¦b°j°é¤¤Àx¦s®É¡A§Ú­Ì¥u¦^¶Çª«¥ó¡A¤£ print
+    return(p) # æ³¨æ„ï¼šåœ¨è¿´åœˆä¸­å„²å­˜æ™‚ï¼Œæˆ‘å€‘åªå›å‚³ç‰©ä»¶ï¼Œä¸ print
     
   } else {
-    message("§ä¤£¨ì¸ê®Æ: ", h_to_plot, " for variable ", v_to_plot)
+    message("æ‰¾ä¸åˆ°è³‡æ–™: ", h_to_plot, " for variable ", v_to_plot)
     return(invisible(NULL))
   }
 }
 create_kriging_gif <- function(target_date, v_to_plot, 
                                kriging_results, global_ranges, map_outline,
                                output_filename = "kriging_animation.gif",
-                               fps = 2) { # fps = ¨C¬íÅã¥Üªº¹Ï¤ù±i¼Æ
+                               fps = 2) { # fps = æ¯ç§’é¡¯ç¤ºçš„åœ–ç‰‡å¼µæ•¸
   
-  # a. «Ø¥ß¤@­Ó¼È¦s¸ê®Æ§¨¨Ó¦s©ñ³æ±i¹Ï¤ù
+  # a. å»ºç«‹ä¸€å€‹æš«å­˜è³‡æ–™å¤¾ä¾†å­˜æ”¾å–®å¼µåœ–ç‰‡
   temp_dir <- file.path(tempdir(), "kriging_frames")
   if (!dir.exists(temp_dir)) {
     dir.create(temp_dir)
   } else {
-    # ²M²zÂÂªº¹Ï¤ù
+    # æ¸…ç†èˆŠçš„åœ–ç‰‡
     unlink(file.path(temp_dir, "*.png"))
   }
   
-  message("¼È¦s¸ê®Æ§¨«Ø¥ß©ó: ", temp_dir)
+  message("æš«å­˜è³‡æ–™å¤¾å»ºç«‹æ–¼: ", temp_dir)
   
-  # b. ²£¥Í¸Ó¤é´Á 24 ¤p®Éªº®É¶¡ÂI¦r¦ê
+  # b. ç”¢ç”Ÿè©²æ—¥æœŸ 24 å°æ™‚çš„æ™‚é–“é»å­—ä¸²
   hourly_timestamps <- paste0(target_date, " ", sprintf("%02d", 0:23))
   
-  # c. °j°é²£¥Í¨ÃÀx¦s¨C¤@±i¹Ï¤ù
+  # c. è¿´åœˆç”¢ç”Ÿä¸¦å„²å­˜æ¯ä¸€å¼µåœ–ç‰‡
   frame_files <- c()
   for (i in seq_along(hourly_timestamps)) {
     h <- hourly_timestamps[i]
-    message("¥¿¦b²£¥Í¹Ï¤ù: ", h)
+    message("æ­£åœ¨ç”¢ç”Ÿåœ–ç‰‡: ", h)
     
-    # ©I¥sÂÂ¨ç¼Æ¨Ó²£¥Í ggplot ª«¥ó
+    # å‘¼å«èˆŠå‡½æ•¸ä¾†ç”¢ç”Ÿ ggplot ç‰©ä»¶
     plot_object <- plot_kriging_map(
       v_to_plot = v_to_plot,
       h_to_plot = h,
@@ -258,7 +258,7 @@ create_kriging_gif <- function(target_date, v_to_plot,
       map_outline = map_outline
     )
     
-    # ¦pªG¦¨¥\²£¥Í¹Ï¤ù¡A´N¦sÀÉ
+    # å¦‚æœæˆåŠŸç”¢ç”Ÿåœ–ç‰‡ï¼Œå°±å­˜æª”
     if (!is.null(plot_object)) {
       frame_path <- file.path(temp_dir, sprintf("frame_%03d.png", i))
       ggsave(filename = frame_path, plot = plot_object, width = 8, height = 8, dpi = 96)
@@ -266,23 +266,23 @@ create_kriging_gif <- function(target_date, v_to_plot,
     }
   }
   
-  # d. ¨Ï¥Î magick ®M¥ó±N©Ò¦³¹Ï¤ù²Õ¦X¦¨ GIF
+  # d. ä½¿ç”¨ magick å¥—ä»¶å°‡æ‰€æœ‰åœ–ç‰‡çµ„åˆæˆ GIF
   if (length(frame_files) > 0) {
-    message("\n©Ò¦³¹Ï¤ù²£¥Í§¹²¦¡A¶}©l¦X¦¨ GIF...")
+    message("\næ‰€æœ‰åœ–ç‰‡ç”¢ç”Ÿå®Œç•¢ï¼Œé–‹å§‹åˆæˆ GIF...")
     
     animation <- image_read(frame_files) %>%
       image_animate(fps = fps)
     
     image_write(animation, path = output_filename)
     
-    message("GIF ¦¨¥\Àx¦s¦Ü: ", normalizePath(output_filename))
+    message("GIF æˆåŠŸå„²å­˜è‡³: ", normalizePath(output_filename))
   } else {
-    message("¨S¦³¥ô¦ó¦³®Äªº¹Ï¤ù³Q²£¥Í¡AµLªk«Ø¥ß GIF¡C")
+    message("æ²’æœ‰ä»»ä½•æœ‰æ•ˆçš„åœ–ç‰‡è¢«ç”¢ç”Ÿï¼Œç„¡æ³•å»ºç«‹ GIFã€‚")
   }
   
-  # e. ²M²z¼È¦s¸ê®Æ§¨
+  # e. æ¸…ç†æš«å­˜è³‡æ–™å¤¾
   unlink(temp_dir, recursive = TRUE)
-  message("¼È¦s¸ê®Æ§¨¤w²M²z¡C")
+  message("æš«å­˜è³‡æ–™å¤¾å·²æ¸…ç†ã€‚")
 }
 
 create_kriging_gif_range <- function(start_datetime, end_datetime, v_to_plot, 
@@ -290,26 +290,26 @@ create_kriging_gif_range <- function(start_datetime, end_datetime, v_to_plot,
                                      output_filename = "kriging_range_animation.gif",
                                      fps = 2) {
   
-  # a. «Ø¥ß¼È¦s¸ê®Æ§¨
+  # a. å»ºç«‹æš«å­˜è³‡æ–™å¤¾
   temp_dir <- file.path(tempdir(), "kriging_frames")
   if (!dir.exists(temp_dir)) dir.create(temp_dir) else unlink(file.path(temp_dir, "*.png"))
-  message("¼È¦s¸ê®Æ§¨«Ø¥ß©ó: ", temp_dir)
+  message("æš«å­˜è³‡æ–™å¤¾å»ºç«‹æ–¼: ", temp_dir)
   
-  # b. *** ÃöÁä­×§ï¡G²£¥Í«ü©w®É¶¡°Ï¶¡¤ºªº¨C¤p®É®É¶¡§Ç¦C ***
+  # b. *** é—œéµä¿®æ”¹ï¼šç”¢ç”ŸæŒ‡å®šæ™‚é–“å€é–“å…§çš„æ¯å°æ™‚æ™‚é–“åºåˆ— ***
   start_time <- as.POSIXct(start_datetime, tz = "UTC")
   end_time <- as.POSIXct(end_datetime, tz = "UTC")
   
-  # ²£¥Í±q¶}©l®É¶¡¨ìµ²§ô®É¶¡¡A¨C¹j¤@¤p®Éªº®É¶¡§Ç¦C
+  # ç”¢ç”Ÿå¾é–‹å§‹æ™‚é–“åˆ°çµæŸæ™‚é–“ï¼Œæ¯éš”ä¸€å°æ™‚çš„æ™‚é–“åºåˆ—
   time_sequence <- seq(from = start_time, to = end_time, by = "hour")
   
-  # ±N®É¶¡§Ç¦C®æ¦¡¤Æ¦¨§Ú­Ì»İ­nªº¦r¦ê®æ¦¡
+  # å°‡æ™‚é–“åºåˆ—æ ¼å¼åŒ–æˆæˆ‘å€‘éœ€è¦çš„å­—ä¸²æ ¼å¼
   hourly_timestamps <- format(time_sequence, "%Y-%m-%d %H")
   
-  # c. °j°é²£¥Í¨ÃÀx¦s¨C¤@±i¹Ï¤ù
+  # c. è¿´åœˆç”¢ç”Ÿä¸¦å„²å­˜æ¯ä¸€å¼µåœ–ç‰‡
   frame_files <- c()
   for (i in seq_along(hourly_timestamps)) {
     h <- hourly_timestamps[i]
-    message("¥¿¦b²£¥Í¹Ï¤ù: ", h)
+    message("æ­£åœ¨ç”¢ç”Ÿåœ–ç‰‡: ", h)
     
     plot_object <- plot_kriging_map(
       v_to_plot = v_to_plot, h_to_plot = h,
@@ -324,43 +324,43 @@ create_kriging_gif_range <- function(start_datetime, end_datetime, v_to_plot,
     }
   }
   
-  # d. ¨Ï¥Î magick ®M¥ó±N©Ò¦³¹Ï¤ù²Õ¦X¦¨ GIF
+  # d. ä½¿ç”¨ magick å¥—ä»¶å°‡æ‰€æœ‰åœ–ç‰‡çµ„åˆæˆ GIF
   if (length(frame_files) > 0) {
-    message("\n©Ò¦³¹Ï¤ù²£¥Í§¹²¦¡A¶}©l¦X¦¨ GIF...")
+    message("\næ‰€æœ‰åœ–ç‰‡ç”¢ç”Ÿå®Œç•¢ï¼Œé–‹å§‹åˆæˆ GIF...")
     animation <- image_read(frame_files) %>%
       image_animate(fps = fps)
     image_write(animation, path = output_filename)
-    message("GIF ¦¨¥\Àx¦s¦Ü: ", normalizePath(output_filename))
+    message("GIF æˆåŠŸå„²å­˜è‡³: ", normalizePath(output_filename))
   } else {
-    message("¨S¦³¥ô¦ó¦³®Äªº¹Ï¤ù³Q²£¥Í¡AµLªk«Ø¥ß GIF¡C")
+    message("æ²’æœ‰ä»»ä½•æœ‰æ•ˆçš„åœ–ç‰‡è¢«ç”¢ç”Ÿï¼Œç„¡æ³•å»ºç«‹ GIFã€‚")
   }
   
-  # e. ²M²z¼È¦s¸ê®Æ§¨
+  # e. æ¸…ç†æš«å­˜è³‡æ–™å¤¾
   unlink(temp_dir, recursive = TRUE)
-  message("¼È¦s¸ê®Æ§¨¤w²M²z¡C")
+  message("æš«å­˜è³‡æ–™å¤¾å·²æ¸…ç†ã€‚")
 }
 
 create_kriging_video <- function(start_datetime, end_datetime, v_to_plot, 
                                  kriging_results, global_ranges, map_outline,
                                  output_filename = "kriging_animation.mp4",
-                                 framerate = 2) { # framerate = ¼v®æ²v(´V²v)
+                                 framerate = 2) { # framerate = å½±æ ¼ç‡(å¹€ç‡)
   
-  # a. «Ø¥ß¼È¦s¸ê®Æ§¨ (³o³¡¤À¤£ÅÜ)
+  # a. å»ºç«‹æš«å­˜è³‡æ–™å¤¾ (é€™éƒ¨åˆ†ä¸è®Š)
   temp_dir <- file.path(tempdir(), "kriging_frames")
   if (!dir.exists(temp_dir)) dir.create(temp_dir) else unlink(file.path(temp_dir, "*.png"))
-  message("¼È¦s¸ê®Æ§¨«Ø¥ß©ó: ", temp_dir)
+  message("æš«å­˜è³‡æ–™å¤¾å»ºç«‹æ–¼: ", temp_dir)
   
-  # b. ²£¥Í®É¶¡§Ç¦C (³o³¡¤À¤£ÅÜ)
+  # b. ç”¢ç”Ÿæ™‚é–“åºåˆ— (é€™éƒ¨åˆ†ä¸è®Š)
   start_time <- as.POSIXct(start_datetime, tz = "UTC")
   end_time <- as.POSIXct(end_datetime, tz = "UTC")
   time_sequence <- seq(from = start_time, to = end_time, by = "hour")
   hourly_timestamps <- format(time_sequence, "%Y-%m-%d %H")
   
-  # c. °j°é²£¥Í¨ÃÀx¦s¨C¤@±i¹Ï¤ù (³o³¡¤À¤£ÅÜ)
+  # c. è¿´åœˆç”¢ç”Ÿä¸¦å„²å­˜æ¯ä¸€å¼µåœ–ç‰‡ (é€™éƒ¨åˆ†ä¸è®Š)
   frame_files <- c()
   for (i in seq_along(hourly_timestamps)) {
     h <- hourly_timestamps[i]
-    message("¥¿¦b²£¥Í¹Ï¤ù: ", h)
+    message("æ­£åœ¨ç”¢ç”Ÿåœ–ç‰‡: ", h)
     plot_object <- plot_kriging_map(
       v_to_plot = v_to_plot, h_to_plot = h,
       kriging_results = kriging_results, global_ranges = global_ranges,
@@ -373,31 +373,31 @@ create_kriging_video <- function(start_datetime, end_datetime, v_to_plot,
     }
   }
   
-  # d. *** ÃöÁä­×§ï¡G¨Ï¥Î av ®M¥ó±N©Ò¦³¹Ï¤ù²Õ¦X¦¨ MP4 ***
+  # d. *** é—œéµä¿®æ”¹ï¼šä½¿ç”¨ av å¥—ä»¶å°‡æ‰€æœ‰åœ–ç‰‡çµ„åˆæˆ MP4 ***
   if (length(frame_files) > 0) {
-    message("\n©Ò¦³¹Ï¤ù²£¥Í§¹²¦¡A¶}©l¦X¦¨ MP4...")
+    message("\næ‰€æœ‰åœ–ç‰‡ç”¢ç”Ÿå®Œç•¢ï¼Œé–‹å§‹åˆæˆ MP4...")
     
-    output_dir <- dirname(output_filename) # ¨ú±o¿é¥X¸ô®|ªº¸ê®Æ§¨³¡¤À
-    # ¦pªG¸ê®Æ§¨¤£¦s¦b¡A´N»¼°j¦a«Ø¥ß¥¦
+    output_dir <- dirname(output_filename) # å–å¾—è¼¸å‡ºè·¯å¾‘çš„è³‡æ–™å¤¾éƒ¨åˆ†
+    # å¦‚æœè³‡æ–™å¤¾ä¸å­˜åœ¨ï¼Œå°±éè¿´åœ°å»ºç«‹å®ƒ
     if (!dir.exists(output_dir)) {
       dir.create(output_dir, recursive = TRUE)
     }
     
-    # ©I¥s av_encode_video ¨Ó¦X¦¨¼v¤ù
+    # å‘¼å« av_encode_video ä¾†åˆæˆå½±ç‰‡
     av::av_encode_video(
       input = frame_files,      
       output = output_filename, 
       framerate = framerate     
     )
     
-    message("MP4 ¼v¤ù¦¨¥\Àx¦s¦Ü: ", normalizePath(output_filename))
+    message("MP4 å½±ç‰‡æˆåŠŸå„²å­˜è‡³: ", normalizePath(output_filename))
   } else {
-    message("¨S¦³¥ô¦ó¦³®Äªº¹Ï¤ù³Q²£¥Í¡AµLªk«Ø¥ß MP4¡C")
+    message("æ²’æœ‰ä»»ä½•æœ‰æ•ˆçš„åœ–ç‰‡è¢«ç”¢ç”Ÿï¼Œç„¡æ³•å»ºç«‹ MP4ã€‚")
   }
   
-  # e. ²M²z¼È¦s¸ê®Æ§¨ (³o³¡¤À¤£ÅÜ)
+  # e. æ¸…ç†æš«å­˜è³‡æ–™å¤¾ (é€™éƒ¨åˆ†ä¸è®Š)
   unlink(temp_dir, recursive = TRUE)
-  message("¼È¦s¸ê®Æ§¨¤w²M²z¡C")
+  message("æš«å­˜è³‡æ–™å¤¾å·²æ¸…ç†ã€‚")
 }
 target_variable <- "temperature_c"
 target_date_str <- "2022-01-01"
@@ -405,7 +405,7 @@ target_date_str <- "2022-01-01"
 plot_kriging_map(
   v_to_plot = target_variable, 
   h_to_plot = target_date_str,
-  kriging_results = filled_results_clean, # ¨Ï¥Î²M²z¹Lªº results list
+  kriging_results = filled_results_clean, # ä½¿ç”¨æ¸…ç†éçš„ results list
   global_ranges = global_ranges_df,
   map_outline = taiwan_main_island
 )

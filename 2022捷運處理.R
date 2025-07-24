@@ -26,38 +26,38 @@
   library(progress)
 }
 
-base_path <- "E:/brain/¸ÑÀ£ÁYdata"
-TPCmrt2022df_input_csv_1_6 <- "E:/brain/¸ÑÀ£ÁYdata/csv/2022/»O¥_±¶¹B¹q¤l²¼ÃÒ¸ê®Æ(TO2A)_2022¦~1~6¤ë/»O¥_±¶¹B¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-TPCmrt2022df_output_parquet_1_6 <- file.path(base_path, "fst", "2022", "2022»O¥_¥«±¶¹B1-6¤ë.parquet")
-TPCmrt2022df_output_fst_1_6 <- file.path(base_path, "fst", "2022", "2022»O¥_¥«±¶¹B1-6¤ë.fst")
-TPCmrt2022df_output_fst_1_6_2<- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»O¥_¥«±¶¹B1-6¤ë(¥h°£²§±`­È)2.fst")
-TPCmrt2022df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»O¥_¥«±¶¹B1-6¤ë(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3)chunk")
+base_path <- "E:/brain/è§£å£“ç¸®data"
+TPCmrt2022df_input_csv_1_6 <- "E:/brain/è§£å£“ç¸®data/csv/2022/è‡ºåŒ—æ·é‹é›»å­ç¥¨è­‰è³‡æ–™(TO2A)_2022å¹´1~6æœˆ/è‡ºåŒ—æ·é‹é›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+TPCmrt2022df_output_parquet_1_6 <- file.path(base_path, "fst", "2022", "2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ.parquet")
+TPCmrt2022df_output_fst_1_6 <- file.path(base_path, "fst", "2022", "2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ.fst")
+TPCmrt2022df_output_fst_1_6_2<- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(å»é™¤ç•°å¸¸å€¼)2.fst")
+TPCmrt2022df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3)chunk")
 nrow(fst(TPCmrt2022df_output_fst_1_6))
 nrow(fst(TPCmrt2022df_output_fst_1_6_2))
 
-TPCmrt2022df_input_csv_7_12 <- "E:/brain/¸ÑÀ£ÁYdata/csv/2022/»O¥_±¶¹B¹q¤l²¼ÃÒ¸ê®Æ(TO2A)_2022¦~7~12¤ë/»O¥_±¶¹B¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-TPCmrt2022df_output_parquet_7_12 <- file.path(base_path, "fst", "2022", "2022»O¥_¥«±¶¹B7-12¤ë.parquet")
-TPCmrt2022df_output_fst_7_12 <- file.path(base_path, "fst", "2022", "2022»O¥_¥«±¶¹B7-12¤ë.fst")
-TPCmrt2022df_output_fst_7_12_2<- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»O¥_¥«±¶¹B7-12¤ë(¥h°£²§±`­È)2.fst")
-TPCmrt2022df_output_fst_7_12_3_chunkv3<- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»O¥_¥«±¶¹B7-12¤ë(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3)3chunk")
+TPCmrt2022df_input_csv_7_12 <- "E:/brain/è§£å£“ç¸®data/csv/2022/è‡ºåŒ—æ·é‹é›»å­ç¥¨è­‰è³‡æ–™(TO2A)_2022å¹´7~12æœˆ/è‡ºåŒ—æ·é‹é›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+TPCmrt2022df_output_parquet_7_12 <- file.path(base_path, "fst", "2022", "2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ.parquet")
+TPCmrt2022df_output_fst_7_12 <- file.path(base_path, "fst", "2022", "2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ.fst")
+TPCmrt2022df_output_fst_7_12_2<- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(å»é™¤ç•°å¸¸å€¼)2.fst")
+TPCmrt2022df_output_fst_7_12_3_chunkv3<- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3)3chunk")
 nrow(fst(TPCmrt2022df_output_fst_7_12))
 nrow(fst(TPCmrt2022df_output_fst_7_12_2))
 
-NTPmrt2022df_input_csv <- "E:/brain/¸ÑÀ£ÁYdata/csv/2022/·s¥_±¶¹B¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2022-01-01 ~ 2022-12-31/·s¥_±¶¹B¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-NTPmrt2022df_output_fst <- file.path(base_path, "fst", "2022", "2022·s¥_¥«±¶¹B.fst")
-NTPmrt2022df_output_fst2 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022·s¥_¥«±¶¹B(¥h°£²§±`­È)2.fst")
-NTPmrt2022df_output_fst3v3 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022·s¥_¥«±¶¹B(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3)3.fst")
-NTPmrt2022df_output_fst4v3 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022·s¥_¥«±¶¹B(¥[¤Jª½½u¶ZÂ÷_voronoi_v3)4.fst")
-NTPmrt2022df_output_fst5v3 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022·s¥_¥«±¶¹B(µo®iµ{«×²¾°Ê_voronoi_v3)5.fst")
+NTPmrt2022df_input_csv <- "E:/brain/è§£å£“ç¸®data/csv/2022/æ–°åŒ—æ·é‹é›»å­ç¥¨è­‰è³‡æ–™(TO2A)2022-01-01 ~ 2022-12-31/æ–°åŒ—æ·é‹é›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+NTPmrt2022df_output_fst <- file.path(base_path, "fst", "2022", "2022æ–°åŒ—å¸‚æ·é‹.fst")
+NTPmrt2022df_output_fst2 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022æ–°åŒ—å¸‚æ·é‹(å»é™¤ç•°å¸¸å€¼)2.fst")
+NTPmrt2022df_output_fst3v3 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022æ–°åŒ—å¸‚æ·é‹(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3)3.fst")
+NTPmrt2022df_output_fst4v3 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022æ–°åŒ—å¸‚æ·é‹(åŠ å…¥ç›´ç·šè·é›¢_voronoi_v3)4.fst")
+NTPmrt2022df_output_fst5v3 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022æ–°åŒ—å¸‚æ·é‹(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5.fst")
 names(fst(NTPmrt2022df_output_fst5v3))
 
-rail2022df_input_csv <- "E:/brain/¸ÑÀ£ÁYdata/csv/2022/»OÅK¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2022-01-01 ~ 2022-12-31/»OÅK¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-rail2022df_output_fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022»OÅK.fst"
-rail2022df_output_fst2 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»OÅK(¥h°£²§±`­È)2.fst")
-rail2022df_output_fst3 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»OÅK(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸)3.fst")
-rail2022df_output_fst4 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»OÅK(¥[¤Jª½½u¶ZÂ÷_voronoi)4.fst")
-rail2022df_output_fst5 <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»OÅK(µo®iµ{«×²¾°Ê)5.fst")
-rail2022df_output_fst5_truncated <- file.path(base_path, "¸ê®Æ³B²z", "2022", "2022»OÅK(µo®iµ{«×²¾°Ê_truncated)5.fst")
+rail2022df_input_csv <- "E:/brain/è§£å£“ç¸®data/csv/2022/è‡ºéµé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2022-01-01 ~ 2022-12-31/è‡ºéµé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+rail2022df_output_fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022è‡ºéµ.fst"
+rail2022df_output_fst2 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºéµ(å»é™¤ç•°å¸¸å€¼)2.fst")
+rail2022df_output_fst3 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºéµ(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™)3.fst")
+rail2022df_output_fst4 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºéµ(åŠ å…¥ç›´ç·šè·é›¢_voronoi)4.fst")
+rail2022df_output_fst5 <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºéµ(ç™¼å±•ç¨‹åº¦ç§»å‹•)5.fst")
+rail2022df_output_fst5_truncated <- file.path(base_path, "è³‡æ–™è™•ç†", "2022", "2022è‡ºéµ(ç™¼å±•ç¨‹åº¦ç§»å‹•_truncated)5.fst")
 
 rail2022df <- read_fst(rail2022df_output_fst, as.data.table = TRUE)
 rail2022df[as.Date(rail2022df$EntryTime)=="2022-09-21"& hour(rail2022df$EntryTime)==20]
@@ -80,13 +80,13 @@ unique_stops <- unique(
                  Latitude = DLatitude, Longitude = DLongitude)]
   )
 )
-write_parquet(unique_stops,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/»OÅK¯¸ÂI¸ê®Æ/¥ş»O»OÅK¯¸ÂI(¯¸½X¸g½n«×).parquet")
+write_parquet(unique_stops,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/è‡ºéµç«™é»è³‡æ–™/å…¨è‡ºè‡ºéµç«™é»(ç«™ç¢¼ç¶“ç·¯åº¦).parquet")
 nrow(fst(rail2022df_output_fst2))
 names(fst(rail2022df_output_fst5))
 
-mrtstop_path <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/±¶¹B¯¸ÂI¸ê®Æ/¥_¥xÆW±¶¹B¯¸ÂI(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3).parquet"
-mrtstop_path_TPC <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/±¶¹B¯¸ÂI¸ê®Æ/¥_¥xÆW±¶¹B¯¸ÂI(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v2_for TPC).csv"
-railstop_path <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/»OÅK¯¸ÂI¸ê®Æ/¥ş»O»OÅK¯¸ÂI(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3).parquet"
+mrtstop_path <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/æ·é‹ç«™é»è³‡æ–™/åŒ—å°ç£æ·é‹ç«™é»(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3).parquet"
+mrtstop_path_TPC <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/æ·é‹ç«™é»è³‡æ–™/åŒ—å°ç£æ·é‹ç«™é»(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v2_for TPC).csv"
+railstop_path <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/è‡ºéµç«™é»è³‡æ–™/å…¨è‡ºè‡ºéµç«™é»(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3).parquet"
 mrt <- fread(mrtstop_path_TPC)
 mrt <- read_parquet(mrtstop_path)
 
@@ -102,8 +102,8 @@ TPCmrt2022df[, `:=`(
 )]
 write_fst(TPCmrt2022df, TPCmrt2022df_output_fst_1_6v2,compress0)
 
-#Âà¦¨fst
-#2022»O¥_¥«±¶¹B
+#è½‰æˆfst
+#2022è‡ºåŒ—å¸‚æ·é‹
 checklines <- function(df){
   first_line <- readLines(df, n = 1, encoding = "UTF-8")
   cat(strsplit(first_line, ",")[[1]], sep = "\n")
@@ -237,16 +237,16 @@ cleanproblemmrt <- function(df){
     parse_date_time(
       x,
       orders = c(
-        "Ymd HMS OS",    # ¦~-¤ë-¤é ®É:¤À:¬í.²@¬í  (OS = optional seconds fraction)
-        "Ymd HMS",       # ¦~-¤ë-¤é ®É:¤À:¬í
-        "Ymd HM",        # ¦~-¤ë-¤é ®É:¤À
-        "Ymd"            # ¦~-¤ë-¤é¡]¯Â¤é´Á¡^
+        "Ymd HMS OS",    # å¹´-æœˆ-æ—¥ æ™‚:åˆ†:ç§’.æ¯«ç§’  (OS = optional seconds fraction)
+        "Ymd HMS",       # å¹´-æœˆ-æ—¥ æ™‚:åˆ†:ç§’
+        "Ymd HM",        # å¹´-æœˆ-æ—¥ æ™‚:åˆ†
+        "Ymd"            # å¹´-æœˆ-æ—¥ï¼ˆç´”æ—¥æœŸï¼‰
       ),
-      tz = "UTC",        # ¦p¦³»İ¨D¥i«ü©w®É°Ï
+      tz = "UTC",        # å¦‚æœ‰éœ€æ±‚å¯æŒ‡å®šæ™‚å€
     )
   }
   df <- df %>%
-    # ¤TÄæ³£Âà¦¨¦r¦ê¦A¶ñ "-99"
+    # ä¸‰æ¬„éƒ½è½‰æˆå­—ä¸²å†å¡« "-99"
     mutate(across(
       c(SubTicketType, TransferCode),
       ~ replace_na(as.character(.), "-99")
@@ -257,18 +257,18 @@ cleanproblemmrt <- function(df){
       ExitTime  = parse_flexible(ExitTime)
     ) %>%
     
-    # ­l¥Í®É¶¡Äæ¦ì
+    # è¡ç”Ÿæ™‚é–“æ¬„ä½
     mutate(
-      BDayOfWeek        = weekdays(EntryTime),                                # Monday¡KSunday
+      BDayOfWeek        = weekdays(EntryTime),                                # Mondayâ€¦Sunday
       BWeekendOrWeekday = if_else(
         wday(EntryTime) %in% c(1, 7),
         "Weekend", 
         "Weekday"
       ),
-      BHour    = hour(EntryTime),                                            # 0¡V23
-      BMonth   = month(EntryTime),                                           # 1¡V12
-      BYear    = year(EntryTime),                                            # ¦~¥÷
-      DYear    = year(ExitTime),                                             # Â÷¯¸¦~¥÷
+      BHour    = hour(EntryTime),                                            # 0â€“23
+      BMonth   = month(EntryTime),                                           # 1â€“12
+      BYear    = year(EntryTime),                                            # å¹´ä»½
+      DYear    = year(ExitTime),                                             # é›¢ç«™å¹´ä»½
       Duration = ExitTime - EntryTime                                       # difftime
     ) %>%
     filter(
@@ -294,7 +294,7 @@ cleanproblemmrt_dt_opti <- function(df) {
     BMonth            = month(EntryTime),
     BYear             = year(EntryTime),
     DYear             = year(ExitTime),
-    Duration          = as.numeric(difftime(ExitTime, EntryTime, units = "hours")) # ½T«O¬°¼Æ­È
+    Duration          = as.numeric(difftime(ExitTime, EntryTime, units = "hours")) # ç¢ºä¿ç‚ºæ•¸å€¼
   )]
   
   df_filtered <- df[!is.na(Duration) & Duration <= 12 &
@@ -309,32 +309,32 @@ process_fst_chunks_direct <- function(fst_file_path,
                                       chunk_size = 10000000L) {
   
   if (!file.exists(fst_file_path)) {
-    stop(paste("FST ÀÉ®×¤£¦s¦b:", fst_file_path))
+    stop(paste("FST æª”æ¡ˆä¸å­˜åœ¨:", fst_file_path))
   }
   if (!grepl("\\.fst$", fst_file_path, ignore.case = TRUE)) {
-    warning(paste("¿é¤JÀÉ®×¥i¯à¤£¬O FST ÀÉ®× (°ÆÀÉ¦W«D .fst):", fst_file_path))
+    warning(paste("è¼¸å…¥æª”æ¡ˆå¯èƒ½ä¸æ˜¯ FST æª”æ¡ˆ (å‰¯æª”åé .fst):", fst_file_path))
   }
   if (!requireNamespace("fst", quietly = TRUE)) {
-    stop("½Ğ¥ı¦w¸Ë¨Ã¸ü¤J 'fst' ®M¥ó: install.packages('fst'); library(fst)")
+    stop("è«‹å…ˆå®‰è£ä¸¦è¼‰å…¥ 'fst' å¥—ä»¶: install.packages('fst'); library(fst)")
   }
   
-  message(paste("·Ç³Æ±q FST ÀÉ®×ª½±µ¤À¶ôÅª¨ú:", fst_file_path))
+  message(paste("æº–å‚™å¾ FST æª”æ¡ˆç›´æ¥åˆ†å¡Šè®€å–:", fst_file_path))
   fst_meta <- metadata_fst(fst_file_path)
   n_total_rows <- fst_meta$nrOfRows
   
   if (n_total_rows == 0) {
-    message("¿é¤J FST ÀÉ®×¬OªÅªº©Î¨S¦³¸ê®Æ¦C¡C")
+    message("è¼¸å…¥ FST æª”æ¡ˆæ˜¯ç©ºçš„æˆ–æ²’æœ‰è³‡æ–™åˆ—ã€‚")
     empty_structured_dt <- read_fst(fst_file_path, from = 1, to = 0, as.data.table = TRUE)
     return(processing_function(empty_structured_dt)) 
   }
   
   n_chunks <- ceiling(n_total_rows / chunk_size)
-  message(paste("Á`¦æ¼Æ:", n_total_rows, "| ¤À¶ô¤j¤p:", chunk_size, "| Á`¶ô¼Æ:", n_chunks))
+  message(paste("ç¸½è¡Œæ•¸:", n_total_rows, "| åˆ†å¡Šå¤§å°:", chunk_size, "| ç¸½å¡Šæ•¸:", n_chunks))
   
   processed_list <- vector("list", n_chunks) 
   
   for (i in 1:n_chunks) {
-    message(paste0("¥¿¦b³B²z¤À¶ô ", i, " / ", n_chunks, "..."))
+    message(paste0("æ­£åœ¨è™•ç†åˆ†å¡Š ", i, " / ", n_chunks, "..."))
     start_row <- (i - 1) * chunk_size + 1
     end_row <- min(i * chunk_size, n_total_rows)
     
@@ -347,9 +347,9 @@ process_fst_chunks_direct <- function(fst_file_path,
     processed_list[[i]] <- processed_chunk
   }
   
-  message("©Ò¦³¤À¶ô³B²z§¹²¦¡C¥¿¦b¦X¨Öµ²ªG...")
+  message("æ‰€æœ‰åˆ†å¡Šè™•ç†å®Œç•¢ã€‚æ­£åœ¨åˆä½µçµæœ...")
   final_result <- rbindlist(processed_list, use.names = TRUE, fill = TRUE)
-  message("¦X¨Ö§¹¦¨¡C")
+  message("åˆä½µå®Œæˆã€‚")
   
   return(final_result)
 }
@@ -396,15 +396,15 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
   library(fst)
   
   start_time <- Sys.time()
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, StopName := as.character(StopName)]
   stopuid <- unique(stopuid, by = "StopName")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
     cols <- setdiff(names(dt), "StopName")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
@@ -421,7 +421,7 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -430,47 +430,47 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     start_idx <- ((i - 1) * chunk_size) + 1
     end_idx <- min(i * chunk_size, total_rows)
     dt_chunk <- dt[start_idx:end_idx]
-    cat(sprintf("³B²z Chunk %d ...\n", i))
+    cat(sprintf("è™•ç† Chunk %d ...\n", i))
     cat(nrow(dt_chunk),"\n")
-    # ¦X¨Ö Boarding ¼ĞÅÒ¸ê°T
+    # åˆä½µ Boarding æ¨™ç±¤è³‡è¨Š
     setkey(dt_chunk, EntryStationName)
     setkey(stopuid_B, StopName)
     dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(EntryStationName = StopName)]
     
-    # ¦X¨Ö Deboarding ¼ĞÅÒ¸ê°T
+    # åˆä½µ Deboarding æ¨™ç±¤è³‡è¨Š
     setkey(dt_chunk, ExitStationName)
     setkey(stopuid_D, StopName)
     dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(ExitStationName = StopName)]
     cat(nrow(dt_chunk),"\n")
     
-    cat("[6/9] §R°£¯Ê¥¢©Î¦P¯¸¸ê®Æ¦C...\n")
-    # ¥u§R°£¯Ê¤Ö¦WºÙ©Î¤W¤U¯¸¬Û¦Pªº¦C
+    cat("[6/9] åˆªé™¤ç¼ºå¤±æˆ–åŒç«™è³‡æ–™åˆ—...\n")
+    # åªåˆªé™¤ç¼ºå°‘åç¨±æˆ–ä¸Šä¸‹ç«™ç›¸åŒçš„åˆ—
     
     cat(nrow(dt_chunk),"\n")
-    # ½T»{¥²­n®y¼ĞÄæ¦ì¦s¦b
+    # ç¢ºèªå¿…è¦åº§æ¨™æ¬„ä½å­˜åœ¨
     required_fields <- c("BLongitude", "BLatitude", "DLongitude", "DLatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
     if (length(missing_fields) > 0) {
-      stop(paste("¯Ê¤Ö¥²­nÄæ¦ì¡G", paste(missing_fields, collapse = ", ")))
+      stop(paste("ç¼ºå°‘å¿…è¦æ¬„ä½ï¼š", paste(missing_fields, collapse = ", ")))
     }
     cat(nrow(dt_chunk),"\n")
-    # §R°£¯Ê¤Ö®y¼Ğªº¦C
+    # åˆªé™¤ç¼ºå°‘åº§æ¨™çš„åˆ—
     dt_chunk <- dt_chunk[! (is.na(BLongitude) | is.na(BLatitude) | is.na(DLongitude) | is.na(DLatitude))]
     cat(nrow(dt_chunk),"\n")
-    cat("[7/9] ²M°£¤£¥²­nÄæ¦ì¨Ã²¾°£ NA («O¯d address)...\n")
+    cat("[7/9] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ä¸¦ç§»é™¤ NA (ä¿ç•™ address)...\n")
     cat(nrow(dt_chunk),"\n")
-    # ©w¸q¡u¥²¶· non???NA¡vªºÄæ¦ì
+    # å®šç¾©ã€Œå¿…é ˆ non???NAã€çš„æ¬„ä½
     keep_cols <- c("EntryStationName","ExitStationName",
                    "BLongitude","BLatitude","DLongitude","DLatitude")
     
-    # ¥u¹ï³o¨ÇÄæ¦ìÀË¬d
+    # åªå°é€™äº›æ¬„ä½æª¢æŸ¥
     n_before <- nrow(dt_chunk)
     dt_chunk <- dt_chunk[ complete.cases(dt_chunk[, ..keep_cols]) ]
     n_after  <- nrow(dt_chunk)
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
@@ -479,15 +479,15 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     gc()
   }
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   cat(nrow(final_dt),"\n")
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   return(final_dt)
 }
 merge_stopuid_fast_chunk_rail(rail2022df,railstop,rail2022df_output_fst3)
@@ -499,15 +499,15 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
   library(fst)
   
   start_time <- Sys.time()
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, MRT_StationID := as.character(MRT_StationID)]
   stopuid <- unique(stopuid, by = "MRT_StationID")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
     cols <- setdiff(names(dt), "MRT_StationID")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
@@ -524,7 +524,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -533,55 +533,55 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
     start_idx <- ((i - 1) * chunk_size) + 1
     end_idx <- min(i * chunk_size, total_rows)
     dt_chunk <- dt[start_idx:end_idx]
-    cat(sprintf("³B²z Chunk %d ...\n", i))
+    cat(sprintf("è™•ç† Chunk %d ...\n", i))
     cat(nrow(dt_chunk),"\n")
-    # ¦X¨Ö Boarding ¼ĞÅÒ¸ê°T
+    # åˆä½µ Boarding æ¨™ç±¤è³‡è¨Š
     setkey(dt_chunk, EntryStationID)
     setkey(stopuid_B, MRT_StationID)
     dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(EntryStationID = MRT_StationID)]
     
-    # ¦X¨Ö Deboarding ¼ĞÅÒ¸ê°T
+    # åˆä½µ Deboarding æ¨™ç±¤è³‡è¨Š
     setkey(dt_chunk, ExitStationID)
     setkey(stopuid_D, MRT_StationID)
     dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(ExitStationID = MRT_StationID)]
     cat(nrow(dt_chunk),"\n")
-    # ¦pªG¼ĞÅÒ»P²{¦³¦WºÙ¤£²Å¡A¨Ï¥Î¼ĞÅÒ¨ú¥N¦WºÙ
+    # å¦‚æœæ¨™ç±¤èˆ‡ç¾æœ‰åç¨±ä¸ç¬¦ï¼Œä½¿ç”¨æ¨™ç±¤å–ä»£åç¨±
     dt_chunk[(BStationNameCh != EntryStationName | EntryStationName=="")  & !is.na(BStationNameCh), EntryStationName := BStationNameCh]
     dt_chunk[(DStationNameCh != ExitStationName | ExitStationName=="") & !is.na(DStationNameCh), ExitStationName := DStationNameCh]
     cat(nrow(dt_chunk),"\n")
-    # ±N NA ©ÎªÅ¦r¦êÂà¦^ªÅ¦r¦ê¡A«O¯d address Äæ¦ì
+    # å°‡ NA æˆ–ç©ºå­—ä¸²è½‰å›ç©ºå­—ä¸²ï¼Œä¿ç•™ address æ¬„ä½
     dt_chunk[, EntryStationName   := ifelse(is.na(EntryStationName)   | EntryStationName == "", "", EntryStationName)]
     dt_chunk[, ExitStationName := ifelse(is.na(ExitStationName) | ExitStationName == "", "", ExitStationName)]
     cat(nrow(dt_chunk),"\n")
-    cat("[6/9] §R°£¯Ê¥¢©Î¦P¯¸¸ê®Æ¦C...\n")
-    # ¥u§R°£¯Ê¤Ö¦WºÙ©Î¤W¤U¯¸¬Û¦Pªº¦C
+    cat("[6/9] åˆªé™¤ç¼ºå¤±æˆ–åŒç«™è³‡æ–™åˆ—...\n")
+    # åªåˆªé™¤ç¼ºå°‘åç¨±æˆ–ä¸Šä¸‹ç«™ç›¸åŒçš„åˆ—
     dt_chunk <- dt_chunk[ !(EntryStationName == ExitStationName)]
     cat(nrow(dt_chunk),"\n")
-    # ½T»{¥²­n®y¼ĞÄæ¦ì¦s¦b
+    # ç¢ºèªå¿…è¦åº§æ¨™æ¬„ä½å­˜åœ¨
     required_fields <- c("BLongitude", "BLatitude", "DLongitude", "DLatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
     if (length(missing_fields) > 0) {
-      stop(paste("¯Ê¤Ö¥²­nÄæ¦ì¡G", paste(missing_fields, collapse = ", ")))
+      stop(paste("ç¼ºå°‘å¿…è¦æ¬„ä½ï¼š", paste(missing_fields, collapse = ", ")))
     }
     cat(nrow(dt_chunk),"\n")
-    # §R°£¯Ê¤Ö®y¼Ğªº¦C
+    # åˆªé™¤ç¼ºå°‘åº§æ¨™çš„åˆ—
     dt_chunk <- dt_chunk[! (is.na(BLongitude) | is.na(BLatitude) | is.na(DLongitude) | is.na(DLatitude))]
     cat(nrow(dt_chunk),"\n")
-    cat("[7/9] ²M°£¤£¥²­nÄæ¦ì¨Ã²¾°£ NA («O¯d address)...\n")
+    cat("[7/9] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ä¸¦ç§»é™¤ NA (ä¿ç•™ address)...\n")
     dt_chunk[, c("BStationNameCh","DStationNameCh") := NULL]
     cat(nrow(dt_chunk),"\n")
-    # ©w¸q¡u¥²¶· non???NA¡vªºÄæ¦ì
+    # å®šç¾©ã€Œå¿…é ˆ non???NAã€çš„æ¬„ä½
     keep_cols <- c("EntryStationName","ExitStationName",
                    "BLongitude","BLatitude","DLongitude","DLatitude")
     
-    # ¥u¹ï³o¨ÇÄæ¦ìÀË¬d
+    # åªå°é€™äº›æ¬„ä½æª¢æŸ¥
     n_before <- nrow(dt_chunk)
     dt_chunk <- dt_chunk[ complete.cases(dt_chunk[, ..keep_cols]) ]
     n_after  <- nrow(dt_chunk)
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
@@ -590,15 +590,15 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
     gc()
   }
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   cat(nrow(final_dt),"\n")
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   return(final_dt)
 }
 merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2022df,mrtstop,NTPmrt2022df_output_fst3v3)
@@ -612,7 +612,7 @@ mega_preprocess_fst <- function(fst_path,
   library(fst)
   library(fs)
   
-  message("[1] Åª¨ú stopuid ¡K")
+  message("[1] è®€å– stopuid â€¦")
   stopuid <- fread(stopuid_path, colClasses = list(character = "MRT_StationID"))
   setkey(stopuid, MRT_StationID)
   
@@ -629,15 +629,15 @@ mega_preprocess_fst <- function(fst_path,
   meta     <- fst::fst.metadata(fst_path)
   n_rows   <- meta$nrOfRows
   parts    <- ceiling(n_rows / chunk_size)
-  message("[2] ÀÉ®×Á`¦C¼Æ: ", format(n_rows, big.mark = ","), 
-          " | chunk ¼Æ: ", parts)
+  message("[2] æª”æ¡ˆç¸½åˆ—æ•¸: ", format(n_rows, big.mark = ","), 
+          " | chunk æ•¸: ", parts)
   
   dir_create(out_dir, recurse = TRUE)
   
   for (part in seq_len(parts)) {
     from <- (part - 1) * chunk_size + 1L
     to   <- min(part * chunk_size, n_rows)
-    msg <- sprintf("%s | Part %d [%d-%d] ÅªÀÉ¡K",
+    msg <- sprintf("%s | Part %d [%d-%d] è®€æª”â€¦",
                    Sys.time(),
                    part, from, to)
     message(msg)
@@ -663,9 +663,9 @@ mega_preprocess_fst <- function(fst_path,
     rm(dt); gc()
   }
   
-  message("[4] ¦ê¬y¦X¨Ö chunk ¡÷ ", final_path)
+  message("[4] ä¸²æµåˆä½µ chunk â†’ ", final_path)
   chunk_files <- dir_ls(out_dir, glob = "*.fst", recurse = FALSE)
-  if (!length(chunk_files)) stop("§ä¤£¨ì¥ô¦ó chunk ÀÉ¡A¬yµ{ºÃ¦ü¥¢±Ñ¡C")
+  if (!length(chunk_files)) stop("æ‰¾ä¸åˆ°ä»»ä½• chunk æª”ï¼Œæµç¨‹ç–‘ä¼¼å¤±æ•—ã€‚")
   
   first <- TRUE
   for (f in chunk_files) {
@@ -677,7 +677,7 @@ mega_preprocess_fst <- function(fst_path,
     }
   }
   message("???  DONE.   Rows written: ", format(n_rows, big.mark = ","), 
-          " ¡÷ ", final_path)
+          " â†’ ", final_path)
 }
 
 mega_preprocess_fst(TPCmrt2022df_output_fst_1_6_2,
@@ -729,10 +729,10 @@ level_change <- function(df){
   df <- df[!is.na(Distance) & Distance > 0.35]
   
   level_map <- c(
-    "¼Æ¦ìµo®i¦¨¼ô°Ï(¤À¸s1)" = 1,
-    "¼Æ¦ìµo®i¼ç¤O°Ï(¤À¸s2)" = 2,
-    "¼Æ¦ìµo®i°_¨B°Ï(¤À¸s3)" = 3,
-    "¼Æ¦ìµo®iµŞ°Ê°Ï(¤À¸s4)" = 4
+    "æ•¸ä½ç™¼å±•æˆç†Ÿå€(åˆ†ç¾¤1)" = 1,
+    "æ•¸ä½ç™¼å±•æ½›åŠ›å€(åˆ†ç¾¤2)" = 2,
+    "æ•¸ä½ç™¼å±•èµ·æ­¥å€(åˆ†ç¾¤3)" = 3,
+    "æ•¸ä½ç™¼å±•èŒå‹•å€(åˆ†ç¾¤4)" = 4
   )
   
   df[, Bgroup := level_map[Bdevelopment_level]]
@@ -750,20 +750,20 @@ write.fst(rail2022df,rail2022df_output_fst5)
 rail2022df <- read_fst(rail2022df_output_fst5,as.data.table = TRUE)
 head(rail2022df)
 names(rail2022df)
-rail2022df<- rail2022df[rail2022df$Bcounty_name%in%c("»O¥_¥«","·s¥_¥«","°ò¶©¥«","®ç¶é¥«")&
-                          rail2022df$Dcounty_name%in%c("»O¥_¥«","·s¥_¥«","°ò¶©¥«","®ç¶é¥«")]
+rail2022df<- rail2022df[rail2022df$Bcounty_name%in%c("è‡ºåŒ—å¸‚","æ–°åŒ—å¸‚","åŸºéš†å¸‚","æ¡ƒåœ’å¸‚")&
+                          rail2022df$Dcounty_name%in%c("è‡ºåŒ—å¸‚","æ–°åŒ—å¸‚","åŸºéš†å¸‚","æ¡ƒåœ’å¸‚")]
 write_fst(rail2022df,rail2022df_output_fst5_truncated)
 
 nrow(fst(rail2022df_output_fst5))
 nrow(fst(rail2022df_output_fst5_truncated))
 
-#¤@¦¸°µstep4 step5
-TPCmrt2022_1_6_chunk_dir    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B1-6¤ë(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3)chunk"              
-TPCmrt2022_1_6_final_fst    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B1-6¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5chunk" 
-TPCmrt2022_7_12_chunk_dir    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B7-12¤ë(¥[¤J¶m¬F¥«°Ï¼Æ¦ìµo®i¤ÀÃş»P®ğ¶H¯¸_voronoi_v3)3chunk"              
-TPCmrt2022_7_12_final_fst    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B7-12¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5chunk" 
-head(fst("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B1-6¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5chunk/chunk_001.fst"))
-head(fst("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B7-12¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5chunk/chunk_001.fst"))
+#ä¸€æ¬¡åšstep4 step5
+TPCmrt2022_1_6_chunk_dir    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3)chunk"              
+TPCmrt2022_1_6_final_fst    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5chunk" 
+TPCmrt2022_7_12_chunk_dir    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(åŠ å…¥é„‰æ”¿å¸‚å€æ•¸ä½ç™¼å±•åˆ†é¡èˆ‡æ°£è±¡ç«™_voronoi_v3)3chunk"              
+TPCmrt2022_7_12_final_fst    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5chunk" 
+head(fst("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5chunk/chunk_001.fst"))
+head(fst("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5chunk/chunk_001.fst"))
 
 
 lonlatdevelop_fst <- function(chunk_dir,
@@ -776,22 +776,22 @@ lonlatdevelop_fst <- function(chunk_dir,
   dir.create(output_dir, recursive = TRUE)
   
   level_map <- c(
-    "¼Æ¦ìµo®i¦¨¼ô°Ï(¤À¸s1)" = 1,
-    "¼Æ¦ìµo®i¼ç¤O°Ï(¤À¸s2)" = 2,
-    "¼Æ¦ìµo®i°_¨B°Ï(¤À¸s3)" = 3,
-    "¼Æ¦ìµo®iµŞ°Ê°Ï(¤À¸s4)" = 4
+    "æ•¸ä½ç™¼å±•æˆç†Ÿå€(åˆ†ç¾¤1)" = 1,
+    "æ•¸ä½ç™¼å±•æ½›åŠ›å€(åˆ†ç¾¤2)" = 2,
+    "æ•¸ä½ç™¼å±•èµ·æ­¥å€(åˆ†ç¾¤3)" = 3,
+    "æ•¸ä½ç™¼å±•èŒå‹•å€(åˆ†ç¾¤4)" = 4
   )
   
   chunk_files <- list.files(chunk_dir,
                             pattern = "\\.fst$",
                             full.names = TRUE)
   if (length(chunk_files) == 0) {
-    stop("¦b¥Ø¿ı¤¤§ä¤£¨ì¥ô¦ó .fst ÀÉ®×¡G", chunk_dir)
+    stop("åœ¨ç›®éŒ„ä¸­æ‰¾ä¸åˆ°ä»»ä½• .fst æª”æ¡ˆï¼š", chunk_dir)
   }
   
   for (i in seq_along(chunk_files)) {
     fpath <- chunk_files[i]
-    message(sprintf("[Chunk %d/%d] ³B²zÀÉ®×¡G%s",
+    message(sprintf("[Chunk %d/%d] è™•ç†æª”æ¡ˆï¼š%s",
                     i, length(chunk_files), basename(fpath)))
     
     dt <- fst::read_fst(fpath, as.data.table = TRUE)
@@ -809,8 +809,8 @@ lonlatdevelop_fst <- function(chunk_dir,
     )]
     
     if (anyNA(dt$Bgroup) || anyNA(dt$Dgroup)) {
-      stop("¬M®g¥¢±Ñ¡Aµo²{¥¼ª¾µ¥¯Å¡]ÀÉ®×¡G", fpath, "¡^\n",
-           "¥¼ª¾Ãş§O¡G",
+      stop("æ˜ å°„å¤±æ•—ï¼Œç™¼ç¾æœªçŸ¥ç­‰ç´šï¼ˆæª”æ¡ˆï¼š", fpath, "ï¼‰\n",
+           "æœªçŸ¥é¡åˆ¥ï¼š",
            paste(unique(c(
              dt$Bdevelopment_level[is.na(dt$Bgroup)],
              dt$Ddevelopment_level[is.na(dt$Dgroup)]
@@ -829,7 +829,7 @@ lonlatdevelop_fst <- function(chunk_dir,
     gc()
   }
   
-  message("©Ò¦³¤À¶ô³B²z§¹¦¨¡ADataset ¦s©ñ©ó¡G", output_dir)
+  message("æ‰€æœ‰åˆ†å¡Šè™•ç†å®Œæˆï¼ŒDataset å­˜æ”¾æ–¼ï¼š", output_dir)
   ds <- arrow::open_dataset(output_dir, format = "parquet")
   invisible(ds)
 }
@@ -850,30 +850,30 @@ merge_and_write_fst <- function(dir_path, vars, out_file) {
                           pattern = "\\.fst$",
                           full.names = TRUE)
   if (length(fst_files) == 0) {
-    stop("¥Ø¿ı¤¤¨S¦³§ä¨ì¥ô¦ó .fst ÀÉ®×¡G", dir_path)
+    stop("ç›®éŒ„ä¸­æ²’æœ‰æ‰¾åˆ°ä»»ä½• .fst æª”æ¡ˆï¼š", dir_path)
   }
   
   dt_list <- lapply(fst_files, function(f) {
-    cat("Åª¨úÀÉ®×",f,"\n")
+    cat("è®€å–æª”æ¡ˆ",f,"\n")
     read.fst(f, columns = vars, as.data.table = TRUE)
   })
-  cat("¦X¨Ö","\n")
+  cat("åˆä½µ","\n")
   merged_dt <- rbindlist(dt_list, use.names = TRUE, fill = TRUE)
-  cat("¿é¥X","\n")
+  cat("è¼¸å‡º","\n")
   write_fst(merged_dt, out_file)
-  message("¤w§¹¦¨¦X¨Ö¨Ã¼g¥X¡G", out_file)
+  message("å·²å®Œæˆåˆä½µä¸¦å¯«å‡ºï¼š", out_file)
 }
 mrt_var_select <- c("Authority","IDType","HolderType","TicketType","SubTicketType",
                     "EntryStationID","EntryStationName","EntryTime","ExitStationID",
                     "ExitStationName","ExitTime","TransferCode","Bdevelopment_level",
                     "BStationID","Ddevelopment_level","Distance",
                     "dev_movement","movement_level")
-TPCmrt2022_1_6_final_fst    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B1-6¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5chunk" 
-TPCmrt2022_7_12_final_fst    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B7-12¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5chunk" 
-TPCmrt2022_1_6_final_fst_path <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022¤½¨®±¶¹B¦X¨Ö/2022»O¥_¥«±¶¹B1-6¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5.fst"
-TPCmrt2022_7_12_final_fst_path    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022¤½¨®±¶¹B¦X¨Ö/2022»O¥_¥«±¶¹B7-12¤ë(µo®iµ{«×²¾°Ê_voronoi_v3)5.fst"
-TPCmrt2022_final_fst_chunk_path    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022»O¥_¥«±¶¹B(µo®iµ{«×²¾°Ê_voronoi_v3)5"
-TPCmrt2022_final_fst_path    <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/2022¾ã¦~»O¥_¥«±¶¹B(µo®iµ{«×²¾°Ê_voronoi_v3)5.fst"
+TPCmrt2022_1_6_final_fst    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5chunk" 
+TPCmrt2022_7_12_final_fst    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5chunk" 
+TPCmrt2022_1_6_final_fst_path <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022å…¬è»Šæ·é‹åˆä½µ/2022è‡ºåŒ—å¸‚æ·é‹1-6æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5.fst"
+TPCmrt2022_7_12_final_fst_path    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022å…¬è»Šæ·é‹åˆä½µ/2022è‡ºåŒ—å¸‚æ·é‹7-12æœˆ(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5.fst"
+TPCmrt2022_final_fst_chunk_path    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022è‡ºåŒ—å¸‚æ·é‹(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5"
+TPCmrt2022_final_fst_path    <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/2022æ•´å¹´è‡ºåŒ—å¸‚æ·é‹(ç™¼å±•ç¨‹åº¦ç§»å‹•_voronoi_v3)5.fst"
 merge_and_write_fst(TPCmrt2022_1_6_final_fst,mrt_var_select,TPCmrt2022_1_6_final_fst_path)
 merge_and_write_fst(TPCmrt2022_7_12_final_fst,mrt_var_select,TPCmrt2022_7_12_final_fst_path)
 merge_and_write_fst(TPCmrt2022_final_fst_chunk_path,mrt_var_select,TPCmrt2022_final_fst_path)

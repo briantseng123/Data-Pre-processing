@@ -1,14 +1,14 @@
 library(dplyr)
 library(jsonlite)
-mannedstationjson <- fromJSON("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ð¸ê®Æ/®ð¶H¯¸ÂI/¦³¤H¯¸/C-B0074-001.json")
+mannedstationjson <- fromJSON("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/æ°£è±¡ç«™é»ž/æœ‰äººç«™/C-B0074-001.json")
 mannedstation <- mannedstationjson$cwaopendata$resources$resource$data$stationsStatus$station
 mannedstation <- mannedstation %>%
   dplyr::select(StationID,StationName,StationAltitude, StationLongitude, StationLatitude)
 
-autostationjson <- fromJSON("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ð¸ê®Æ/®ð¶H¯¸ÂI/µL¤H¯¸/C-B0074-002.json")
+autostationjson <- fromJSON("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/æ°£è±¡ç«™é»ž/ç„¡äººç«™/C-B0074-002.json")
 autostation <- autostationjson$cwaopendata$resources$resource$data$stationsStatus$station
 autostation <- autostation %>%
   dplyr::select(StationID,StationName,StationAltitude, StationLongitude, StationLatitude)
 
 combinedstation <- rbind(mannedstation,autostation)
-write_fst(combinedstation,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤Ñ®ð¸ê®Æ/®ð¶H¯¸ÂI/all_weather_stations_info.fst")
+write_fst(combinedstation,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å¤©æ°£è³‡æ–™/æ°£è±¡ç«™é»ž/all_weather_stations_info.fst")

@@ -96,7 +96,6 @@ col_for_read <- c("Authority","HolderType","TicketType","SubTicketType",
                   "TransferCode","IsAbnormal","ErrorCode","Result")
 
 
-# 檢查捷運相同站點上下車
 ALL <- fread("E:/brain/解壓縮data/資料處理/公車站點資料/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度)3.csv",encoding="UTF-8")
 ALL <- ALL%>%
   dplyr::select(StopUID,StopName,StationID,City,StationUID,StationName,Latitude,Longitude,
