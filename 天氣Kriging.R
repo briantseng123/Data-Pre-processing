@@ -1,0 +1,468 @@
+library(fst)
+library(data.table)
+library(dplyr)
+library(lattice)
+library(gstat)
+library(geoR)
+library(sp)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(devtools)
+library(parallel)
+library(doParallel)
+library(progress)
+library(progressr)
+library(tidyverse) 
+library(stars)     
+library(viridis)
+library(stars)
+library(magick)
+library(av)
+
+df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2024每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2023每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2022每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+
+df$StationLongitude <- as.numeric(df$StationLongitude)
+df$StationLatitude  <- as.numeric(df$StationLatitude)
+coordinates(df) <- ~ StationLongitude + StationLatitude
+proj4string(df) <- CRS("+proj=longlat +datum=WGS84 +no_defs")
+df_utm <- spTransform(df, CRS("+proj=utm +zone=51 +datum=WGS84 +units=m +no_defs"))
+
+# 4. 載入台灣邊界 (Natural Earth) 並投影
+#devtools::install_github("ropensci/rnaturalearthhires")
+taiwan_ll <- ne_countries(scale = "large", country = "Taiwan", returnclass = "sf")
+taiwan_utm <- st_transform(taiwan_ll, crs = st_crs(df_utm))
+# 轉 sf 成 Spatial 以便用 sp 畫圖
+taiwan_sp <- as(taiwan_utm, "Spatial")
+
+taiwan_islands <- taiwan_utm %>%
+  st_cast("POLYGON") # 將 MULTIPOLYGON 拆解成多個 POLYGON
+
+# --- 2. 計算每個獨立島嶼的面積，並找出最大的那個 ---
+taiwan_main_island <- taiwan_islands %>%
+  mutate(area = st_area(.)) %>% # 新增一欄叫 area，計算每個島嶼的面積
+  arrange(desc(area)) %>%      # 依據面積由大到小排序
+  slice(1)      
+
+# 建立 5km 等距網格
+grid_sf <- st_make_grid(
+  taiwan_main_island,     # 以台灣地圖為範圍
+  cellsize = 5000,  # 網格大小 5000x5000 公尺
+  what = "centers"  # 我們需要網格的中心點
+)
+
+# 3. (可選) st_make_grid 預設只回傳幾何資訊，我們可以把它轉成完整的 sf 物件
+grid_sf <- st_sf(geometry = grid_sf)
+
+# 現在 grid_sf 就是您需要的、覆蓋全台灣的網格點 (sf 格式)
+# 如果後續的 krige 函數需要 sp 格式，可以再轉換
+grid_utm_from_sf <- as(grid_sf, "Spatial")
+
+df_utm_sf <- st_as_sf(df_utm)
+
+# --- 2. 使用 ggplot2 繪圖 ---
+# 現在所有傳入 geom_sf 的資料都是 sf 格式了
+ggplot() +
+  # 畫出新的、完整的網格點 (灰色)
+  geom_sf(data = grid_sf, color = "grey80", size = 0.5) +
+  
+  # 疊上台灣的輪廓 (黑色框線)
+  geom_sf(data = taiwan_main_island, fill = NA, color = "black") +
+  
+  # 疊上您原始的資料點 (紅色)，注意這裡使用的是轉換後的 df_utm_sf
+  geom_sf(data = df_utm_sf, color = "red", size = 1.5) +
+  
+  # coord_sf(crs = st_crs(df_utm)) + # 這行通常可以省略，因為 geom_sf 會自動處理
+  labs(
+    title = "網格覆蓋範圍檢查",
+    subtitle = "新網格 (灰色) 完整覆蓋台灣，而原始資料點 (紅色) 則沒有"
+  ) +
+  theme_bw()
+
+# 按小時迴圈：variogram + kriging
+df@data <- df@data %>%
+  mutate(datetime = as.POSIXct(datetime),
+         hour = format(datetime, "%Y-%m-%d %H"))
+
+df_utm@data$datetime <- df@data$datetime
+df_utm@data$hour     <- df@data$hour
+
+all_hours <- sort(unique(df_utm$hour))
+names(df_utm)
+vars <- c("temperature_c", "relative_humidity_percent", "wind_speed_m_s",
+          "precipitation_mm","uv_index") 
+# 初始化儲存容器
+filled_results <- list()
+#non parallel
+for (h in all_hours) {
+  message("Processing hour: ", h)
+  sub_hr <- df_utm[df_utm$hour == h, ]
+  if (nrow(sub_hr) == 0) next
+  
+  h_str <- gsub("[: ]", "_", h)
+  filled_results[[h_str]] <- list()
+  
+  for (v in vars) {
+    if (!v %in% names(sub_hr@data)) {
+      warning("Variable ", v, " not found in data columns. Skipping.")
+      next
+    }
+    
+    obs <- sub_hr[!is.na(sub_hr[[v]]), ]
+    if (nrow(obs) < 5) {
+      warning("Hour ", h, ", var ", v, ": <5 observations, skip.")
+      next
+    }
+    
+    coords_obs <- coordinates(obs)
+    dmat <- sp::spDists(coords_obs, longlat = FALSE)
+    max_dist <- max(dmat, na.rm = TRUE) / 2
+    
+    vario_obj <- variog(data = obs@data[[v]], coords = coords_obs, max.dist = max_dist)
+    reml  <- likfit(data = obs@data[[v]], coords = coords_obs,
+                    ini.cov.pars = c(var(obs@data[[v]]), max_dist), fix.nug = TRUE,
+                    lik.met = "REML")
+    
+    vgm_cloud <- variogram(as.formula(paste0(v, " ~ 1")), obs)
+    vgm_fit   <- fit.variogram(vgm_cloud,
+                               vgm(psill = var(obs@data[[v]]), model = "Exp",
+                                   range = max_dist, nugget = 0))
+    
+    # Kriging 整張 5km 網格
+    kr <- krige(as.formula(paste0(v, " ~ 1")), locations = obs,
+                newdata = grid_utm_from_sf, model = vgm_fit)
+    filled_results[[h_str]][[v]] <- kr
+  }
+}
+
+
+saveRDS(filled_results,"E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2022天氣站格點(Kriging).rds")
+filled_results <- readRDS("E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2022天氣站格點(Kriging).rds")
+
+filled_results_clean <- purrr::compact(filled_results)
+names(filled_results_clean)
+
+hourly_ranges_df <- imap_dfr(filled_results_clean, ~{
+  imap_dfr(.x, ~{
+    pred_range <- range(.x@data$var1.pred, na.rm = TRUE)
+    tibble(min_pred = pred_range[1], max_pred = pred_range[2])
+  }, .id = "variable")
+}, .id = "hour")
+global_ranges_df <- hourly_ranges_df %>%
+  group_by(variable) %>%
+  summarise(global_min = min(min_pred, na.rm = TRUE), global_max = max(max_pred, na.rm = TRUE)) %>%
+  ungroup()
+
+
+plot_kriging_map <- function(v_to_plot, h_to_plot, 
+                             kriging_results, global_ranges, map_outline) {
+  
+  # --- 建立一個變數名稱與中文標籤的對照表 ---
+  label_map <- c(
+    "temperature_c" = "溫度 (°C)",
+    "relative_humidity_percent" = "相對溼度 (%)",
+    "wind_speed_m_s" = "風速 (m/s)",
+    "precipitation_mm" = "降雨量 (mm)",
+    "uv_index" = "紫外線指數"
+  )
+  # 使用對照表來取得正確的標籤，如果找不到，就用原始變數名稱
+  v_label <- ifelse(v_to_plot %in% names(label_map), label_map[v_to_plot], v_to_plot)
+  
+  h_key <- gsub("[: ]", "_", h_to_plot)
+  var_limits <- dplyr::filter(global_ranges, variable == v_to_plot)
+  
+  if (nrow(var_limits) == 1 && h_key %in% names(kriging_results)) {
+    
+    min_val <- var_limits$global_min
+    max_val <- var_limits$global_max
+    kr_result <- kriging_results[[h_key]][[v_to_plot]]
+    
+    if (is.null(kr_result) || length(kr_result) == 0) {
+      return(invisible(NULL)) 
+    }
+    
+    # === 關鍵修正 1：穩健的資料準備，強制命名座標 ===
+    plot_data_values <- kr_result@data
+    plot_coords <- as.data.frame(sp::coordinates(kr_result))
+    names(plot_coords)[1:2] <- c("x", "y") # 強制命名
+    plot_df <- dplyr::bind_cols(plot_data_values, plot_coords) %>%
+      dplyr::rename(prediction = var1.pred)
+    
+    p <- ggplot2::ggplot() +
+      ggplot2::geom_tile(
+        data = plot_df, 
+        ggplot2::aes(x = x, y = y, fill = prediction),
+        width = 5000, height = 5000
+      ) +
+      ggplot2::geom_sf(data = map_outline, fill = NA, color = "black", linewidth = 0.5) +
+      viridis::scale_fill_viridis(
+        option = "plasma", 
+        name = v_label, # 直接使用 v_label 作為圖例名稱
+        limits = c(min_val, max_val),
+        na.value = "transparent"
+      ) +
+      # === 關鍵修正 2：使用修正後的 v_label ===
+      ggplot2::labs(
+        title = paste("Kriging -", v_label),
+        subtitle = paste("時間:", h_to_plot)
+      ) +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        plot.background = ggplot2::element_rect(fill = "white", color = NA),
+        plot.title = ggplot2::element_text(hjust = 0.5, size = 16, face = "bold"),
+        plot.subtitle = ggplot2::element_text(hjust = 0.5, size = 12),
+        legend.title = ggplot2::element_text(size = 10) # 讓圖例標題清楚些
+      ) +
+      ggplot2::coord_sf(datum = sf::st_crs(map_outline))
+    
+    return(p) # 注意：在迴圈中儲存時，我們只回傳物件，不 print
+    
+  } else {
+    message("找不到資料: ", h_to_plot, " for variable ", v_to_plot)
+    return(invisible(NULL))
+  }
+}
+create_kriging_gif <- function(target_date, v_to_plot, 
+                               kriging_results, global_ranges, map_outline,
+                               output_filename = "kriging_animation.gif",
+                               fps = 2) { # fps = 每秒顯示的圖片張數
+  
+  # a. 建立一個暫存資料夾來存放單張圖片
+  temp_dir <- file.path(tempdir(), "kriging_frames")
+  if (!dir.exists(temp_dir)) {
+    dir.create(temp_dir)
+  } else {
+    # 清理舊的圖片
+    unlink(file.path(temp_dir, "*.png"))
+  }
+  
+  message("暫存資料夾建立於: ", temp_dir)
+  
+  # b. 產生該日期 24 小時的時間點字串
+  hourly_timestamps <- paste0(target_date, " ", sprintf("%02d", 0:23))
+  
+  # c. 迴圈產生並儲存每一張圖片
+  frame_files <- c()
+  for (i in seq_along(hourly_timestamps)) {
+    h <- hourly_timestamps[i]
+    message("正在產生圖片: ", h)
+    
+    # 呼叫舊函數來產生 ggplot 物件
+    plot_object <- plot_kriging_map(
+      v_to_plot = v_to_plot,
+      h_to_plot = h,
+      kriging_results = kriging_results,
+      global_ranges = global_ranges,
+      map_outline = map_outline
+    )
+    
+    # 如果成功產生圖片，就存檔
+    if (!is.null(plot_object)) {
+      frame_path <- file.path(temp_dir, sprintf("frame_%03d.png", i))
+      ggsave(filename = frame_path, plot = plot_object, width = 8, height = 8, dpi = 96)
+      frame_files <- c(frame_files, frame_path)
+    }
+  }
+  
+  # d. 使用 magick 套件將所有圖片組合成 GIF
+  if (length(frame_files) > 0) {
+    message("\n所有圖片產生完畢，開始合成 GIF...")
+    
+    animation <- image_read(frame_files) %>%
+      image_animate(fps = fps)
+    
+    image_write(animation, path = output_filename)
+    
+    message("GIF 成功儲存至: ", normalizePath(output_filename))
+  } else {
+    message("沒有任何有效的圖片被產生，無法建立 GIF。")
+  }
+  
+  # e. 清理暫存資料夾
+  unlink(temp_dir, recursive = TRUE)
+  message("暫存資料夾已清理。")
+}
+
+create_kriging_gif_range <- function(start_datetime, end_datetime, v_to_plot, 
+                                     kriging_results, global_ranges, map_outline,
+                                     output_filename = "kriging_range_animation.gif",
+                                     fps = 2) {
+  
+  # a. 建立暫存資料夾
+  temp_dir <- file.path(tempdir(), "kriging_frames")
+  if (!dir.exists(temp_dir)) dir.create(temp_dir) else unlink(file.path(temp_dir, "*.png"))
+  message("暫存資料夾建立於: ", temp_dir)
+  
+  # b. *** 關鍵修改：產生指定時間區間內的每小時時間序列 ***
+  start_time <- as.POSIXct(start_datetime, tz = "UTC")
+  end_time <- as.POSIXct(end_datetime, tz = "UTC")
+  
+  # 產生從開始時間到結束時間，每隔一小時的時間序列
+  time_sequence <- seq(from = start_time, to = end_time, by = "hour")
+  
+  # 將時間序列格式化成我們需要的字串格式
+  hourly_timestamps <- format(time_sequence, "%Y-%m-%d %H")
+  
+  # c. 迴圈產生並儲存每一張圖片
+  frame_files <- c()
+  for (i in seq_along(hourly_timestamps)) {
+    h <- hourly_timestamps[i]
+    message("正在產生圖片: ", h)
+    
+    plot_object <- plot_kriging_map(
+      v_to_plot = v_to_plot, h_to_plot = h,
+      kriging_results = kriging_results, global_ranges = global_ranges,
+      map_outline = map_outline
+    )
+    
+    if (!is.null(plot_object)) {
+      frame_path <- file.path(temp_dir, sprintf("frame_%03d.png", i))
+      ggsave(filename = frame_path, plot = plot_object, width = 8, height = 8, dpi = 96)
+      frame_files <- c(frame_files, frame_path)
+    }
+  }
+  
+  # d. 使用 magick 套件將所有圖片組合成 GIF
+  if (length(frame_files) > 0) {
+    message("\n所有圖片產生完畢，開始合成 GIF...")
+    animation <- image_read(frame_files) %>%
+      image_animate(fps = fps)
+    image_write(animation, path = output_filename)
+    message("GIF 成功儲存至: ", normalizePath(output_filename))
+  } else {
+    message("沒有任何有效的圖片被產生，無法建立 GIF。")
+  }
+  
+  # e. 清理暫存資料夾
+  unlink(temp_dir, recursive = TRUE)
+  message("暫存資料夾已清理。")
+}
+
+create_kriging_video <- function(start_datetime, end_datetime, v_to_plot, 
+                                 kriging_results, global_ranges, map_outline,
+                                 output_filename = "kriging_animation.mp4",
+                                 framerate = 2) { # framerate = 影格率(幀率)
+  
+  # a. 建立暫存資料夾 (這部分不變)
+  temp_dir <- file.path(tempdir(), "kriging_frames")
+  if (!dir.exists(temp_dir)) dir.create(temp_dir) else unlink(file.path(temp_dir, "*.png"))
+  message("暫存資料夾建立於: ", temp_dir)
+  
+  # b. 產生時間序列 (這部分不變)
+  start_time <- as.POSIXct(start_datetime, tz = "UTC")
+  end_time <- as.POSIXct(end_datetime, tz = "UTC")
+  time_sequence <- seq(from = start_time, to = end_time, by = "hour")
+  hourly_timestamps <- format(time_sequence, "%Y-%m-%d %H")
+  
+  # c. 迴圈產生並儲存每一張圖片 (這部分不變)
+  frame_files <- c()
+  for (i in seq_along(hourly_timestamps)) {
+    h <- hourly_timestamps[i]
+    message("正在產生圖片: ", h)
+    plot_object <- plot_kriging_map(
+      v_to_plot = v_to_plot, h_to_plot = h,
+      kriging_results = kriging_results, global_ranges = global_ranges,
+      map_outline = map_outline
+    )
+    if (!is.null(plot_object)) {
+      frame_path <- file.path(temp_dir, sprintf("frame_%03d.png", i))
+      ggsave(filename = frame_path, plot = plot_object, width = 8, height = 8, dpi = 96)
+      frame_files <- c(frame_files, frame_path)
+    }
+  }
+  
+  # d. *** 關鍵修改：使用 av 套件將所有圖片組合成 MP4 ***
+  if (length(frame_files) > 0) {
+    message("\n所有圖片產生完畢，開始合成 MP4...")
+    
+    output_dir <- dirname(output_filename) # 取得輸出路徑的資料夾部分
+    # 如果資料夾不存在，就遞迴地建立它
+    if (!dir.exists(output_dir)) {
+      dir.create(output_dir, recursive = TRUE)
+    }
+    
+    # 呼叫 av_encode_video 來合成影片
+    av::av_encode_video(
+      input = frame_files,      
+      output = output_filename, 
+      framerate = framerate     
+    )
+    
+    message("MP4 影片成功儲存至: ", normalizePath(output_filename))
+  } else {
+    message("沒有任何有效的圖片被產生，無法建立 MP4。")
+  }
+  
+  # e. 清理暫存資料夾 (這部分不變)
+  unlink(temp_dir, recursive = TRUE)
+  message("暫存資料夾已清理。")
+}
+target_variable <- "temperature_c"
+target_date_str <- "2022-01-01"
+
+plot_kriging_map(
+  v_to_plot = target_variable, 
+  h_to_plot = target_date_str,
+  kriging_results = filled_results_clean, # 使用清理過的 results list
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island
+)
+
+gif_file <- "E:/brain/weather_kriging_mp4/"
+create_kriging_video(
+  start_datetime = "2022-01-01 01",
+  end_datetime = "2022-12-31 23",
+  v_to_plot = "temperature_c",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"temperature_c", "_", "2022", ".mp4"), 
+  framerate = 50
+)
+gc()
+create_kriging_video(
+  start_datetime = "2022-01-01 01",
+  end_datetime = "2022-12-31 23",
+  v_to_plot = "relative_humidity_percent",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"relative_humidity_percent", "_", "2022", ".mp4"), 
+  framerate = 50 
+)
+gc()
+create_kriging_video(
+  start_datetime = "2022-01-01 01",
+  end_datetime = "2022-12-31 23",
+  v_to_plot = "wind_speed_m_s",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"wind_speed_m_s", "_", "2022", ".mp4"), 
+  framerate =  50
+)
+gc()
+create_kriging_video(
+  start_datetime = "2022-01-01 01",
+  end_datetime = "2022-12-31 23",
+  v_to_plot = "precipitation_mm",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"precipitation_mm", "_", "2022", ".mp4"), 
+  framerate = 50
+)
+gc()
+create_kriging_video(
+  start_datetime = "2022-01-01 01",
+  end_datetime = "2022-12-31 23",
+  v_to_plot = "uv_index",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"uv_index", "_", "2022", ".mp4"), 
+  framerate = 50
+)
+gc()
