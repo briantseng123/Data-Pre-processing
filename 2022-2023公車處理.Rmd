@@ -1,0 +1,36 @@
+---
+title: "R 2022-2023公車處理"
+author: "Brian Tseng"
+date: "2025-07-24"
+output: html_document
+---
+# 處理公車資料
+# 說明:
+
+匯入library
+```{r}
+library(arrow)
+library(tibble)
+library(smacof)
+library(lubridate)
+library(readr)
+library(data.table)
+library(fst)
+library(dplyr)
+library(doParallel)
+library(tidyr)
+library(ggplot2)
+library(forcats)
+library(scales)
+library(disk.frame)
+library(future)
+library(geosphere)
+library(psych)
+library(transport)
+library(proxy) 
+library(gridExtra)
+library(stringi)
+library(readr)
+```
+
+將資料轉換成
