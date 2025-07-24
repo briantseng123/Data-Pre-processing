@@ -7,7 +7,7 @@ output: html_document
 # 處理公車資料
 # 說明:
 
-匯入library
+# 匯入library
 ```{r}
 library(arrow)
 library(tibble)
@@ -33,4 +33,83 @@ library(stringi)
 library(readr)
 ```
 
-將資料轉由csv換成fst方便管理
+# 將資料轉由csv換成fst方便管理
+## 2020
+```{r}
+NWTbus2020_7_12csv <- "E:/TPASS/csv/2020/新北市公車電子票證資料(TO2A)2020-07-01 ~ 2020-12-31/新北市公車電子票證資料(TO2A).csv"
+NWTbus2020_7_12fst <- "E:/brain/解壓縮data/fst/2020/2020_7_12新北市公車.fst"
+NWTbus2020_7_12 <- fread(NWTbus2020_7_12csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(NWTbus2020_7_12,NWTbus2020_7_12fst)
+```
+
+## 2021
+```{r}
+NWTbus2021csv <- "E:/TPASS/csv/2021/新北市公車電子票證資料(TO2A)2021-01-01 ~ 2021-12-31/新北市公車電子票證資料(TO2A).csv"
+NWTbus2021fst <- "E:/brain/解壓縮data/fst/2021/2021新北市公車.fst"
+NWTbus2021 <- fread(NWTbus2021csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(NWTbus2021,NWTbus2021fst)
+```
+## 2022
+```{r}
+NTWbus2022csv <- "E:/TPASS/csv/2022/新北市公車電子票證資料(TO2A)2022-01-01 ~ 2022-12-31/新北市公車電子票證資料(TO2A).csv"
+NTWbus2022fst <- "E:/brain/解壓縮data/fst/2022/2022新北市公車.fst"
+NTWbus2022 <- fread(NWTbus2022csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(NWTbus2022,NWTbus2022fst)
+
+TAObus2022csv <- "E:/TPASS/csv/2022/桃園市公車電子票證資料(TO2A)2022-01-01 ~ 2022-12-31/桃園市公車電子票證資料(TO2A).csv"
+TAObus2022fst <- "E:/brain/解壓縮data/fst/2022/2022桃園市公車.fst"
+TAObus2022 <- fread(TAObus2022csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(TAObus2022,TAObus2022fst)
+
+KEEbus2022csv <- "E:/TPASS/csv/2022/基隆市公車電子票證資料(TO1A)2022-01-01 ~ 2022-12-31/基隆市公車電子票證資料(TO1A).csv"
+KEEbus2022fst <- "E:/brain/解壓縮data/fst/2022/2022基隆市公車.fst"
+KEEbus2022 <- fread(KEEbus2022csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(KEEbus2022,KEEbus2022fst)
+
+rm(list = ls())
+gc()
+TPEbus2022_1_6csv <- "E:/TPASS/csv/2022/臺北市公車電子票證資料(TO1A)20220101~20220630/臺北市公車電子票證資料(TO1A).csv"
+TPEbus2022_1_6fst <- "E:/brain/解壓縮data/fst/2022/2022臺北市公車1-6月.fst"
+TPEbus2022 <- fread(TPEbus2022_1_6csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(TPEbus2022,TPEbus2022_1_6fst)
+
+rm(list = ls())
+gc()
+TPEbus2022_7_12csv <- "E:/TPASS/csv/2022/臺北市公車電子票證資料(TO1A)20220701~20221231/臺北市公車電子票證資料(TO1A).csv"
+TPEbus2022_7_12fst <- "E:/brain/解壓縮data/fst/2022/2022臺北市公車7-12月.fst"
+TPEbus2022 <- fread(TPEbus2022_7_12csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(TPEbus2022,TPEbus2022_7_12fst)
+
+rm(list = ls())
+gc()
+```
+## 2023
+```{r}
+TPEbus2023csv <- "E:/TPASS/csv/2023/臺北市公車電子票證資料(TO1A)2023-01-01 ~ 2023-12-31/臺北市公車電子票證資料(TO1A).csv"
+TPEbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023臺北市公車.fst"
+TPEbus2023 <- fread(TPEbus2023csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(TPEbus2023,TPEbus2023fst)
+
+rm(list = ls())
+gc()
+NTWbus2023csv <- "E:/TPASS/csv/2023/新北市公車電子票證資料(TO2A)2023-01-01 ~ 2023-12-31/新北市公車電子票證資料(TO2A).csv"
+NTWbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023新北市公車.fst"
+NTWbus2023 <- fread(NTWbus2023csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(NTWbus2023,NTWbus2023fst)
+
+rm(list = ls())
+gc()
+TAObus2023csv <- "E:/TPASS/csv/2023/桃園市公車電子票證資料(TO2A)2023-01-01 ~ 2023-12-31/桃園市公車電子票證資料(TO2A).csv"
+TAObus2023fst <- "E:/brain/解壓縮data/fst/2023/2023桃園市公車.fst"
+TAObus2023 <- fread(TAObus2023csv, skip = 1, header = TRUE, encoding = "UTF-8")
+write_fst(TAObus2023,TAObus2023fst)
+
+rm(list = ls())
+gc()
+KEEbus2023csv <- "E:/TPASS/csv/2023/基隆市公車電子票證資料(TO1A)2023-01-01 ~ 2023-12-31/基隆市公車電子票證資料(TO1A).csv"
+KEEbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023基隆市公車.fst"
+
+KEEbus2023 <- read_csv(KEEbus2023csv, skip = 1, locale = locale(encoding = "UTF-8"))
+KEEbus2023 <- fread(KEEbus2023csv, skip = 1, header = TRUE, encoding = "unknown")
+write_fst(KEEbus2023,KEEbus2023fst)
+```
