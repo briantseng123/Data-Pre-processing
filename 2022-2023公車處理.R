@@ -21,70 +21,70 @@ library(gridExtra)
 library(stringi)
 library(readr)
 
-NWTbus2020_7_12csv <- "E:/TPASS/csv/2020/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2020-07-01 ~ 2020-12-31/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-NWTbus2020_7_12fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2020/2020_7_12·s¥_¥«¤½¨®.fst"
+NWTbus2020_7_12csv <- "E:/TPASS/csv/2020/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2020-07-01 ~ 2020-12-31/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+NWTbus2020_7_12fst <- "E:/brain/è§£å£“ç¸®data/fst/2020/2020_7_12æ–°åŒ—å¸‚å…¬è»Š.fst"
 NWTbus2020_7_12 <- fread(NWTbus2020_7_12csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(NWTbus2020_7_12,NWTbus2020_7_12fst)
 
-NWTbus2021csv <- "E:/TPASS/csv/2021/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2021-01-01 ~ 2021-12-31/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-NWTbus2021fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2021/2021·s¥_¥«¤½¨®.fst"
+NWTbus2021csv <- "E:/TPASS/csv/2021/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2021-01-01 ~ 2021-12-31/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+NWTbus2021fst <- "E:/brain/è§£å£“ç¸®data/fst/2021/2021æ–°åŒ—å¸‚å…¬è»Š.fst"
 NWTbus2021 <- fread(NWTbus2021csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(NWTbus2021,NWTbus2021fst)
 
-NTWbus2022csv <- "E:/TPASS/csv/2022/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2022-01-01 ~ 2022-12-31/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-NTWbus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022·s¥_¥«¤½¨®.fst"
+NTWbus2022csv <- "E:/TPASS/csv/2022/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2022-01-01 ~ 2022-12-31/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+NTWbus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022æ–°åŒ—å¸‚å…¬è»Š.fst"
 NTWbus2022 <- fread(NWTbus2022csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(NWTbus2022,NWTbus2022fst)
 
-TAObus2022csv <- "E:/TPASS/csv/2022/®ç¶é¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2022-01-01 ~ 2022-12-31/®ç¶é¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-TAObus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022®ç¶é¥«¤½¨®.fst"
+TAObus2022csv <- "E:/TPASS/csv/2022/æ¡ƒåœ’å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2022-01-01 ~ 2022-12-31/æ¡ƒåœ’å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+TAObus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022æ¡ƒåœ’å¸‚å…¬è»Š.fst"
 TAObus2022 <- fread(TAObus2022csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(TAObus2022,TAObus2022fst)
 
-KEEbus2022csv <- "E:/TPASS/csv/2022/°ò¶©¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A)2022-01-01 ~ 2022-12-31/°ò¶©¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A).csv"
-KEEbus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022°ò¶©¥«¤½¨®.fst"
+KEEbus2022csv <- "E:/TPASS/csv/2022/åŸºéš†å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A)2022-01-01 ~ 2022-12-31/åŸºéš†å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A).csv"
+KEEbus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022åŸºéš†å¸‚å…¬è»Š.fst"
 KEEbus2022 <- fread(KEEbus2022csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(KEEbus2022,KEEbus2022fst)
 
 rm(list = ls())
 gc()
-TPEbus2022_1_6csv <- "E:/TPASS/csv/2022/»O¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A)20220101~20220630/»O¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A).csv"
-TPEbus2022_1_6fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022»O¥_¥«¤½¨®1-6¤ë.fst"
+TPEbus2022_1_6csv <- "E:/TPASS/csv/2022/è‡ºåŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A)20220101~20220630/è‡ºåŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A).csv"
+TPEbus2022_1_6fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022è‡ºåŒ—å¸‚å…¬è»Š1-6æœˆ.fst"
 TPEbus2022 <- fread(TPEbus2022_1_6csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(TPEbus2022,TPEbus2022_1_6fst)
 
 rm(list = ls())
 gc()
-TPEbus2022_7_12csv <- "E:/TPASS/csv/2022/»O¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A)20220701~20221231/»O¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A).csv"
-TPEbus2022_7_12fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022»O¥_¥«¤½¨®7-12¤ë.fst"
+TPEbus2022_7_12csv <- "E:/TPASS/csv/2022/è‡ºåŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A)20220701~20221231/è‡ºåŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A).csv"
+TPEbus2022_7_12fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022è‡ºåŒ—å¸‚å…¬è»Š7-12æœˆ.fst"
 TPEbus2022 <- fread(TPEbus2022_7_12csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(TPEbus2022,TPEbus2022_7_12fst)
 
 rm(list = ls())
 gc()
-TPEbus2023csv <- "E:/TPASS/csv/2023/»O¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A)2023-01-01 ~ 2023-12-31/»O¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A).csv"
-TPEbus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023»O¥_¥«¤½¨®.fst"
+TPEbus2023csv <- "E:/TPASS/csv/2023/è‡ºåŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A)2023-01-01 ~ 2023-12-31/è‡ºåŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A).csv"
+TPEbus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023è‡ºåŒ—å¸‚å…¬è»Š.fst"
 TPEbus2023 <- fread(TPEbus2023csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(TPEbus2023,TPEbus2023fst)
 
 rm(list = ls())
 gc()
-NTWbus2023csv <- "E:/TPASS/csv/2023/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2023-01-01 ~ 2023-12-31/·s¥_¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-NTWbus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023·s¥_¥«¤½¨®.fst"
+NTWbus2023csv <- "E:/TPASS/csv/2023/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2023-01-01 ~ 2023-12-31/æ–°åŒ—å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+NTWbus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023æ–°åŒ—å¸‚å…¬è»Š.fst"
 NTWbus2023 <- fread(NTWbus2023csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(NTWbus2023,NTWbus2023fst)
 
 rm(list = ls())
 gc()
-TAObus2023csv <- "E:/TPASS/csv/2023/®ç¶é¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A)2023-01-01 ~ 2023-12-31/®ç¶é¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO2A).csv"
-TAObus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023®ç¶é¥«¤½¨®.fst"
+TAObus2023csv <- "E:/TPASS/csv/2023/æ¡ƒåœ’å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A)2023-01-01 ~ 2023-12-31/æ¡ƒåœ’å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO2A).csv"
+TAObus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023æ¡ƒåœ’å¸‚å…¬è»Š.fst"
 TAObus2023 <- fread(TAObus2023csv, skip = 1, header = TRUE, encoding = "UTF-8")
 write_fst(TAObus2023,TAObus2023fst)
 
 rm(list = ls())
 gc()
-KEEbus2023csv <- "E:/TPASS/csv/2023/°ò¶©¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A)2023-01-01 ~ 2023-12-31/°ò¶©¥«¤½¨®¹q¤l²¼ÃÒ¸ê®Æ(TO1A).csv"
-KEEbus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023°ò¶©¥«¤½¨®.fst"
+KEEbus2023csv <- "E:/TPASS/csv/2023/åŸºéš†å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A)2023-01-01 ~ 2023-12-31/åŸºéš†å¸‚å…¬è»Šé›»å­ç¥¨è­‰è³‡æ–™(TO1A).csv"
+KEEbus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023åŸºéš†å¸‚å…¬è»Š.fst"
 
 KEEbus2023 <- read_csv(KEEbus2023csv, skip = 1, locale = locale(encoding = "UTF-8"))
 KEEbus2023 <- fread(KEEbus2023csv, skip = 1, header = TRUE, encoding = "unknown")
@@ -96,11 +96,11 @@ col_for_read <- c("Authority","HolderType","TicketType","SubTicketType",
                   "TransferCode","IsAbnormal","ErrorCode","Result")
 
 
-ALL <- fread("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤½¨®¯¸ÂI¸ê®Æ/¯¸µP¡B¯¸¦ì¡B²Õ¯¸¦ì/¥_¥_°ò®ç¯¸¸s(²K¥[¶m¬F¥«°Ï&µo®iµ{«×)3.csv",encoding="UTF-8")
+ALL <- fread("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å…¬è»Šç«™é»è³‡æ–™/ç«™ç‰Œã€ç«™ä½ã€çµ„ç«™ä½/åŒ—åŒ—åŸºæ¡ƒç«™ç¾¤(æ·»åŠ é„‰æ”¿å¸‚å€&ç™¼å±•ç¨‹åº¦)3.csv",encoding="UTF-8")
 ALL <- ALL%>%
   dplyr::select(StopUID,StopName,StationID,City,StationUID,StationName,Latitude,Longitude,
                 StationGroupID,development_level)
-#¥h°£¤W¤U¨®¬Û¦P
+#å»é™¤ä¸Šä¸‹è»Šç›¸åŒ
 process_bus_data <- function(fst_path, columns,year_str) {
   
   df <- read_fst(fst_path, columns = columns)
@@ -123,24 +123,24 @@ process_bus_data <- function(fst_path, columns,year_str) {
   
   abnormal_rows <- df %>% filter(IsAbnormal == 1)
   print(head(abnormal_rows))
-  cat("IsAbnormal == 1 ªºµ§¼Æ¡G", nrow(abnormal_rows), "\n")
+  cat("IsAbnormal == 1 çš„ç­†æ•¸ï¼š", nrow(abnormal_rows), "\n")
   
-  print("-99ªº¼Æ¶q")
+  print("-99çš„æ•¸é‡")
   summary_counts <- df %>% summarise(across(everything(), ~ sum(. == -99, na.rm = TRUE)))
   print(summary_counts)
   
-  print("NULLªº¼Æ¶q")
+  print("NULLçš„æ•¸é‡")
   summary_counts <- df %>% 
     summarise(across(everything(), ~ sum(as.character(.) == "NULL", na.rm = TRUE)))
   print(summary_counts)
   
   
   ISAB0 <- df %>% filter(IsAbnormal == 0)%>%nrow()
-  cat(ISAB0, "µ§¸ê®Æ (ISABNORMAL==0)\n")
+  cat(ISAB0, "ç­†è³‡æ–™ (ISABNORMAL==0)\n")
   
   df <- df %>% filter(IsAbnormal == 0)
   rows_to_remove <- df %>% filter(BoardingStopName == DeboardingStopName & BoardingStopUID == DeboardingStopUID)%>%nrow()
-  cat("±N²¾°£", rows_to_remove, "µ§¸ê®Æ (BoardingStopName==DeboardingStopName ©M BoardingStopUID==DeboardingStopName)\n")
+  cat("å°‡ç§»é™¤", rows_to_remove, "ç­†è³‡æ–™ (BoardingStopName==DeboardingStopName å’Œ BoardingStopUID==DeboardingStopName)\n")
   
   year_num <- as.numeric(year_str)
   df <- df %>% 
@@ -148,7 +148,7 @@ process_bus_data <- function(fst_path, columns,year_str) {
   
   rows_to_remove <- df %>%
     filter(!(year(BoardingTime)==year_num & year(DeboardingTime)==year_num))%>%nrow()
-  cat("±N²¾°£", rows_to_remove, "µ§¸ê®Æ (BoardingTime==2023 ©M DeboardingTime==2023)\n")
+  cat("å°‡ç§»é™¤", rows_to_remove, "ç­†è³‡æ–™ (BoardingTime==2023 å’Œ DeboardingTime==2023)\n")
   
   df <- df %>%filter(year(BoardingTime)==year_num & year(DeboardingTime)==year_num)
   return(df)
@@ -176,24 +176,24 @@ process_bus_data <- function(path, columns,year_str) {
   
   abnormal_rows <- df %>% filter(IsAbnormal == 1)
   print(head(abnormal_rows))
-  cat("IsAbnormal == 1 ªºµ§¼Æ¡G", nrow(abnormal_rows), "\n")
+  cat("IsAbnormal == 1 çš„ç­†æ•¸ï¼š", nrow(abnormal_rows), "\n")
   
-  print("-99ªº¼Æ¶q")
+  print("-99çš„æ•¸é‡")
   summary_counts <- df %>% summarise(across(everything(), ~ sum(. == -99, na.rm = TRUE)))
   print(summary_counts)
   
-  print("NULLªº¼Æ¶q")
+  print("NULLçš„æ•¸é‡")
   summary_counts <- df %>% 
     summarise(across(everything(), ~ sum(as.character(.) == "NULL", na.rm = TRUE)))
   print(summary_counts)
   
   
   ISAB0 <- df %>% filter(IsAbnormal == 0)%>%nrow()
-  cat(ISAB0, "µ§¸ê®Æ (ISABNORMAL==0)\n")
+  cat(ISAB0, "ç­†è³‡æ–™ (ISABNORMAL==0)\n")
   
   df <- df %>% filter(IsAbnormal == 0)
   rows_to_remove <- df %>% filter(BoardingStopName == DeboardingStopName & BoardingStopUID == DeboardingStopUID)%>%nrow()
-  cat("±N²¾°£", rows_to_remove, "µ§¸ê®Æ (BoardingStopName==DeboardingStopName ©M BoardingStopUID==DeboardingStopName)\n")
+  cat("å°‡ç§»é™¤", rows_to_remove, "ç­†è³‡æ–™ (BoardingStopName==DeboardingStopName å’Œ BoardingStopUID==DeboardingStopName)\n")
   
   year_num <- as.numeric(year_str)
   df <- df %>% 
@@ -201,14 +201,14 @@ process_bus_data <- function(path, columns,year_str) {
   
   rows_to_remove <- df %>%
     filter(!(year(BoardingTime)==year_num & year(DeboardingTime)==year_num))%>%nrow()
-  cat("±N²¾°£", rows_to_remove, "µ§¸ê®Æ (BoardingTime==2023 ©M DeboardingTime==2023)\n")
+  cat("å°‡ç§»é™¤", rows_to_remove, "ç­†è³‡æ–™ (BoardingTime==2023 å’Œ DeboardingTime==2023)\n")
   
   df <- df %>%filter(year(BoardingTime)==year_num & year(DeboardingTime)==year_num)
   return(df)
   
 }
 
-#¶ñ¸É¿ò¥¢­È
+#å¡«è£œéºå¤±å€¼
 fill_missing_stops <- function(df,df_output, verbose = TRUE) {
   #df <- df %>% mutate(
     #DeboardingStopName = iconv(DeboardingStopName, from = "", to = "UTF-8"),
@@ -231,7 +231,7 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
     summarise(modeName = get_mode(DeboardingStopName), .groups = "drop")
   
   if (verbose) {
-    cat("DeboardingStopUID ¸s²Õ¤¤³Ì±`¥X²{ªº DeboardingStopName:\n")
+    cat("DeboardingStopUID ç¾¤çµ„ä¸­æœ€å¸¸å‡ºç¾çš„ DeboardingStopName:\n")
     print(most_common_names)
   }
   gc()
@@ -245,7 +245,7 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
     summarise(modeUID = get_mode(DeboardingStopUID), .groups = "drop")
   
   if (verbose) {
-    cat("DeboardingStopName ¸s²Õ¤¤³Ì±`¥X²{ªº DeboardingStopUID:\n")
+    cat("DeboardingStopName ç¾¤çµ„ä¸­æœ€å¸¸å‡ºç¾çš„ DeboardingStopUID:\n")
     print(most_common_uids)
   }
   gc()
@@ -259,7 +259,7 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
     summarise(modeBUID = get_mode(BoardingStopUID), .groups = "drop")
   
   if (verbose) {
-    cat("BoardingStopName ¸s²Õ¤¤³Ì±`¥X²{ªº BoardingStopUID:\n")
+    cat("BoardingStopName ç¾¤çµ„ä¸­æœ€å¸¸å‡ºç¾çš„ BoardingStopUID:\n")
     print(most_common_b_uids)
   }
   gc()
@@ -273,7 +273,7 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
     summarise(modeBName = get_mode(BoardingStopName), .groups = "drop")
   
   if (verbose) {
-    cat("BoardingStopUID ¸s²Õ¤¤³Ì±`¥X²{ªº BoardingStopName:\n")
+    cat("BoardingStopUID ç¾¤çµ„ä¸­æœ€å¸¸å‡ºç¾çš„ BoardingStopName:\n")
     print(most_common_b_names)
   }
   gc()
@@ -285,7 +285,7 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
   return(df)
 }
 
-#²M°£¿ò¥¢­È
+#æ¸…é™¤éºå¤±å€¼
 process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose = TRUE) {
   df <- read_fst(df_input)
   
@@ -298,7 +298,7 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
   
   na_counts <- sapply(df, function(x) sum(is.na(x)))
   if (verbose) {
-    cat("Âà´««á¦UÅÜ¼Æ NA ªº¼Æ¶q¡G\n")
+    cat("è½‰æ›å¾Œå„è®Šæ•¸ NA çš„æ•¸é‡ï¼š\n")
     print(na_counts)
   }
   
@@ -316,8 +316,8 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
     
     removed_nrow <- original_nrow - nrow(df)
     if (verbose) {
-      cat("drop_na «á¡A¸ê®Æ®Øºû«×¡G", paste(dim(df), collapse = " x "), "\n")
-      cat("Á`¦@²¾°£¤F", removed_nrow, "µ§§t NA ªºÆ[¹î­È¡C\n")
+      cat("drop_na å¾Œï¼Œè³‡æ–™æ¡†ç¶­åº¦ï¼š", paste(dim(df), collapse = " x "), "\n")
+      cat("ç¸½å…±ç§»é™¤äº†", removed_nrow, "ç­†å« NA çš„è§€å¯Ÿå€¼ã€‚\n")
     }
   }
   
@@ -340,7 +340,7 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
   ))
   
   if (verbose) {
-    cat("Label ¼Æ¶q¤À§G¡G\n")
+    cat("Label æ•¸é‡åˆ†ä½ˆï¼š\n")
     print(table(df$Label))
   }
   
@@ -356,7 +356,7 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
   ))
   
   if (verbose) {
-    cat("Code ¼Æ¶q¤À§G¡G\n")
+    cat("Code æ•¸é‡åˆ†ä½ˆï¼š\n")
     print(table(df$Code))
   }
   
@@ -387,7 +387,7 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
   return(df)
 }
 
-#§ó·s¬Û¦P¦WºÙ¯¸ÂI
+#æ›´æ–°ç›¸åŒåç¨±ç«™é»
 update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
   library(dplyr)
   df <- read_fst(df_input)
@@ -438,9 +438,9 @@ update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
   if (verbose) {
     uidsame_count <- df %>% filter(Code == "UIDSAME", BoardingStopUID == DeboardingStopUID) %>% nrow()
     namesame_count <- df %>% filter(Code == "NAMESAME", BoardingStopName == DeboardingStopName) %>% nrow()
-    cat("§ó·s«á¡G\n")
-    cat("  Code ¬° UIDSAME¡A¥B BoardingStopUID == DeboardingStopUID ªºµ§¼Æ¡G", uidsame_count, "\n")
-    cat("  Code ¬° NAMESAME¡A¥B BoardingStopName == DeboardingStopName ªºµ§¼Æ¡G", namesame_count, "\n")
+    cat("æ›´æ–°å¾Œï¼š\n")
+    cat("  Code ç‚º UIDSAMEï¼Œä¸” BoardingStopUID == DeboardingStopUID çš„ç­†æ•¸ï¼š", uidsame_count, "\n")
+    cat("  Code ç‚º NAMESAMEï¼Œä¸” BoardingStopName == DeboardingStopName çš„ç­†æ•¸ï¼š", namesame_count, "\n")
   }
   
   n_before <- nrow(df)
@@ -451,8 +451,8 @@ update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
   n_after <- nrow(df)
   
   if (verbose) {
-    cat("§ó·s¨Ã§R°£«áªº¸ê®Æµ§¼Æ¡G", n_after, "\n")
-    cat("¦@§R°£¤F", n_before - n_after, "µ§²Å¦X§R°£±ø¥óªº¸ê®Æ¡C\n")
+    cat("æ›´æ–°ä¸¦åˆªé™¤å¾Œçš„è³‡æ–™ç­†æ•¸ï¼š", n_after, "\n")
+    cat("å…±åˆªé™¤äº†", n_before - n_after, "ç­†ç¬¦åˆåˆªé™¤æ¢ä»¶çš„è³‡æ–™ã€‚\n")
   }
   
   write_fst(df, df_output)
@@ -533,25 +533,25 @@ merge_stopuid <- function(df, stopuid, startwith, outputpath) {
   df$DeboardingStopName[mask] <- df$DLabel[mask]
   
   
-  cat("¶ñ¸É«e¯Ê¥¢­ÈÁ`¼Æ¡G", missing_before, "\n")
-  cat("¦¨¥\¶ñ¸É¯Ê¥¢­È¼Æ¶q¡G", filled_count, "\n")
-  cat("¶ñ¸É«á³Ñ¾l¯Ê¥¢­È¼Æ¶q¡G", missing_after, "\n")
+  cat("å¡«è£œå‰ç¼ºå¤±å€¼ç¸½æ•¸ï¼š", missing_before, "\n")
+  cat("æˆåŠŸå¡«è£œç¼ºå¤±å€¼æ•¸é‡ï¼š", filled_count, "\n")
+  cat("å¡«è£œå¾Œå‰©é¤˜ç¼ºå¤±å€¼æ•¸é‡ï¼š", missing_after, "\n")
   df <- df %>% select(-Baddress, -Daddress, -BLabel, -DLabel)
   missing_summary <- sapply(df, function(x) sum(is.na(x)))
   missing_cols <- names(missing_summary[missing_summary > 0])
   if (length(missing_cols) > 0) {
-    cat("¡i¤´¦³¯Ê¥¢­ÈªºÄæ¦ì¡j\n")
+    cat("ã€ä»æœ‰ç¼ºå¤±å€¼çš„æ¬„ä½ã€‘\n")
     print(missing_summary[missing_summary > 0])
   } else {
-    cat("¥Ø«e©Ò¦³Äæ¦ì§¡µL¯Ê¥¢­È¡C\n")
+    cat("ç›®å‰æ‰€æœ‰æ¬„ä½å‡ç„¡ç¼ºå¤±å€¼ã€‚\n")
   }
   
   n_before <- nrow(df)
   df <- df %>% drop_na()
   n_after <- nrow(df)
-  cat("\ndrop_na() ¤w²¾°£", n_before - n_after, "¦C¯Ê¥¢¸ê®Æ¡C\n")
+  cat("\ndrop_na() å·²ç§»é™¤", n_before - n_after, "åˆ—ç¼ºå¤±è³‡æ–™ã€‚\n")
   
-  cat("\n¡i³Ì²×¸ê®Æ¶°¡j\n")
+  cat("\nã€æœ€çµ‚è³‡æ–™é›†ã€‘\n")
   print(head(df))
   write_fst(df,outputpath)
   return(df)
@@ -559,16 +559,16 @@ merge_stopuid <- function(df, stopuid, startwith, outputpath) {
 
 merge_stopuid_fast <- function(inputfile, stopuid, startwith, outputpath) {
   start_time <- Sys.time()
-  cat("[1/8] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/8] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <-  as.data.table(inputfile)
   
-  cat("[2/8] ³B²z stopuid...\n")
+  cat("[2/8] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/8] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/8] å»ºç«‹ stopuid_B / stopuid_D...\n")
   stopuid_B <- copy(stopuid)
   stopuid_D <- copy(stopuid)
   cols_B <- setdiff(names(stopuid_B), "Id")
@@ -576,21 +576,21 @@ merge_stopuid_fast <- function(inputfile, stopuid, startwith, outputpath) {
   cols_D <- setdiff(names(stopuid_D), "Id")
   setnames(stopuid_D, cols_D, paste0("D", cols_D))
   
-  cat("[4/8] ¦X¨Ö stopuid_B...\n")
+  cat("[4/8] åˆä½µ stopuid_B...\n")
   setkey(dt, BoardingStopUID)
   setkey(stopuid_B, Id)
   cols <- setdiff(names(stopuid_B), "Id")
   newcols <- paste0("B", cols)
   dt[stopuid_B, (newcols) := mget(paste0("i.", cols)), on = .(BoardingStopUID = Id)]
   
-  cat("[5/8] ¦X¨Ö stopuid_D...\n")
+  cat("[5/8] åˆä½µ stopuid_D...\n")
   setkey(dt, DeboardingStopUID)
   setkey(stopuid_D, Id)
   cols_D <- setdiff(names(stopuid_D), "Id")
   newcols_D <- paste0("D", cols_D)
   dt[stopuid_D, (newcols_D) := mget(paste0("i.", cols_D)), on = .(DeboardingStopUID = Id)]
   
-  cat("[6/8] ³B²z±ø¥ó¯¸¦W§ó·s...\n")
+  cat("[6/8] è™•ç†æ¢ä»¶ç«™åæ›´æ–°...\n")
   dt[, mask := (Code == "NAMESAME" & 
                   BoardingStopName == DeboardingStopName & 
                   !is.na(BLabel) & !is.na(DLabel) & 
@@ -599,7 +599,7 @@ merge_stopuid_fast <- function(inputfile, stopuid, startwith, outputpath) {
   dt[mask == TRUE, DeboardingStopName := DLabel]
   dt[, mask := NULL]
   
-  cat("[7/8] ²M°£Äæ¦ì¡B²¾°£ NA...\n")
+  cat("[7/8] æ¸…é™¤æ¬„ä½ã€ç§»é™¤ NA...\n")
   remove_cols <- c("Baddress", "Daddress", "BLabel", "DLabel")
   remove_cols <- intersect(names(dt), remove_cols)
   dt[, (remove_cols) := NULL]
@@ -607,28 +607,28 @@ merge_stopuid_fast <- function(inputfile, stopuid, startwith, outputpath) {
   n_before <- nrow(dt)
   dt <- dt[complete.cases(dt)]
   n_after <- nrow(dt)
-  cat("drop_na() ¤w²¾°£", n_before - n_after, "¦C¯Ê¥¢¸ê®Æ¡C\n")
+  cat("drop_na() å·²ç§»é™¤", n_before - n_after, "åˆ—ç¼ºå¤±è³‡æ–™ã€‚\n")
   
-  cat("[8/8] ¼g¥Xµ²ªG¦Ü ", outputpath, "...\n")
+  cat("[8/8] å¯«å‡ºçµæœè‡³ ", outputpath, "...\n")
   write_fst(as.data.frame(dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(paste0("§¹¦¨¡IÁ`¯Ó®É¡G", elapsed, " ¬í¡C\n"))
+  cat(paste0("å®Œæˆï¼ç¸½è€—æ™‚ï¼š", elapsed, " ç§’ã€‚\n"))
   return(dt)
 }
 
 merge_stopuid_fast_dropsamestopname <- function(inputfile, stopuid, startwith, outputpath) {
   start_time <- Sys.time()
-  cat("[1/8] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/8] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/8] ³B²z stopuid...\n")
+  cat("[2/8] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/8] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/8] å»ºç«‹ stopuid_B / stopuid_D...\n")
   stopuid_B <- copy(stopuid)
   stopuid_D <- copy(stopuid)
   cols_B <- setdiff(names(stopuid_B), "Id")
@@ -636,27 +636,27 @@ merge_stopuid_fast_dropsamestopname <- function(inputfile, stopuid, startwith, o
   cols_D <- setdiff(names(stopuid_D), "Id")
   setnames(stopuid_D, cols_D, paste0("D", cols_D))
   
-  cat("[4/8] ¦X¨Ö stopuid_B...\n")
+  cat("[4/8] åˆä½µ stopuid_B...\n")
   setkey(dt, BoardingStopUID)
   setkey(stopuid_B, Id)
   cols <- setdiff(names(stopuid_B), "Id")
   newcols <- paste0("B", cols)
   dt[stopuid_B, (newcols) := mget(paste0("i.", cols)), on = .(BoardingStopUID = Id)]
   
-  cat("[5/8] ¦X¨Ö stopuid_D...\n")
+  cat("[5/8] åˆä½µ stopuid_D...\n")
   setkey(dt, DeboardingStopUID)
   setkey(stopuid_D, Id)
   cols_D <- setdiff(names(stopuid_D), "Id")
   newcols_D <- paste0("D", cols_D)
   dt[stopuid_D, (newcols_D) := mget(paste0("i.", cols_D)), on = .(DeboardingStopUID = Id)]
   
-  cat("[6/8] §R°£ BoardingStopName == DeboardingStopName ªº¸ê®Æ...\n")
+  cat("[6/8] åˆªé™¤ BoardingStopName == DeboardingStopName çš„è³‡æ–™...\n")
   
   dt <- dt[!( !is.na(BoardingStopName) & !is.na(DeboardingStopName) &
                 BoardingStopName == DeboardingStopName & BoardingStopName != BLabel &
                 DeboardingStopName != DLabel)]
   
-  cat("[7/8] ²M°£¤£¥²­nÄæ¦ì¡B²¾°£ NA...\n")
+  cat("[7/8] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ã€ç§»é™¤ NA...\n")
   remove_cols <- c("Baddress", "Daddress", "BLabel", "DLabel")
   remove_cols <- intersect(names(dt), remove_cols)
   dt[, (remove_cols) := NULL]
@@ -664,13 +664,13 @@ merge_stopuid_fast_dropsamestopname <- function(inputfile, stopuid, startwith, o
   n_before <- nrow(dt)
   dt <- dt[complete.cases(dt)]
   n_after <- nrow(dt)
-  cat("drop_na() ¤w²¾°£", n_before - n_after, "¦C¯Ê¥¢¸ê®Æ¡C\n")
+  cat("drop_na() å·²ç§»é™¤", n_before - n_after, "åˆ—ç¼ºå¤±è³‡æ–™ã€‚\n")
   
-  cat("[8/8] ¼g¥Xµ²ªG¦Ü", outputpath, "...\n")
+  cat("[8/8] å¯«å‡ºçµæœè‡³", outputpath, "...\n")
   write_fst(as.data.frame(dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(paste0("§¹¦¨¡IÁ`¯Ó®É¡G", elapsed, " ¬í¡C\n"))
+  cat(paste0("å®Œæˆï¼ç¸½è€—æ™‚ï¼š", elapsed, " ç§’ã€‚\n"))
   return(dt)
 }
 
@@ -680,16 +680,16 @@ merge_stopuid_fast_chunk <- function(inputfile, stopuid, startwith, outputpath, 
   
   start_time <- Sys.time()
   
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   stopuid_B <- copy(stopuid)
   stopuid_D <- copy(stopuid)
   cols_B <- setdiff(names(stopuid_B), "Id")
@@ -699,7 +699,7 @@ merge_stopuid_fast_chunk <- function(inputfile, stopuid, startwith, outputpath, 
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -741,21 +741,21 @@ merge_stopuid_fast_chunk <- function(inputfile, stopuid, startwith, outputpath, 
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
   }
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   
   return(final_dt)
 }
@@ -766,16 +766,16 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
   
   start_time <- Sys.time()
   
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
     cols <- setdiff(names(dt), "Id")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
@@ -792,7 +792,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -802,7 +802,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     end_idx <- min(i * chunk_size, total_rows)
     dt_chunk <- dt[start_idx:end_idx]
     
-    cat(sprintf("³B²z Chunk %d ...\n", i))
+    cat(sprintf("è™•ç† Chunk %d ...\n", i))
     
     setkey(dt_chunk, BoardingStopUID)
     setkey(stopuid_B, Id)
@@ -819,7 +819,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
     if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
     
-    cat("[6/9] §R°£º¡¨¬±ø¥óªº¸ê®Æ¦C...\n")
+    cat("[6/9] åˆªé™¤æ»¿è¶³æ¢ä»¶çš„è³‡æ–™åˆ—...\n")
     dt_chunk <- dt_chunk[!( !is.na(BoardingStopName) & 
                               !is.na(DeboardingStopName) & 
                               BoardingStopName == DeboardingStopName & 
@@ -829,7 +829,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
                               DeboardingStopName == "")]
     dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
     
-    cat("[7/9] ²M°£¤£¥²­nÄæ¦ì¡B²¾°£ NA...\n")
+    cat("[7/9] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ã€ç§»é™¤ NA...\n")
     remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
     if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
     
@@ -839,7 +839,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
@@ -847,15 +847,15 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     gc()
   }
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   
   return(final_dt)
 }
@@ -866,16 +866,16 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
   
   start_time <- Sys.time()
   
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
     cols <- setdiff(names(dt), "Id")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
@@ -892,7 +892,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -902,7 +902,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     end_idx <- min(i * chunk_size, total_rows)
     dt_chunk <- dt[start_idx:end_idx]
     
-    cat(sprintf("³B²z Chunk %d ...\n", i))
+    cat(sprintf("è™•ç† Chunk %d ...\n", i))
     
     setkey(dt_chunk, BoardingStopUID)
     setkey(stopuid_B, Id)
@@ -915,7 +915,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
     if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
     
-    cat("[6/9] §R°£º¡¨¬±ø¥óªº¸ê®Æ¦C...\n")
+    cat("[6/9] åˆªé™¤æ»¿è¶³æ¢ä»¶çš„è³‡æ–™åˆ—...\n")
     dt_chunk <- dt_chunk[!( !is.na(BoardingStopName) & 
                               !is.na(DeboardingStopName) & 
                               BoardingStopName == DeboardingStopName & 
@@ -927,11 +927,11 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     required_fields <- c("Blongitude", "Blatitude", "Dlongitude", "Dlatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
     if (length(missing_fields) > 0) {
-      stop(paste("¯Ê¤Ö¥²­nÄæ¦ì¡G", paste(missing_fields, collapse = ", ")))
+      stop(paste("ç¼ºå°‘å¿…è¦æ¬„ä½ï¼š", paste(missing_fields, collapse = ", ")))
     }
     dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
     
-    cat("[7/9] ²M°£¤£¥²­nÄæ¦ì¡B²¾°£ NA...\n")
+    cat("[7/9] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ã€ç§»é™¤ NA...\n")
     remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
     if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
     
@@ -941,7 +941,7 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
@@ -949,15 +949,15 @@ merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startw
     gc()
   }
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   
   return(final_dt)
 }
@@ -968,16 +968,16 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
   
   start_time <- Sys.time()
   
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
     cols <- setdiff(names(dt), "Id")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
@@ -994,7 +994,7 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -1004,7 +1004,7 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
     end_idx <- min(i * chunk_size, total_rows)
     dt_chunk <- dt[start_idx:end_idx]
     
-    cat(sprintf("³B²z Chunk %d ...\n", i))
+    cat(sprintf("è™•ç† Chunk %d ...\n", i))
     
     setkey(dt_chunk, BoardingStopUID)
     setkey(stopuid_B, Id)
@@ -1024,7 +1024,7 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
     if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
     if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
     
-    cat("[6/9] §R°£º¡¨¬±ø¥óªº¸ê®Æ¦C...\n")
+    cat("[6/9] åˆªé™¤æ»¿è¶³æ¢ä»¶çš„è³‡æ–™åˆ—...\n")
     dt_chunk <- dt_chunk[ !((is.na(BoardingStopName) | BoardingStopName == "") |
                               (is.na(DeboardingStopName) | DeboardingStopName == "") |
                               (BoardingStopName == DeboardingStopName) |
@@ -1034,11 +1034,11 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
     required_fields <- c("Blongitude", "Blatitude", "Dlongitude", "Dlatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
     if (length(missing_fields) > 0) {
-      stop(paste("¯Ê¤Ö¥²­nÄæ¦ì¡G", paste(missing_fields, collapse = ", ")))
+      stop(paste("ç¼ºå°‘å¿…è¦æ¬„ä½ï¼š", paste(missing_fields, collapse = ", ")))
     }
     dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
     
-    cat("[7/9] ²M°£¤£¥²­nÄæ¦ì¡B²¾°£ NA...\n")
+    cat("[7/9] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ã€ç§»é™¤ NA...\n")
     remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
     if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
     
@@ -1048,7 +1048,7 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
@@ -1057,15 +1057,15 @@ merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, start
   }
   
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   
   return(final_dt)
 }
@@ -1075,16 +1075,16 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
   library(fst)
   
   start_time <- Sys.time()
-  cat("[1/9] ¸ü¤J¥D¸ê®Æ...\n")
+  cat("[1/9] è¼‰å…¥ä¸»è³‡æ–™...\n")
   dt <- as.data.table(inputfile)
   
-  cat("[2/9] ³B²z stopuid...\n")
+  cat("[2/9] è™•ç† stopuid...\n")
   stopuid <- as.data.table(stopuid)
   stopuid[, Id := as.character(Id)]
   stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
   stopuid <- unique(stopuid, by = "Id")
   
-  cat("[3/9] «Ø¥ß stopuid_B / stopuid_D...\n")
+  cat("[3/9] å»ºç«‹ stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
     cols <- setdiff(names(dt), "Id")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
@@ -1101,7 +1101,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
   
   total_rows <- nrow(dt)
   num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[¤À¶ô³B²z] Á`µ§¼Æ: %d, ¨C°Ï¶ô: %d µ§, ¦@¤À %d °Ï¶ô\n", total_rows, chunk_size, num_chunks))
+  cat(sprintf("[åˆ†å¡Šè™•ç†] ç¸½ç­†æ•¸: %d, æ¯å€å¡Š: %d ç­†, å…±åˆ† %d å€å¡Š\n", total_rows, chunk_size, num_chunks))
   
   result_list <- vector("list", num_chunks)
   total_removed <- 0
@@ -1110,54 +1110,54 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
     start_idx <- ((i - 1) * chunk_size) + 1
     end_idx <- min(i * chunk_size, total_rows)
     dt_chunk <- dt[start_idx:end_idx]
-    cat(sprintf("³B²z Chunk %d ...\n", i))
+    cat(sprintf("è™•ç† Chunk %d ...\n", i))
     
-    # ¦X¨Ö Boarding ¼ĞÅÒ¸ê°T
+    # åˆä½µ Boarding æ¨™ç±¤è³‡è¨Š
     setkey(dt_chunk, BoardingStopUID)
     setkey(stopuid_B, Id)
     dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(BoardingStopUID = Id)]
     
-    # ¦X¨Ö Deboarding ¼ĞÅÒ¸ê°T
+    # åˆä½µ Deboarding æ¨™ç±¤è³‡è¨Š
     setkey(dt_chunk, DeboardingStopUID)
     setkey(stopuid_D, Id)
     dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(DeboardingStopUID = Id)]
     
-    # ¦pªG¼ĞÅÒ»P²{¦³¦WºÙ¤£²Å¡A¨Ï¥Î¼ĞÅÒ¨ú¥N¦WºÙ
+    # å¦‚æœæ¨™ç±¤èˆ‡ç¾æœ‰åç¨±ä¸ç¬¦ï¼Œä½¿ç”¨æ¨™ç±¤å–ä»£åç¨±
     dt_chunk[(BLabel != BoardingStopName | BoardingStopName=="")  & !is.na(BLabel), BoardingStopName := BLabel]
     dt_chunk[(DLabel != DeboardingStopName | DeboardingStopName=="") & !is.na(DLabel), DeboardingStopName := DLabel]
     
-    # ±N NA ©ÎªÅ¦r¦êÂà¦^ªÅ¦r¦ê¡A«O¯d address Äæ¦ì
+    # å°‡ NA æˆ–ç©ºå­—ä¸²è½‰å›ç©ºå­—ä¸²ï¼Œä¿ç•™ address æ¬„ä½
     dt_chunk[, BoardingStopName   := ifelse(is.na(BoardingStopName)   | BoardingStopName == "", "", BoardingStopName)]
     dt_chunk[, DeboardingStopName := ifelse(is.na(DeboardingStopName) | DeboardingStopName == "", "", DeboardingStopName)]
     
-    cat("[6/9] §R°£¯Ê¥¢©Î¦P¯¸¸ê®Æ¦C...\n")
-    # ¥u§R°£¯Ê¤Ö¦WºÙ©Î¤W¤U¯¸¬Û¦Pªº¦C
+    cat("[6/9] åˆªé™¤ç¼ºå¤±æˆ–åŒç«™è³‡æ–™åˆ—...\n")
+    # åªåˆªé™¤ç¼ºå°‘åç¨±æˆ–ä¸Šä¸‹ç«™ç›¸åŒçš„åˆ—
     dt_chunk <- dt_chunk[ !(BoardingStopName == DeboardingStopName)]
     
-    # ½T»{¥²­n®y¼ĞÄæ¦ì¦s¦b
+    # ç¢ºèªå¿…è¦åº§æ¨™æ¬„ä½å­˜åœ¨
     required_fields <- c("Blongitude", "Blatitude", "Dlongitude", "Dlatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
     if (length(missing_fields) > 0) {
-      stop(paste("¯Ê¤Ö¥²­nÄæ¦ì¡G", paste(missing_fields, collapse = ", ")))
+      stop(paste("ç¼ºå°‘å¿…è¦æ¬„ä½ï¼š", paste(missing_fields, collapse = ", ")))
     }
-    # §R°£¯Ê¤Ö®y¼Ğªº¦C
+    # åˆªé™¤ç¼ºå°‘åº§æ¨™çš„åˆ—
     dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
     
-    cat("[7/9] ²M°£¤£¥²­nÄæ¦ì¨Ã²¾°£ NA («O¯d address)...\n")
+    cat("[7/9] æ¸…é™¤ä¸å¿…è¦æ¬„ä½ä¸¦ç§»é™¤ NA (ä¿ç•™ address)...\n")
     dt_chunk[, c("BLabel","DLabel") := NULL]
     
-    # ©w¸q¡u¥²¶· non???NA¡vªºÄæ¦ì
+    # å®šç¾©ã€Œå¿…é ˆ non???NAã€çš„æ¬„ä½
     keep_cols <- c("BoardingStopName","DeboardingStopName",
                    "Blongitude","Blatitude","Dlongitude","Dlatitude")
     
-    # ¥u¹ï³o¨ÇÄæ¦ìÀË¬d
+    # åªå°é€™äº›æ¬„ä½æª¢æŸ¥
     n_before <- nrow(dt_chunk)
     dt_chunk <- dt_chunk[ complete.cases(dt_chunk[, ..keep_cols]) ]
     n_after  <- nrow(dt_chunk)
     removed <- n_before - n_after
     total_removed <- total_removed + removed
     
-    cat(sprintf("Chunk %d/%d¡G­ì©l¦C¼Æ %d¡A²¾°£ %d ¦C NA¡A³Ñ¤U %d ¦C\n",
+    cat(sprintf("Chunk %d/%dï¼šåŸå§‹åˆ—æ•¸ %dï¼Œç§»é™¤ %d åˆ— NAï¼Œå‰©ä¸‹ %d åˆ—\n",
                 i, num_chunks, n_before, removed, n_after))
     
     result_list[[i]] <- dt_chunk
@@ -1165,15 +1165,15 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
     gc()
   }
   
-  cat("[¦X¨Ö°Ï¶ô] ¥¿¦b¦X¨Ö©Ò¦³°Ï¶ô...\n")
+  cat("[åˆä½µå€å¡Š] æ­£åœ¨åˆä½µæ‰€æœ‰å€å¡Š...\n")
   final_dt <- rbindlist(result_list)
   
-  cat(sprintf("Á`¦@²¾°£¯Ê¥¢¸ê®Æ¦C¼Æ¡G%d\n", total_removed))
-  cat(sprintf("[9/9] ¼g¥Xµ²ªG¦Ü %s ...\n", outputpath))
+  cat(sprintf("ç¸½å…±ç§»é™¤ç¼ºå¤±è³‡æ–™åˆ—æ•¸ï¼š%d\n", total_removed))
+  cat(sprintf("[9/9] å¯«å‡ºçµæœè‡³ %s ...\n", outputpath))
   write_fst(as.data.frame(final_dt), outputpath)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("§¹¦¨¡IÁ`¯Ó®É¡G%s ¬í¡C\n", elapsed))
+  cat(sprintf("å®Œæˆï¼ç¸½è€—æ™‚ï¼š%s ç§’ã€‚\n", elapsed))
   return(final_dt)
 }
 
@@ -1182,11 +1182,11 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
                                                        startwith,
                                                        removed_path = NULL,
                                                        chunk_size = 1e6) {
-  # ¸ü¤J®M¥ó
+  # è¼‰å…¥å¥—ä»¶
   library(data.table)
   library(fst)
   
-  # --- 1. ³B²z stopuid ¹ï·Óªí
+  # --- 1. è™•ç† stopuid å°ç…§è¡¨
   stopuid_dt <- as.data.table(stopuid)
   stopuid_dt[, Id := as.character(Id)]
   stopuid_dt[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
@@ -1202,20 +1202,20 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
   stopuid_B <- prefix_copy(stopuid_dt, "B")
   stopuid_D <- prefix_copy(stopuid_dt, "D")
   
-  # --- 2. Åª¤J¥D¸ê®Æ¨Ã­pºâ¤À¶ô¼Æ
+  # --- 2. è®€å…¥ä¸»è³‡æ–™ä¸¦è¨ˆç®—åˆ†å¡Šæ•¸
   dt <- as.data.table(inputfile)
   total_rows   <- nrow(dt)
   num_chunks   <- ceiling(total_rows / chunk_size)
   removed_chunks <- vector("list", num_chunks)
   
-  # --- 3. ¤À¶ô³B²z
+  # --- 3. åˆ†å¡Šè™•ç†
   for (i in seq_len(num_chunks)) {
     start_idx <- (i - 1) * chunk_size + 1
     end_idx   <- min(i * chunk_size, total_rows)
     cur       <- copy(dt[start_idx:end_idx])
     removed_list <- list()
     
-    # (1) µL¹ïÀ³ BLabel
+    # (1) ç„¡å°æ‡‰ BLabel
     B_cols <- setdiff(names(stopuid_B), "Id")
     dropB  <- intersect(B_cols, names(cur))
     if (length(dropB)) cur[, (dropB) := NULL]
@@ -1228,7 +1228,7 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # (2) µL¹ïÀ³ DLabel
+    # (2) ç„¡å°æ‡‰ DLabel
     D_cols <- setdiff(names(stopuid_D), "Id")
     dropD  <- intersect(D_cols, names(cur))
     if (length(dropD)) cur[, (dropD) := NULL]
@@ -1241,7 +1241,7 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # (3) BoardingStopName ¿ò¥¢
+    # (3) BoardingStopName éºå¤±
     cond <- is.na(cur$BoardingStopName) | cur$BoardingStopName == ""
     if (any(cond)) {
       removed_list[[length(removed_list)+1]] <-
@@ -1249,7 +1249,7 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # (4) DeboardingStopName ¿ò¥¢
+    # (4) DeboardingStopName éºå¤±
     cond <- is.na(cur$DeboardingStopName) | cur$DeboardingStopName == ""
     if (any(cond)) {
       removed_list[[length(removed_list)+1]] <-
@@ -1257,7 +1257,7 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # (5) ¤W¤U¨®¯¸¦W¬Û¦P
+    # (5) ä¸Šä¸‹è»Šç«™åç›¸åŒ
     cond <- cur$BoardingStopName == cur$DeboardingStopName
     if (any(cond)) {
       removed_list[[length(removed_list)+1]] <-
@@ -1265,21 +1265,21 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # (6) ¯¸¦W»P Label ¤£¤@­P
+    # (6) ç«™åèˆ‡ Label ä¸ä¸€è‡´
     cond <- cur$BoardingStopName != cur$BLabel
     if (any(cond)) {
       removed_list[[length(removed_list)+1]] <-
-        cur[cond][, DeletionReason := "BoardingStopName ¡Ú BLabel"]
+        cur[cond][, DeletionReason := "BoardingStopName â‰  BLabel"]
       cur <- cur[!cond]
     }
     cond <- cur$DeboardingStopName != cur$DLabel
     if (any(cond)) {
       removed_list[[length(removed_list)+1]] <-
-        cur[cond][, DeletionReason := "DeboardingStopName ¡Ú DLabel"]
+        cur[cond][, DeletionReason := "DeboardingStopName â‰  DLabel"]
       cur <- cur[!cond]
     }
     
-    # (7) ¸g½n«×¿ò¥¢
+    # (7) ç¶“ç·¯åº¦éºå¤±
     cond <- is.na(cur$Blongitude) | is.na(cur$Blatitude) |
       is.na(cur$Dlongitude) | is.na(cur$Dlatitude)
     if (any(cond)) {
@@ -1288,7 +1288,7 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # (8) ¨ä¥LÄæ¦ì NA
+    # (8) å…¶ä»–æ¬„ä½ NA
     cond <- !complete.cases(cur)
     if (any(cond)) {
       removed_list[[length(removed_list)+1]] <-
@@ -1296,13 +1296,13 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
       cur <- cur[!cond]
     }
     
-    # ¦¬¶°¥» chunk ªº§R°£¬ö¿ı
+    # æ”¶é›†æœ¬ chunk çš„åˆªé™¤ç´€éŒ„
     if (length(removed_list) > 0) {
       removed_chunks[[i]] <- rbindlist(removed_list, use.names = TRUE, fill = TRUE)
     }
   }
   
-  # --- 4. ¦X¨Ö¨Ã¡]¥i¿ï¡^¶×¥X
+  # --- 4. åˆä½µä¸¦ï¼ˆå¯é¸ï¼‰åŒ¯å‡º
   removed_dt <- if (length(removed_chunks) > 0)
     rbindlist(removed_chunks, use.names = TRUE, fill = TRUE)
   else
@@ -1312,16 +1312,16 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
     write_fst(as.data.frame(removed_dt), removed_path)
   }
   
-  # ¦^¶Ç¥u§t³Q§R°£¸ê®Æªº data.table
+  # å›å‚³åªå«è¢«åˆªé™¤è³‡æ–™çš„ data.table
   return(removed_dt)
 }
 
 #2023
 {
-  TPEbus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023»O¥_¥«¤½¨®.fst"
-  NTWbus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023·s¥_¥«¤½¨®.fst"
-  TAObus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023®ç¶é¥«¤½¨®.fst"
-  KEEbus2023fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2023/2023°ò¶©¥«¤½¨®.fst"
+  TPEbus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023è‡ºåŒ—å¸‚å…¬è»Š.fst"
+  NTWbus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023æ–°åŒ—å¸‚å…¬è»Š.fst"
+  TAObus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023æ¡ƒåœ’å¸‚å…¬è»Š.fst"
+  KEEbus2023fst <- "E:/brain/è§£å£“ç¸®data/fst/2023/2023åŸºéš†å¸‚å…¬è»Š.fst"
   nrow(fst(TPEbus2023fst))
   nrow(fst(NTWbus2023fst))
   nrow(fst(TAObus2023fst))
@@ -1340,39 +1340,39 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
     mutate(Year = year(DeboardingTime)) %>%
     count(Year)
   nrow(TAObus2023df)
-  nrow(KEEbus2023df) #¬Û¦P¯¸¦W¯¸½X:21322734-6357248=14965486
+  nrow(KEEbus2023df) #ç›¸åŒç«™åç«™ç¢¼:21322734-6357248=14965486
   
-  TPEbus2023df <- fill_missing_stops(TPEbus2023df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/»O¥_¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
-  NTWbus2023df <- fill_missing_stops(NTWbus2023df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
-  TAObus2023df <- fill_missing_stops(TAObus2023df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
-  KEEbus2023df <- fill_missing_stops(KEEbus2023df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
+  TPEbus2023df <- fill_missing_stops(TPEbus2023df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
+  NTWbus2023df <- fill_missing_stops(NTWbus2023df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
+  TAObus2023df <- fill_missing_stops(TAObus2023df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
+  KEEbus2023df <- fill_missing_stops(KEEbus2023df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
   
-  NTPbus2023df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst",
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  TYCbus2023df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst",
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  KLCbus2023df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst",
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  TPCbus2023df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/»O¥_¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst", 
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/»O¥_¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  NTPbus2023df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst",
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  TYCbus2023df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst",
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  KLCbus2023df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst",
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  TPCbus2023df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst", 
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
   
-  update_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È§R°£)2.fst",
-                    "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/·s¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X)3.fst", verbose = TRUE)
-  update_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È§R°£)2.fst",
-                    "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/®ç¶é¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X)3.fst", verbose = TRUE)
-  update_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È§R°£)2.fst",
-                    "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/°ò¶©¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X)3.fst", verbose = TRUE)
-  update_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/»O¥_¥«¤½¨®(¿ò¥¢­È§R°£)2.fst",
-                    "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2023/¤½¨®³B²z/»O¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst",
+                    "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst",
+                    "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst",
+                    "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst",
+                    "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2023/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼)3.fst", verbose = TRUE)
   
 }
 
 #2022
 {
-  TPEbus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022»O¥_¥«¤½¨®.fst"
-  NTWbus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022·s¥_¥«¤½¨®.fst"
-  TAObus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022®ç¶é¥«¤½¨®.fst"
-  KEEbus2022fst <- "E:/brain/¸ÑÀ£ÁYdata/fst/2022/2022°ò¶©¥«¤½¨®.fst"
+  TPEbus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022è‡ºåŒ—å¸‚å…¬è»Š.fst"
+  NTWbus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022æ–°åŒ—å¸‚å…¬è»Š.fst"
+  TAObus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022æ¡ƒåœ’å¸‚å…¬è»Š.fst"
+  KEEbus2022fst <- "E:/brain/è§£å£“ç¸®data/fst/2022/2022åŸºéš†å¸‚å…¬è»Š.fst"
   nrow(fst(TPEbus2022fst))
   nrow(fst(NTWbus2022fst))
   nrow(fst(TAObus2022fst))
@@ -1392,104 +1392,104 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
     mutate(Year = year(DeboardingTime)) %>%
     count(Year)
   nrow(TAObus2022df)
-  nrow(KEEbus2022df) #¬Û¦P¯¸¦W¯¸½X:21322734-6357248=14965486
+  nrow(KEEbus2022df) #ç›¸åŒç«™åç«™ç¢¼:21322734-6357248=14965486
   
-  TPEbus2022df <- fill_missing_stops(TPEbus2022df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/»O¥_¥«¤½¨®1-6¤ë(¿ò¥¢­È¶ñ¸É).fst")
-  TPEbus2022df <- fill_missing_stops(TPEbus2022df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/»O¥_¥«¤½¨®7-12¤ë(¿ò¥¢­È¶ñ¸É).fst")
-  NTWbus2022df <- fill_missing_stops(NTWbus2022df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
-  TAObus2022df <- fill_missing_stops(TAObus2022df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
-  KEEbus2022df <- fill_missing_stops(KEEbus2022df,"E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst")
+  TPEbus2022df <- fill_missing_stops(TPEbus2022df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š1-6æœˆ(éºå¤±å€¼å¡«è£œ).fst")
+  TPEbus2022df <- fill_missing_stops(TPEbus2022df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š7-12æœˆ(éºå¤±å€¼å¡«è£œ).fst")
+  NTWbus2022df <- fill_missing_stops(NTWbus2022df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
+  TAObus2022df <- fill_missing_stops(TAObus2022df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
+  KEEbus2022df <- fill_missing_stops(KEEbus2022df,"E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst")
   
-  NTPbus2022df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst",
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/·s¥_¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  TYCbus2022df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst",
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/®ç¶é¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  KLCbus2022df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È¶ñ¸É).fst",
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/°ò¶©¥«¤½¨®(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  TPCbus2022df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/»O¥_¥«¤½¨®1-6¤ë(¿ò¥¢­È¶ñ¸É).fst", 
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/»O¥_¥«¤½¨®1-6¤ë(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
-  TPCbus2022df <- process_stop_codes("E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/»O¥_¥«¤½¨®7-12¤ë(¿ò¥¢­È¶ñ¸É).fst", 
-                                     "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2022/¤½¨®³B²z/»O¥_¥«¤½¨®7-12¤ë(¿ò¥¢­È§R°£)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  NTPbus2022df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst",
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/æ–°åŒ—å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  TYCbus2022df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst",
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/æ¡ƒåœ’å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  KLCbus2022df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼å¡«è£œ).fst",
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/åŸºéš†å¸‚å…¬è»Š(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  TPCbus2022df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š1-6æœˆ(éºå¤±å€¼å¡«è£œ).fst", 
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š1-6æœˆ(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  TPCbus2022df <- process_stop_codes("E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š7-12æœˆ(éºå¤±å€¼å¡«è£œ).fst", 
+                                     "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2022/å…¬è»Šè™•ç†/è‡ºåŒ—å¸‚å…¬è»Š7-12æœˆ(éºå¤±å€¼åˆªé™¤)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
   
 }
 
 
 
-base_path <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/2024"
-busstoppath <- "E:/brain/¸ÑÀ£ÁYdata/¸ê®Æ³B²z/¤½¨®¯¸ÂI¸ê®Æ"
-NTPbusstoppath <- file.path(busstoppath,"·s¥_¥«¤½¨®¯¸ÂI.csv")
-TYCbusstoppath <- file.path(busstoppath,"®ç¶é¥«¤½¨®¯¸ÂI.csv")
-KLCbusstoppath <- file.path(busstoppath,"°ò¶©¥«¤½¨®¯¸ÂI.csv")
-TPCbusstoppath <- file.path(busstoppath,"»O¥_¥«¤½¨®¯¸ÂI.csv")
-NTPbusoutputpath <- file.path(base_path,"·s¥_¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst")
-TYCbusoutputpath <- file.path(base_path,"®ç¶é¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst")
-KLCbusoutputpath <- file.path(base_path,"°ò¶©¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst")
-TPCbusoutputpath <- file.path(base_path,"»O¥_¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst")
-NTPbusoutputpath2 <- file.path(base_path,"·s¥_¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W)v2.fst")
-TYCbusoutputpath2 <- file.path(base_path,"®ç¶é¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W)v2.fst")
-KLCbusoutputpath2 <- file.path(base_path,"°ò¶©¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W)v2.fst")
-TPCbusoutputpath2 <- file.path(base_path,"»O¥_¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W)v2.fst")
+base_path <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/2024"
+busstoppath <- "E:/brain/è§£å£“ç¸®data/è³‡æ–™è™•ç†/å…¬è»Šç«™é»è³‡æ–™"
+NTPbusstoppath <- file.path(busstoppath,"æ–°åŒ—å¸‚å…¬è»Šç«™é».csv")
+TYCbusstoppath <- file.path(busstoppath,"æ¡ƒåœ’å¸‚å…¬è»Šç«™é».csv")
+KLCbusstoppath <- file.path(busstoppath,"åŸºéš†å¸‚å…¬è»Šç«™é».csv")
+TPCbusstoppath <- file.path(busstoppath,"è‡ºåŒ—å¸‚å…¬è»Šç«™é».csv")
+NTPbusoutputpath <- file.path(base_path,"æ–°åŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst")
+TYCbusoutputpath <- file.path(base_path,"æ¡ƒåœ’å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst")
+KLCbusoutputpath <- file.path(base_path,"åŸºéš†å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst")
+TPCbusoutputpath <- file.path(base_path,"è‡ºåŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst")
+NTPbusoutputpath2 <- file.path(base_path,"æ–°åŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å)v2.fst")
+TYCbusoutputpath2 <- file.path(base_path,"æ¡ƒåœ’å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å)v2.fst")
+KLCbusoutputpath2 <- file.path(base_path,"åŸºéš†å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å)v2.fst")
+TPCbusoutputpath2 <- file.path(base_path,"è‡ºåŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å)v2.fst")
 
-NTPbusdeloutputpath <- file.path(base_path,"·s¥_¥«¤½¨®(¸g½n«×_³Q§R°£¸ê®Æ).fst")
-TYCbusdeloutputpath <- file.path(base_path,"®ç¶é¥«¤½¨®(¸g½n«×_³Q§R°£¸ê®Æ).fst")
-KLCbusdeloutputpath <- file.path(base_path,"°ò¶©¥«¤½¨®(¸g½n«×_³Q§R°£¸ê®Æ).fst")
-TPCbusdeloutputpath <- file.path(base_path,"»O¥_¥«¤½¨®(¸g½n«×_³Q§R°£¸ê®Æ).fst")
+NTPbusdeloutputpath <- file.path(base_path,"æ–°åŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_è¢«åˆªé™¤è³‡æ–™).fst")
+TYCbusdeloutputpath <- file.path(base_path,"æ¡ƒåœ’å¸‚å…¬è»Š(ç¶“ç·¯åº¦_è¢«åˆªé™¤è³‡æ–™).fst")
+KLCbusdeloutputpath <- file.path(base_path,"åŸºéš†å¸‚å…¬è»Š(ç¶“ç·¯åº¦_è¢«åˆªé™¤è³‡æ–™).fst")
+TPCbusdeloutputpath <- file.path(base_path,"è‡ºåŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_è¢«åˆªé™¤è³‡æ–™).fst")
 
-NTPbus2024df <- read_fst(file.path(base_path,"·s¥_¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst"))
+NTPbus2024df <- read_fst(file.path(base_path,"æ–°åŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst"))
 nrow(NTPdf)
 colSums(is.na(NTPdf))
 
-TPCbus2024df <- read_fst(file.path(base_path,"»O¥_¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst"))
+TPCbus2024df <- read_fst(file.path(base_path,"è‡ºåŒ—å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst"))
 nrow(TPCdf)
 colSums(is.na(TPCdf))
 
-KLCbus2024df <- read_fst(file.path(base_path,"°ò¶©¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst"))
+KLCbus2024df <- read_fst(file.path(base_path,"åŸºéš†å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst"))
 nrow(KLCdf)
 colSums(is.na(KLCdf))
 
-TYCbus2024df <- read_fst(file.path(base_path,"®ç¶é¥«¤½¨®(¸g½n«×_§R°£¬Û¦P¯¸¦W).fst"))
+TYCbus2024df <- read_fst(file.path(base_path,"æ¡ƒåœ’å¸‚å…¬è»Š(ç¶“ç·¯åº¦_åˆªé™¤ç›¸åŒç«™å).fst"))
 nrow(TYCdf)
 colSums(is.na(TYCdf))
 
 
-NTPbus2024df_head <- read_fst(file.path(base_path, "·s¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"), from = 1, to = 5)
+NTPbus2024df_head <- read_fst(file.path(base_path, "æ–°åŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"), from = 1, to = 5)
 names(NTPbus2024df_head)  
-NTPbus2024df <- read_fst(file.path(base_path, "·s¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+NTPbus2024df <- read_fst(file.path(base_path, "æ–°åŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","IDType","HolderType","TicketType",
                                    "SubTicketType","BoardingStopUID","BoardingStopName",
                                    "BoardingTime","DeboardingStopUID","DeboardingStopName",
                                    "DeboardingTime","TransferCode"))
 
-NTPbus2024df <- read_fst(file.path(base_path, "·s¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+NTPbus2024df <- read_fst(file.path(base_path, "æ–°åŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","BoardingStopUID","BoardingStopName",
                                    "DeboardingStopUID","DeboardingStopName"))
 
-TYCbus2024df <- read_fst(file.path(base_path, "®ç¶é¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+TYCbus2024df <- read_fst(file.path(base_path, "æ¡ƒåœ’å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","IDType","HolderType","TicketType",
                                    "SubTicketType","BoardingStopUID","BoardingStopName",
                                    "BoardingTime","DeboardingStopUID","DeboardingStopName",
                                    "DeboardingTime","TransferCode"))
 
-TYCbus2024df <- read_fst(file.path(base_path, "®ç¶é¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+TYCbus2024df <- read_fst(file.path(base_path, "æ¡ƒåœ’å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","BoardingStopUID","BoardingStopName",
                                    "DeboardingStopUID","DeboardingStopName"))
 
-KLCbus2024df <- read_fst(file.path(base_path, "°ò¶©¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+KLCbus2024df <- read_fst(file.path(base_path, "åŸºéš†å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","IDType","HolderType","TicketType",
                                    "SubTicketType","BoardingStopUID","BoardingStopName",
                                    "BoardingTime","DeboardingStopUID","DeboardingStopName",
                                    "DeboardingTime","TransferCode"))
 
-KLCbus2024df <- read_fst(file.path(base_path, "°ò¶©¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+KLCbus2024df <- read_fst(file.path(base_path, "åŸºéš†å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","BoardingStopUID","BoardingStopName",
                                    "DeboardingStopUID","DeboardingStopName"))
 
-TPCbus2024df <- read_fst(file.path(base_path, "»O¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+TPCbus2024df <- read_fst(file.path(base_path, "è‡ºåŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","IDType","HolderType","TicketType",
                                    "SubTicketType","BoardingStopUID","BoardingStopName",
                                    "BoardingTime","DeboardingStopUID","DeboardingStopName",
                                    "DeboardingTime","TransferCode"))
-TPCbus2024df <- read_fst(file.path(base_path, "»O¥_¥«¤½¨®(§R°£¬Û¦P¯¸¦W¯¸½X).fst"),
+TPCbus2024df <- read_fst(file.path(base_path, "è‡ºåŒ—å¸‚å…¬è»Š(åˆªé™¤ç›¸åŒç«™åç«™ç¢¼).fst"),
                          columns=c("Authority","BoardingStopUID","BoardingStopName",
                                    "DeboardingStopUID","DeboardingStopName"))
 
