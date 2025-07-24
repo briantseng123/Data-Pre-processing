@@ -33,4 +33,4 @@ library(stringi)
 library(readr)
 ```
 
-將資料轉換成
+將資料轉由csv換成fst方便管理
