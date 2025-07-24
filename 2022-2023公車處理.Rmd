@@ -113,3 +113,12 @@ KEEbus2023 <- read_csv(KEEbus2023csv, skip = 1, locale = locale(encoding = "UTF-
 KEEbus2023 <- fread(KEEbus2023csv, skip = 1, header = TRUE, encoding = "unknown")
 write_fst(KEEbus2023,KEEbus2023fst)
 ```
+# 匯入上下車站點資料
+```{r}
+ALL <- fread("E:/brain/解壓縮data/資料處理/公車站點資料/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度)3.csv",encoding="UTF-8")
+ALL <- ALL%>%
+  dplyr::select(StopUID,StopName,StationID,City,StationUID,StationName,Latitude,Longitude,
+                StationGroupID,development_level)
+```
+# 開始處理資料
+## 定義function
