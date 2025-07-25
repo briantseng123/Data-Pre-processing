@@ -1316,6 +1316,8 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
   return(removed_dt)
 }
 
+rm(list = ls())
+gc()
 #2023
 {
   TPEbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023臺北市公車.fst"
@@ -1410,6 +1412,17 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
                                      "E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
   TPCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值填補).fst", 
                                      "E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  update_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(遺失值刪除)2.fst",
+                    "E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(刪除相同站名站碼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(遺失值刪除)2.fst",
+                    "E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(刪除相同站名站碼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(遺失值刪除)2.fst",
+                    "E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(刪除相同站名站碼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值刪除)2.fst",
+                    "E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(刪除相同站名站碼)3.fst", verbose = TRUE)
+  update_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值刪除)2.fst",
+                    "E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(刪除相同站名站碼)3.fst", verbose = TRUE)
   
 }
 
