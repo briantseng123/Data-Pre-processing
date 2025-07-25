@@ -20,9 +20,18 @@ library(stars)
 library(magick)
 library(av)
 
-df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2024每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
-df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2023每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
-df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2022每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+# A5000
+{
+  df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2024每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+  df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2023每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+  df <- read_fst("E:/brain/解壓縮data/資料處理/天氣資料/2022每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+}
+# PC
+{
+  df <- read_fst("F:/淡江/研究實習生/天氣資料/2024每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+  df <- read_fst("F:/淡江/研究實習生/天氣資料/2023每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+  df <- read_fst("F:/淡江/研究實習生/天氣資料/2022每小時氣象資料(將特殊值轉為NA_v3)2.fst",as.data.table = TRUE)
+}
 
 df$StationLongitude <- as.numeric(df$StationLongitude)
 df$StationLatitude  <- as.numeric(df$StationLatitude)
