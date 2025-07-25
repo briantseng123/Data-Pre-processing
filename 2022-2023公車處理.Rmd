@@ -127,6 +127,7 @@ ALL <- ALL%>%
 - 如果BoardingStopName, BoardingStopUID, DeboardingStopName, DeboardingStopUID為""或"0"，則將被轉換為NA
 - 僅保留IsAbnormal為0的數據
 - 剃除BoardingStopName == DeboardingStopName 且 BoardingStopUID == DeboardingStopUID的數據，也剃除BoardingTime & DeboardingTime不為資料年份的數據
+以下是讀取fst檔案:
 ```{r}
 process_bus_data <- function(fst_path, columns,year_str) {
   
@@ -183,6 +184,7 @@ process_bus_data <- function(fst_path, columns,year_str) {
 }
 ```
 
+以下是讀取csv檔案:
 ```{r}
 process_bus_data <- function(path, columns,year_str) {
   
@@ -237,8 +239,13 @@ process_bus_data <- function(path, columns,year_str) {
   return(df)
   
 }
+```
 
-#填補遺失值
+### 填補遺失值
+說明:
+- 使用get_mode這個function找出眾數
+- 對於Name來說找到唯一UID去填補遺失值，反之亦然
+```{r}
 fill_missing_stops <- function(df,df_output, verbose = TRUE) {
   #df <- df %>% mutate(
     #DeboardingStopName = iconv(DeboardingStopName, from = "", to = "UTF-8"),
@@ -314,7 +321,9 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
   write_fst(df, df_output)
   return(df)
 }
+```
 
+```{r}
 #清除遺失值
 process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose = TRUE) {
   df <- read_fst(df_input)
@@ -416,7 +425,8 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
   
   return(df)
 }
-
+```
+```{r}
 #更新相同名稱站點
 update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
   library(dplyr)
@@ -488,8 +498,8 @@ update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
   write_fst(df, df_output)
   return(df)
 }
-
-
+```
+```{r}
 merge_stopuid <- function(df, stopuid, startwith, outputpath) {
   library(dplyr)
   
