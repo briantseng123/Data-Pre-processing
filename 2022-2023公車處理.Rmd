@@ -118,7 +118,7 @@ write_fst(KEEbus2023,KEEbus2023fst)
 ```{r}
 ALL <- fread("E:/brain/解壓縮data/資料處理/公車站點資料/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度)3.csv",encoding="UTF-8")
 ALL <- ALL%>%
-  dplyr::select(StopUID,StopName,StationID,City,StationUID,StationName,Latitude,Longitude,
+  dplyr::select(StopUID,StopName,City,StationUID,Latitude,Longitude,
                 StationGroupID,development_level)
 ```
 # 開始處理資料
@@ -452,618 +452,8 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
 }
 ```
 
-
+### 合併公車站點資料
 ```{r}
-merge_stopuid <- function(df, stopuid, startwith, outputpath) {
-  library(dplyr)
-  
-  stopuid <- stopuid %>%
-    mutate(Id = as.character(Id),
-           Id = ifelse(!startsWith(Id, startwith), paste0(startwith, Id), Id)) %>%
-    distinct(Id, .keep_all = TRUE)
-  
-  stopuid_B <- stopuid %>% rename_with(~ paste0("B", .), .cols = -Id)
-  stopuid_D <- stopuid %>% rename_with(~ paste0("D", .), .cols = -Id)
-  
-  df <- df %>%
-    left_join(stopuid_B, by = c("BoardingStopUID" = "Id")) %>%
-    left_join(stopuid_D, by = c("DeboardingStopUID" = "Id"))
-  
-  mask <- with(df, Code == "NAMESAME" &
-                 BoardingStopName == DeboardingStopName &
-                 !is.na(BLabel) &
-                 !is.na(DLabel) &
-                 (BLabel != DLabel))
-  
-  boarding_df <- df %>%
-    select(BoardingStopName, Blongitude, Blatitude) %>%
-    rename(StopName = BoardingStopName, longitude = Blongitude, latitude = Blatitude)
-  
-  deboarding_df <- df %>%
-    select(DeboardingStopName, Dlongitude, Dlatitude) %>%
-    rename(StopName = DeboardingStopName, longitude = Dlongitude, latitude = Dlatitude)
-  
-  all_stops_df <- bind_rows(boarding_df, deboarding_df)
-  
-  mode_func <- function(x) {
-    x <- x[!is.na(x)]
-    if (length(x) == 0) return(NA)
-    tab <- table(x)
-    mode_val <- names(tab)[tab == max(tab)]
-    return(as.numeric(mode_val[1]))
-  }
-  
-  mode_df <- all_stops_df %>%
-    group_by(StopName) %>%
-    summarise(longitude = mode_func(longitude),
-              latitude = mode_func(latitude),
-              .groups = "drop")
-  
-  mode_dict_long <- setNames(mode_df$longitude, mode_df$StopName)
-  mode_dict_lat  <- setNames(mode_df$latitude, mode_df$StopName)
-  
-  missing_before <- sum(is.na(df$Blongitude)) + sum(is.na(df$Blatitude)) +
-    sum(is.na(df$Dlongitude)) + sum(is.na(df$Dlatitude))
-  
-  df <- df %>%
-    mutate(Blongitude = if_else(is.na(Blongitude),
-                                as.numeric(mode_dict_long[BoardingStopName]),
-                                Blongitude),
-           Blatitude = if_else(is.na(Blatitude),
-                               as.numeric(mode_dict_lat[BoardingStopName]),
-                               Blatitude),
-           Dlongitude = if_else(is.na(Dlongitude),
-                                as.numeric(mode_dict_long[DeboardingStopName]),
-                                Dlongitude),
-           Dlatitude = if_else(is.na(Dlatitude),
-                               as.numeric(mode_dict_lat[DeboardingStopName]),
-                               Dlatitude))
-  
-  missing_after <- sum(is.na(df$Blongitude)) + sum(is.na(df$Blatitude)) +
-    sum(is.na(df$Dlongitude)) + sum(is.na(df$Dlatitude))
-  filled_count <- missing_before - missing_after
-  
-  df$BoardingStopName[mask] <- df$BLabel[mask]
-  df$DeboardingStopName[mask] <- df$DLabel[mask]
-  
-  
-  cat("填補前缺失值總數：", missing_before, "\n")
-  cat("成功填補缺失值數量：", filled_count, "\n")
-  cat("填補後剩餘缺失值數量：", missing_after, "\n")
-  df <- df %>% select(-Baddress, -Daddress, -BLabel, -DLabel)
-  missing_summary <- sapply(df, function(x) sum(is.na(x)))
-  missing_cols <- names(missing_summary[missing_summary > 0])
-  if (length(missing_cols) > 0) {
-    cat("【仍有缺失值的欄位】\n")
-    print(missing_summary[missing_summary > 0])
-  } else {
-    cat("目前所有欄位均無缺失值。\n")
-  }
-  
-  n_before <- nrow(df)
-  df <- df %>% drop_na()
-  n_after <- nrow(df)
-  cat("\ndrop_na() 已移除", n_before - n_after, "列缺失資料。\n")
-  
-  cat("\n【最終資料集】\n")
-  print(head(df))
-  write_fst(df,outputpath)
-  return(df)
-}
-
-merge_stopuid_fast <- function(inputfile, stopuid, startwith, outputpath) {
-  start_time <- Sys.time()
-  cat("[1/8] 載入主資料...\n")
-  dt <-  as.data.table(inputfile)
-  
-  cat("[2/8] 處理 stopuid...\n")
-  stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
-  
-  cat("[3/8] 建立 stopuid_B / stopuid_D...\n")
-  stopuid_B <- copy(stopuid)
-  stopuid_D <- copy(stopuid)
-  cols_B <- setdiff(names(stopuid_B), "Id")
-  setnames(stopuid_B, cols_B, paste0("B", cols_B))
-  cols_D <- setdiff(names(stopuid_D), "Id")
-  setnames(stopuid_D, cols_D, paste0("D", cols_D))
-  
-  cat("[4/8] 合併 stopuid_B...\n")
-  setkey(dt, BoardingStopUID)
-  setkey(stopuid_B, Id)
-  cols <- setdiff(names(stopuid_B), "Id")
-  newcols <- paste0("B", cols)
-  dt[stopuid_B, (newcols) := mget(paste0("i.", cols)), on = .(BoardingStopUID = Id)]
-  
-  cat("[5/8] 合併 stopuid_D...\n")
-  setkey(dt, DeboardingStopUID)
-  setkey(stopuid_D, Id)
-  cols_D <- setdiff(names(stopuid_D), "Id")
-  newcols_D <- paste0("D", cols_D)
-  dt[stopuid_D, (newcols_D) := mget(paste0("i.", cols_D)), on = .(DeboardingStopUID = Id)]
-  
-  cat("[6/8] 處理條件站名更新...\n")
-  dt[, mask := (Code == "NAMESAME" & 
-                  BoardingStopName == DeboardingStopName & 
-                  !is.na(BLabel) & !is.na(DLabel) & 
-                  (BLabel != DLabel))]
-  dt[mask == TRUE, BoardingStopName := BLabel]
-  dt[mask == TRUE, DeboardingStopName := DLabel]
-  dt[, mask := NULL]
-  
-  cat("[7/8] 清除欄位、移除 NA...\n")
-  remove_cols <- c("Baddress", "Daddress", "BLabel", "DLabel")
-  remove_cols <- intersect(names(dt), remove_cols)
-  dt[, (remove_cols) := NULL]
-  
-  n_before <- nrow(dt)
-  dt <- dt[complete.cases(dt)]
-  n_after <- nrow(dt)
-  cat("drop_na() 已移除", n_before - n_after, "列缺失資料。\n")
-  
-  cat("[8/8] 寫出結果至 ", outputpath, "...\n")
-  write_fst(as.data.frame(dt), outputpath)
-  
-  elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(paste0("完成！總耗時：", elapsed, " 秒。\n"))
-  return(dt)
-}
-
-merge_stopuid_fast_dropsamestopname <- function(inputfile, stopuid, startwith, outputpath) {
-  start_time <- Sys.time()
-  cat("[1/8] 載入主資料...\n")
-  dt <- as.data.table(inputfile)
-  
-  cat("[2/8] 處理 stopuid...\n")
-  stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
-  
-  cat("[3/8] 建立 stopuid_B / stopuid_D...\n")
-  stopuid_B <- copy(stopuid)
-  stopuid_D <- copy(stopuid)
-  cols_B <- setdiff(names(stopuid_B), "Id")
-  setnames(stopuid_B, cols_B, paste0("B", cols_B))
-  cols_D <- setdiff(names(stopuid_D), "Id")
-  setnames(stopuid_D, cols_D, paste0("D", cols_D))
-  
-  cat("[4/8] 合併 stopuid_B...\n")
-  setkey(dt, BoardingStopUID)
-  setkey(stopuid_B, Id)
-  cols <- setdiff(names(stopuid_B), "Id")
-  newcols <- paste0("B", cols)
-  dt[stopuid_B, (newcols) := mget(paste0("i.", cols)), on = .(BoardingStopUID = Id)]
-  
-  cat("[5/8] 合併 stopuid_D...\n")
-  setkey(dt, DeboardingStopUID)
-  setkey(stopuid_D, Id)
-  cols_D <- setdiff(names(stopuid_D), "Id")
-  newcols_D <- paste0("D", cols_D)
-  dt[stopuid_D, (newcols_D) := mget(paste0("i.", cols_D)), on = .(DeboardingStopUID = Id)]
-  
-  cat("[6/8] 刪除 BoardingStopName == DeboardingStopName 的資料...\n")
-  
-  dt <- dt[!( !is.na(BoardingStopName) & !is.na(DeboardingStopName) &
-                BoardingStopName == DeboardingStopName & BoardingStopName != BLabel &
-                DeboardingStopName != DLabel)]
-  
-  cat("[7/8] 清除不必要欄位、移除 NA...\n")
-  remove_cols <- c("Baddress", "Daddress", "BLabel", "DLabel")
-  remove_cols <- intersect(names(dt), remove_cols)
-  dt[, (remove_cols) := NULL]
-  
-  n_before <- nrow(dt)
-  dt <- dt[complete.cases(dt)]
-  n_after <- nrow(dt)
-  cat("drop_na() 已移除", n_before - n_after, "列缺失資料。\n")
-  
-  cat("[8/8] 寫出結果至", outputpath, "...\n")
-  write_fst(as.data.frame(dt), outputpath)
-  
-  elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(paste0("完成！總耗時：", elapsed, " 秒。\n"))
-  return(dt)
-}
-
-merge_stopuid_fast_chunk <- function(inputfile, stopuid, startwith, outputpath, chunk_size = 10000000) {
-  library(data.table)
-  library(fst)
-  
-  start_time <- Sys.time()
-  
-  cat("[1/9] 載入主資料...\n")
-  dt <- as.data.table(inputfile)
-  
-  cat("[2/9] 處理 stopuid...\n")
-  stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
-  
-  cat("[3/9] 建立 stopuid_B / stopuid_D...\n")
-  stopuid_B <- copy(stopuid)
-  stopuid_D <- copy(stopuid)
-  cols_B <- setdiff(names(stopuid_B), "Id")
-  setnames(stopuid_B, cols_B, paste0("B", cols_B))
-  cols_D <- setdiff(names(stopuid_D), "Id")
-  setnames(stopuid_D, cols_D, paste0("D", cols_D))
-  
-  total_rows <- nrow(dt)
-  num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[分塊處理] 總筆數: %d, 每區塊: %d 筆, 共分 %d 區塊\n", total_rows, chunk_size, num_chunks))
-  
-  result_list <- vector("list", num_chunks)
-  total_removed <- 0
-  
-  for (i in 1:num_chunks) {
-    start_idx <- ((i - 1) * chunk_size) + 1
-    end_idx <- min(i * chunk_size, total_rows)
-    dt_chunk <- dt[start_idx:end_idx]
-    
-    setkey(dt_chunk, BoardingStopUID)
-    setkey(stopuid_B, Id)
-    cols <- setdiff(names(stopuid_B), "Id")
-    newcols <- paste0("B", cols)
-    dt_chunk[stopuid_B, (newcols) := mget(paste0("i.", cols)), on = .(BoardingStopUID = Id)]
-    
-    setkey(dt_chunk, DeboardingStopUID)
-    setkey(stopuid_D, Id)
-    cols_D <- setdiff(names(stopuid_D), "Id")
-    newcols_D <- paste0("D", cols_D)
-    dt_chunk[stopuid_D, (newcols_D) := mget(paste0("i.", cols_D)), on = .(DeboardingStopUID = Id)]
-    
-    if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
-    if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
-    
-    dt_chunk[, mask := (Code == "NAMESAME" & 
-                          BoardingStopName == DeboardingStopName & 
-                          !is.na(BLabel) & !is.na(DLabel) & 
-                          (BLabel != DLabel))]
-    dt_chunk[mask == TRUE, BoardingStopName := BLabel]
-    dt_chunk[mask == TRUE, DeboardingStopName := DLabel]
-    dt_chunk[, mask := NULL]
-    
-    remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
-    if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
-    
-    n_before <- nrow(dt_chunk)
-    dt_chunk <- dt_chunk[complete.cases(dt_chunk)]
-    n_after <- nrow(dt_chunk)
-    removed <- n_before - n_after
-    total_removed <- total_removed + removed
-    
-    cat(sprintf("Chunk %d/%d：原始列數 %d，移除 %d 列 NA，剩下 %d 列\n",
-                i, num_chunks, n_before, removed, n_after))
-    
-    result_list[[i]] <- dt_chunk
-  }
-  
-  cat("[合併區塊] 正在合併所有區塊...\n")
-  final_dt <- rbindlist(result_list)
-  
-  cat(sprintf("總共移除缺失資料列數：%d\n", total_removed))
-  cat(sprintf("[9/9] 寫出結果至 %s ...\n", outputpath))
-  write_fst(as.data.frame(final_dt), outputpath)
-  
-  elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
-  
-  return(final_dt)
-}
-
-merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startwith, outputpath, chunk_size = 10000000) {
-  library(data.table)
-  library(fst)
-  
-  start_time <- Sys.time()
-  
-  cat("[1/9] 載入主資料...\n")
-  dt <- as.data.table(inputfile)
-  
-  cat("[2/9] 處理 stopuid...\n")
-  stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
-  
-  cat("[3/9] 建立 stopuid_B / stopuid_D...\n")
-  safe_prefix_rename <- function(dt, prefix) {
-    cols <- setdiff(names(dt), "Id")
-    cols_to_rename <- cols[!startsWith(cols, prefix)]
-    newnames <- paste0(prefix, cols_to_rename)
-    setnames(dt, cols_to_rename, newnames)
-    return(newnames)
-  }
-  
-  stopuid_B <- copy(stopuid)
-  B_cols <- safe_prefix_rename(stopuid_B, "B")
-  
-  stopuid_D <- copy(stopuid)
-  D_cols <- safe_prefix_rename(stopuid_D, "D")
-  
-  total_rows <- nrow(dt)
-  num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[分塊處理] 總筆數: %d, 每區塊: %d 筆, 共分 %d 區塊\n", total_rows, chunk_size, num_chunks))
-  
-  result_list <- vector("list", num_chunks)
-  total_removed <- 0
-  
-  for (i in 1:num_chunks) {
-    start_idx <- ((i - 1) * chunk_size) + 1
-    end_idx <- min(i * chunk_size, total_rows)
-    dt_chunk <- dt[start_idx:end_idx]
-    
-    cat(sprintf("處理 Chunk %d ...\n", i))
-    
-    setkey(dt_chunk, BoardingStopUID)
-    setkey(stopuid_B, Id)
-    cols <- setdiff(names(stopuid_B), "Id")
-    newcols <- paste0("B", cols)
-    dt_chunk[stopuid_B, (newcols) := mget(paste0("i.", cols)), on = .(BoardingStopUID = Id)]
-    
-    setkey(dt_chunk, DeboardingStopUID)
-    setkey(stopuid_D, Id)
-    cols_D <- setdiff(names(stopuid_D), "Id")
-    newcols_D <- paste0("D", cols_D)
-    dt_chunk[stopuid_D, (newcols_D) := mget(paste0("i.", cols_D)), on = .(DeboardingStopUID = Id)]
-    
-    if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
-    if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
-    
-    cat("[6/9] 刪除滿足條件的資料列...\n")
-    dt_chunk <- dt_chunk[!( !is.na(BoardingStopName) & 
-                              !is.na(DeboardingStopName) & 
-                              BoardingStopName == DeboardingStopName & 
-                              BoardingStopName != BLabel & 
-                              DeboardingStopName != DLabel&
-                              BoardingStopName == ""&
-                              DeboardingStopName == "")]
-    dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
-    
-    cat("[7/9] 清除不必要欄位、移除 NA...\n")
-    remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
-    if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
-    
-    n_before <- nrow(dt_chunk)
-    dt_chunk <- dt_chunk[complete.cases(dt_chunk)]
-    n_after <- nrow(dt_chunk)
-    removed <- n_before - n_after
-    total_removed <- total_removed + removed
-    
-    cat(sprintf("Chunk %d/%d：原始列數 %d，移除 %d 列 NA，剩下 %d 列\n",
-                i, num_chunks, n_before, removed, n_after))
-    
-    result_list[[i]] <- dt_chunk
-    rm(dt_chunk)
-    gc()
-  }
-  
-  cat("[合併區塊] 正在合併所有區塊...\n")
-  final_dt <- rbindlist(result_list)
-  
-  cat(sprintf("總共移除缺失資料列數：%d\n", total_removed))
-  cat(sprintf("[9/9] 寫出結果至 %s ...\n", outputpath))
-  write_fst(as.data.frame(final_dt), outputpath)
-  
-  elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
-  
-  return(final_dt)
-}
-
-merge_stopuid_fast_chunk_dropsamestopname <- function(inputfile, stopuid, startwith, outputpath, chunk_size = 10000000) {
-  library(data.table)
-  library(fst)
-  
-  start_time <- Sys.time()
-  
-  cat("[1/9] 載入主資料...\n")
-  dt <- as.data.table(inputfile)
-  
-  cat("[2/9] 處理 stopuid...\n")
-  stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
-  
-  cat("[3/9] 建立 stopuid_B / stopuid_D...\n")
-  safe_prefix_rename <- function(dt, prefix) {
-    cols <- setdiff(names(dt), "Id")
-    cols_to_rename <- cols[!startsWith(cols, prefix)]
-    newnames <- paste0(prefix, cols_to_rename)
-    setnames(dt, cols_to_rename, newnames)
-    return(newnames)
-  }
-  
-  stopuid_B <- copy(stopuid)
-  B_cols <- safe_prefix_rename(stopuid_B, "B")
-  
-  stopuid_D <- copy(stopuid)
-  D_cols <- safe_prefix_rename(stopuid_D, "D")
-  
-  total_rows <- nrow(dt)
-  num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[分塊處理] 總筆數: %d, 每區塊: %d 筆, 共分 %d 區塊\n", total_rows, chunk_size, num_chunks))
-  
-  result_list <- vector("list", num_chunks)
-  total_removed <- 0
-  
-  for (i in 1:num_chunks) {
-    start_idx <- ((i - 1) * chunk_size) + 1
-    end_idx <- min(i * chunk_size, total_rows)
-    dt_chunk <- dt[start_idx:end_idx]
-    
-    cat(sprintf("處理 Chunk %d ...\n", i))
-    
-    setkey(dt_chunk, BoardingStopUID)
-    setkey(stopuid_B, Id)
-    dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(BoardingStopUID = Id)]
-    
-    setkey(dt_chunk, DeboardingStopUID)
-    setkey(stopuid_D, Id)
-    dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(DeboardingStopUID = Id)]
-    
-    if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
-    if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
-    
-    cat("[6/9] 刪除滿足條件的資料列...\n")
-    dt_chunk <- dt_chunk[!( !is.na(BoardingStopName) & 
-                              !is.na(DeboardingStopName) & 
-                              BoardingStopName == DeboardingStopName & 
-                              BoardingStopName != BLabel & 
-                              DeboardingStopName != DLabel &
-                              BoardingStopName != "" &
-                              DeboardingStopName != "")]
-    
-    required_fields <- c("Blongitude", "Blatitude", "Dlongitude", "Dlatitude")
-    missing_fields <- setdiff(required_fields, names(dt_chunk))
-    if (length(missing_fields) > 0) {
-      stop(paste("缺少必要欄位：", paste(missing_fields, collapse = ", ")))
-    }
-    dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
-    
-    cat("[7/9] 清除不必要欄位、移除 NA...\n")
-    remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
-    if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
-    
-    n_before <- nrow(dt_chunk)
-    dt_chunk <- dt_chunk[complete.cases(dt_chunk)]
-    n_after <- nrow(dt_chunk)
-    removed <- n_before - n_after
-    total_removed <- total_removed + removed
-    
-    cat(sprintf("Chunk %d/%d：原始列數 %d，移除 %d 列 NA，剩下 %d 列\n",
-                i, num_chunks, n_before, removed, n_after))
-    
-    result_list[[i]] <- dt_chunk
-    rm(dt_chunk)
-    gc()
-  }
-  
-  cat("[合併區塊] 正在合併所有區塊...\n")
-  final_dt <- rbindlist(result_list)
-  
-  cat(sprintf("總共移除缺失資料列數：%d\n", total_removed))
-  cat(sprintf("[9/9] 寫出結果至 %s ...\n", outputpath))
-  write_fst(as.data.frame(final_dt), outputpath)
-  
-  elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
-  
-  return(final_dt)
-}
-
-merge_stopuid_fast_chunk_dropsamestopname2 <- function(inputfile, stopuid, startwith, outputpath, chunk_size = 10000000) {
-  library(data.table)
-  library(fst)
-  
-  start_time <- Sys.time()
-  
-  cat("[1/9] 載入主資料...\n")
-  dt <- as.data.table(inputfile)
-  
-  cat("[2/9] 處理 stopuid...\n")
-  stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
-  
-  cat("[3/9] 建立 stopuid_B / stopuid_D...\n")
-  safe_prefix_rename <- function(dt, prefix) {
-    cols <- setdiff(names(dt), "Id")
-    cols_to_rename <- cols[!startsWith(cols, prefix)]
-    newnames <- paste0(prefix, cols_to_rename)
-    setnames(dt, cols_to_rename, newnames)
-    return(newnames)
-  }
-  
-  stopuid_B <- copy(stopuid)
-  B_cols <- safe_prefix_rename(stopuid_B, "B")
-  
-  stopuid_D <- copy(stopuid)
-  D_cols <- safe_prefix_rename(stopuid_D, "D")
-  
-  total_rows <- nrow(dt)
-  num_chunks <- ceiling(total_rows / chunk_size)
-  cat(sprintf("[分塊處理] 總筆數: %d, 每區塊: %d 筆, 共分 %d 區塊\n", total_rows, chunk_size, num_chunks))
-  
-  result_list <- vector("list", num_chunks)
-  total_removed <- 0
-  
-  for (i in 1:num_chunks) {
-    start_idx <- ((i - 1) * chunk_size) + 1
-    end_idx <- min(i * chunk_size, total_rows)
-    dt_chunk <- dt[start_idx:end_idx]
-    
-    cat(sprintf("處理 Chunk %d ...\n", i))
-    
-    setkey(dt_chunk, BoardingStopUID)
-    setkey(stopuid_B, Id)
-    dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(BoardingStopUID = Id)]
-    
-    dt_chunk <- dt_chunk[!is.na(BLabel) & BLabel != ""]
-    
-    setkey(dt_chunk, DeboardingStopUID)
-    setkey(stopuid_D, Id)
-    dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(DeboardingStopUID = Id)]
-    
-    dt_chunk <- dt_chunk[!is.na(DLabel) & DLabel != ""]
-    
-    dt_chunk[, BoardingStopName := ifelse(is.na(BoardingStopName) | BoardingStopName == "", "", BoardingStopName)]
-    dt_chunk[, DeboardingStopName := ifelse(is.na(DeboardingStopName) | DeboardingStopName == "", "", DeboardingStopName)]
-    
-    if (!("BLabel" %in% names(dt_chunk))) dt_chunk[, BLabel := NA]
-    if (!("DLabel" %in% names(dt_chunk))) dt_chunk[, DLabel := NA]
-    
-    cat("[6/9] 刪除滿足條件的資料列...\n")
-    dt_chunk <- dt_chunk[ !((is.na(BoardingStopName) | BoardingStopName == "") |
-                              (is.na(DeboardingStopName) | DeboardingStopName == "") |
-                              (BoardingStopName == DeboardingStopName) |
-                              (BoardingStopName != BLabel) |
-                              (DeboardingStopName != DLabel))]
-    
-    required_fields <- c("Blongitude", "Blatitude", "Dlongitude", "Dlatitude")
-    missing_fields <- setdiff(required_fields, names(dt_chunk))
-    if (length(missing_fields) > 0) {
-      stop(paste("缺少必要欄位：", paste(missing_fields, collapse = ", ")))
-    }
-    dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
-    
-    cat("[7/9] 清除不必要欄位、移除 NA...\n")
-    remove_cols <- intersect(names(dt_chunk), c("Baddress", "Daddress", "BLabel", "DLabel"))
-    if (length(remove_cols) > 0) dt_chunk[, (remove_cols) := NULL]
-    
-    n_before <- nrow(dt_chunk)
-    dt_chunk <- dt_chunk[complete.cases(dt_chunk)]
-    n_after <- nrow(dt_chunk)
-    removed <- n_before - n_after
-    total_removed <- total_removed + removed
-    
-    cat(sprintf("Chunk %d/%d：原始列數 %d，移除 %d 列 NA，剩下 %d 列\n",
-                i, num_chunks, n_before, removed, n_after))
-    
-    result_list[[i]] <- dt_chunk
-    rm(dt_chunk)
-    gc()
-  }
-  
-  
-  cat("[合併區塊] 正在合併所有區塊...\n")
-  final_dt <- rbindlist(result_list)
-  
-  cat(sprintf("總共移除缺失資料列數：%d\n", total_removed))
-  cat(sprintf("[9/9] 寫出結果至 %s ...\n", outputpath))
-  write_fst(as.data.frame(final_dt), outputpath)
-  
-  elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
-  cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
-  
-  return(final_dt)
-}
-
 merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, startwith, outputpath, chunk_size = 10000000) {
   library(data.table)
   library(fst)
@@ -1074,13 +464,13 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
   
   cat("[2/9] 處理 stopuid...\n")
   stopuid <- as.data.table(stopuid)
-  stopuid[, Id := as.character(Id)]
-  stopuid[!startsWith(Id, startwith), Id := paste0(startwith, Id)]
-  stopuid <- unique(stopuid, by = "Id")
+  stopuid[, StopUID := as.character(StopUID)]
+  stopuid[!startsWith(StopUID, startwith), StopUID := paste0(startwith, StopUID)]
+  stopuid <- unique(stopuid, by = "StopUID")
   
   cat("[3/9] 建立 stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
-    cols <- setdiff(names(dt), "Id")
+    cols <- setdiff(names(dt), "StopUID")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
     newnames <- paste0(prefix, cols_to_rename)
     setnames(dt, cols_to_rename, newnames)
@@ -1108,17 +498,17 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
     
     # 合併 Boarding 標籤資訊
     setkey(dt_chunk, BoardingStopUID)
-    setkey(stopuid_B, Id)
-    dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(BoardingStopUID = Id)]
+    setkey(stopuid_B, StopUID)
+    dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(BoardingStopUID = StopUID)]
     
     # 合併 Deboarding 標籤資訊
     setkey(dt_chunk, DeboardingStopUID)
-    setkey(stopuid_D, Id)
-    dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(DeboardingStopUID = Id)]
+    setkey(stopuid_D, StopUID)
+    dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(DeboardingStopUID = StopUID)]
     
     # 如果標籤與現有名稱不符，使用標籤取代名稱
-    dt_chunk[(BLabel != BoardingStopName | BoardingStopName=="")  & !is.na(BLabel), BoardingStopName := BLabel]
-    dt_chunk[(DLabel != DeboardingStopName | DeboardingStopName=="") & !is.na(DLabel), DeboardingStopName := DLabel]
+    dt_chunk[(BStopName != BoardingStopName | BoardingStopName=="")  & !is.na(BStopName), BoardingStopName := BStopName]
+    dt_chunk[(DStopName != DeboardingStopName | DeboardingStopName=="") & !is.na(DStopName), DeboardingStopName := DStopName]
     
     # 將 NA 或空字串轉回空字串，保留 address 欄位
     dt_chunk[, BoardingStopName   := ifelse(is.na(BoardingStopName)   | BoardingStopName == "", "", BoardingStopName)]
@@ -1129,20 +519,20 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, start
     dt_chunk <- dt_chunk[ !(BoardingStopName == DeboardingStopName)]
     
     # 確認必要座標欄位存在
-    required_fields <- c("Blongitude", "Blatitude", "Dlongitude", "Dlatitude")
+    required_fields <- c("BLongitude", "BLatitude", "DLongitude", "DLatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
     if (length(missing_fields) > 0) {
       stop(paste("缺少必要欄位：", paste(missing_fields, collapse = ", ")))
     }
     # 刪除缺少座標的列
-    dt_chunk <- dt_chunk[! (is.na(Blongitude) | is.na(Blatitude) | is.na(Dlongitude) | is.na(Dlatitude))]
+    dt_chunk <- dt_chunk[! (is.na(BLongitude) | is.na(BLatitude) | is.na(DLongitude) | is.na(DLatitude))]
     
     cat("[7/9] 清除不必要欄位並移除 NA (保留 address)...\n")
-    dt_chunk[, c("BLabel","DLabel") := NULL]
+    dt_chunk[, c("BStopName","DStopName") := NULL]
     
     # 定義「必須 non???NA」的欄位
     keep_cols <- c("BoardingStopName","DeboardingStopName",
-                   "Blongitude","Blatitude","Dlongitude","Dlatitude")
+                   "BLongitude","BLatitude","DLongitude","DLatitude")
     
     # 只對這些欄位檢查
     n_before <- nrow(dt_chunk)
@@ -1357,6 +747,11 @@ gc()
   KLCbus2023df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
   
   TPCbus2023df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值填補).fst", "E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+col=c("Authority","HolderType","TicketType","SubTicketType","BoardingStopUID","BoardingStopName","BoardingTime","DeboardingStopUID","DeboardingStopName","DeboardingTime","TransferCode")
+
+TPCbus2023df <- read_fst("E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
+merge_stopuid_fast_chunk_dropsamestopname3(TPCbus2023df,ALL,"","E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(經緯度刪除相同站名)3.fst")
 ```
 
 ### 2022資料
