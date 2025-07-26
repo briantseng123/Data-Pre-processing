@@ -460,8 +460,8 @@ update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
 }
 
 # for處理臺北公車
-update_stop_codes_in_chunks <- function(df_input, df_output, verbose = TRUE, chunk_dates = NULL) {
-
+update_stop_codes_in_chunks <- function(df_input, df_output_prefix, verbose = TRUE, chunk_dates = NULL) {
+  
   if (verbose) cat("開始讀取資料：", df_input, "\n")
   df_full <- read_fst(df_input)
   if (verbose) cat("資料讀取完成。總筆數：", nrow(df_full), "\n")
@@ -481,38 +481,50 @@ update_stop_codes_in_chunks <- function(df_input, df_output, verbose = TRUE, chu
   name_to_boarding_uid <- setNames(ref_boarding_rev$BoardingStopUID, ref_boarding_rev$BoardingStopName)
   name_to_deboarding_uid <- setNames(ref_deboarding_rev$DeboardingStopUID, ref_deboarding_rev$DeboardingStopName)
   
-  rm(ref, ref_boarding, ref_deboarding, ref_boarding_rev, ref_deboarding_rev) 
+  rm(ref, ref_boarding, ref_deboarding, ref_boarding_rev, ref_deboarding_rev)
   gc()
   
-  processed_chunks_list <- list()
   
   if (is.null(chunk_dates) || length(chunk_dates) == 0) {
-    chunks_to_process <- list(df_full)
+    chunks_to_process_data <- list(df_full)
+    chunks_to_process_labels <- list("full_data")
     if (verbose) cat("不分段處理，將一次性處理所有資料。\n")
   } else {
-    if (!"Date" %in% names(df_full)) {
-      stop("若要依日期分段，資料框中必須包含 'Date' 欄位。")
+    if (!"DeboardingTime" %in% names(df_full)) {
+      stop("若要依 DeboardingTime 分段，資料框中必須包含 'DeboardingTime' 欄位。")
     }
+    
+    
     df_full$DMonth <- as.integer(format(df_full$DeboardingTime, "%m"))
     
-    chunks_to_process <- list()
+    chunks_to_process_data <- list()
+    chunks_to_process_labels <- list() 
+    
     for (i in seq_along(chunk_dates)) {
       month_range <- chunk_dates[[i]]
+      month_label <- paste0("month_", paste(month_range, collapse = "_"))
+      
       if (verbose) cat("正在處理月份範圍：", paste(month_range, collapse = ", "), "\n")
       chunk_df <- df_full %>% filter(DMonth %in% month_range)
-      chunks_to_process[[i]] <- chunk_df
+      
+      chunks_to_process_data[[i]] <- chunk_df
+      chunks_to_process_labels[[i]] <- month_label
     }
     rm(df_full)
     gc()
   }
   
-  for (i in seq_along(chunks_to_process)) {
-    chunk_df <- chunks_to_process[[i]]
+  all_output_files <- c() 
+  
+  for (i in seq_along(chunks_to_process_data)) {
+    chunk_df <- chunks_to_process_data[[i]]
+    chunk_label <- chunks_to_process_labels[[i]] 
+    
     if (nrow(chunk_df) == 0) {
-      if (verbose) cat(sprintf("第 %d 個資料塊為空，跳過。\n", i))
+      if (verbose) cat(sprintf("第 %d 個資料塊 (%s) 為空，跳過。\n", i, chunk_label))
       next
     }
-    if (verbose) cat(sprintf("開始處理第 %d 個資料塊 (筆數: %d)。\n", i, nrow(chunk_df)))
+    if (verbose) cat(sprintf("開始處理第 %d 個資料塊 (%s) (筆數: %d)。\n", i, chunk_label, nrow(chunk_df)))
     
     chunk_df <- chunk_df %>% mutate(
       BoardingStopName = if_else(
@@ -552,35 +564,28 @@ update_stop_codes_in_chunks <- function(df_input, df_output, verbose = TRUE, chu
     n_after_chunk <- nrow(chunk_df)
     
     if (verbose) {
-      cat(sprintf(" 第 %d 個資料塊刪除了 %d 筆資料。\n", i, n_before_chunk - n_after_chunk))
+      cat(sprintf("第 %d 個資料塊 (%s) 刪除了 %d 筆資料。\n", i, chunk_label, n_before_chunk - n_after_chunk))
     }
     
-    processed_chunks_list[[i]] <- chunk_df
+    output_filename <- paste0(df_output_prefix, "_", chunk_label, ".fst")
+    if (verbose) cat(sprintf("寫入處理後的第 %d 個資料塊 (%s) 到：%s\n", i, chunk_label, output_filename))
+    write_fst(chunk_df, output_filename)
+    all_output_files <- c(all_output_files, output_filename) 
+    
     rm(chunk_df) 
     gc()
-    if (verbose) cat(sprintf("第 %d 個資料塊處理完成。\n", i))
+    if (verbose) cat(sprintf("第 %d 個資料塊 (%s) 處理完成。\n", i, chunk_label))
   }
-  
-  if (verbose) cat("合併所有處理後的資料塊。\n")
-  final_df <- bind_rows(processed_chunks_list)
-  if (verbose) cat("最終資料筆數：", nrow(final_df), "\n")
-  gc()
   
   if (verbose) {
-    uidsame_count <- final_df %>% filter(Code == "UIDSAME", BoardingStopUID == DeboardingStopUID) %>% nrow()
-    namesame_count <- final_df %>% filter(Code == "NAMESAME", BoardingStopName == DeboardingStopName) %>% nrow()
-    cat("最終檢查：\n")
-    cat(" Code 為 UIDSAME，且 BoardingStopUID == DeboardingStopUID 的筆數：", uidsame_count, "\n")
-    cat(" Code 為 NAMESAME，且 BoardingStopName == DeboardingStopName 的筆數：", namesame_count, "\n")
+    cat("\n所有處理後的資料塊已分別寫入以下檔案：\n")
+    print(all_output_files)
   }
   
-  if (verbose) cat("寫入最終結果到：", df_output, "\n")
-  write_fst(final_df, df_output)
-  
   gc() 
-  return(final_df)
+  
+  return(invisible(all_output_files))
 }
-
 
 merge_stopuid <- function(df, stopuid, startwith, outputpath) {
   library(dplyr)
@@ -1487,7 +1492,7 @@ gc()
   update_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值刪除)2.fst",
                     "E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(刪除相同站名站碼)3.fst", verbose = TRUE)
   update_stop_codes_in_chunks("E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值刪除)2.fst",
-                    "E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(刪除相同站名站碼)3.fst", verbose = TRUE,chunk_dates = list(1:6, 7:12))
+                    "E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(刪除相同站名站碼)3", verbose = TRUE,chunk_dates = list(1:6, 7:12))
   
 }
 
