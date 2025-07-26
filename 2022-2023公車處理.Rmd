@@ -323,8 +323,13 @@ fill_missing_stops <- function(df,df_output, verbose = TRUE) {
 }
 ```
 
-###清除遺失值
-
+### 清除遺失值
+說明:
+- 將BoardingStopName, BoardingStopUID, DeboardingStopName, DeboardingStopUID為-99或NULL的obs轉換為NA，並且丟棄所有的NA
+- 由於BoardingStopSequence, DeboardingStopSequence應為正整數，建立一個變數Label作為劃分上下車站序是否正常，分類分成BZ(BoardingSeq zero，上車站序為0)；DZ(DeboardingSeq zero，下車站序為0)；BSZ(Both same zero，上下車站序皆為0)；BNZ(Both non zero，上下車站序皆不為零，屬於正常範圍)；BNZE(Both non zero error，上下車站序皆不為零，但上下車站序一致是有誤的)
+- 由於上下車站名或站碼會有相同的問題，因此建立一變數Code作為劃分站碼或站序是否相同，分類分成UIDSAME(站碼相同)；NAMESAME(站名相同)；UIDNAMESAME(站碼相同且站名相同)；CHECK(上下車站名站碼皆不同)
+- 使用Label及Code這兩個變數中找出同時符合BNZ及CHECK的資料去做出對照表，做出唯一值映射表，可以對於UIDSAME的BoardingStopName, DeboardingStopName進行映射，可以對應其他UID，NAMESAME可以使用BoardingStopUID, DeboardingStopUID對應其他NAME
+- 刪除UIDNAME裡仍然相同的站碼，NAMESAME裡仍然相同的站名
 ```{r}
 process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose = TRUE) {
   df <- read_fst(df_input)
@@ -422,67 +427,12 @@ process_stop_codes <- function(df_input, df_output, drop_na_rows = TRUE, verbose
   df$BoardingStopUID[mask_uidsame] <- name_to_boarding_uid[ as.character(df$BoardingStopName[mask_uidsame]) ]
   df$DeboardingStopUID[mask_uidsame] <- name_to_deboarding_uid[ as.character(df$DeboardingStopName[mask_uidsame]) ]
   
-  write_fst(df, df_output)
-  
-  return(df)
-}
-```
-```{r}
-#更新相同名稱站點
-update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
-  library(dplyr)
-  df <- read_fst(df_input)
-  ref <- df %>% filter(Code == "CHECK", Label == "BNZ")
-  
-  ref_boarding <- ref %>% select(BoardingStopUID, BoardingStopName) %>% distinct()
-  ref_deboarding <- ref %>% select(DeboardingStopUID, DeboardingStopName) %>% distinct()
-  
-  uid_to_boarding_name <- setNames(ref_boarding$BoardingStopName, ref_boarding$BoardingStopUID)
-  uid_to_deboarding_name <- setNames(ref_deboarding$DeboardingStopName, ref_deboarding$DeboardingStopUID)
-  
-  ref_boarding_rev <- ref %>% select(BoardingStopName, BoardingStopUID) %>% distinct()
-  ref_deboarding_rev <- ref %>% select(DeboardingStopName, DeboardingStopUID) %>% distinct()
-  
-  name_to_boarding_uid <- setNames(ref_boarding_rev$BoardingStopUID, ref_boarding_rev$BoardingStopName)
-  name_to_deboarding_uid <- setNames(ref_deboarding_rev$DeboardingStopUID, ref_deboarding_rev$DeboardingStopName)
-  
-  df <- df %>% mutate(
-    BoardingStopName = if_else(
-      Code == "NAMESAME",
-      uid_to_boarding_name[as.character(BoardingStopUID)],
-      BoardingStopName,
-      missing = BoardingStopName
-    ),
-    DeboardingStopName = if_else(
-      Code == "NAMESAME",
-      uid_to_deboarding_name[as.character(DeboardingStopUID)],
-      DeboardingStopName,
-      missing = DeboardingStopName
-    )
-  )
-  
-  df <- df %>% mutate(
-    BoardingStopUID = if_else(
-      Code == "UIDSAME",
-      name_to_boarding_uid[as.character(BoardingStopName)],
-      BoardingStopUID,
-      missing = BoardingStopUID
-    ),
-    DeboardingStopUID = if_else(
-      Code == "UIDSAME",
-      name_to_deboarding_uid[as.character(DeboardingStopName)],
-      DeboardingStopUID,
-      missing = DeboardingStopUID
-    )
-  )
-  
-  if (verbose) {
     uidsame_count <- df %>% filter(Code == "UIDSAME", BoardingStopUID == DeboardingStopUID) %>% nrow()
     namesame_count <- df %>% filter(Code == "NAMESAME", BoardingStopName == DeboardingStopName) %>% nrow()
     cat("更新後：\n")
     cat("  Code 為 UIDSAME，且 BoardingStopUID == DeboardingStopUID 的筆數：", uidsame_count, "\n")
     cat("  Code 為 NAMESAME，且 BoardingStopName == DeboardingStopName 的筆數：", namesame_count, "\n")
-  }
+  
   
   n_before <- nrow(df)
   df <- df %>% filter(
@@ -491,15 +441,17 @@ update_stop_codes <- function(df_input, df_output, verbose = TRUE) {
   )
   n_after <- nrow(df)
   
-  if (verbose) {
+
     cat("更新並刪除後的資料筆數：", n_after, "\n")
     cat("共刪除了", n_before - n_after, "筆符合刪除條件的資料。\n")
-  }
+ 
   
   write_fst(df, df_output)
   return(df)
 }
 ```
+
+
 ```{r}
 merge_stopuid <- function(df, stopuid, startwith, outputpath) {
   library(dplyr)
