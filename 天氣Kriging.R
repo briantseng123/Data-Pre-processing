@@ -92,7 +92,32 @@ grid_sf <- st_sf(geometry = grid_sf)
   }
   
   #找到屬於站點的編號
+  nearest_grid_index_for_rail <- st_nearest_feature(rail_stops_sf_utm, grid_sf)
   nearest_grid_index_for_bus <- st_nearest_feature(bus_stops_sf_utm, grid_sf)
+  nearest_grid_index_for_mrt <- st_nearest_feature(mrt_stops_sf_utm, grid_sf)
+  
+  # 站點網格對應表
+  rail_stop_to_grid_map <- rail_stops_sf_utm %>%
+    mutate(
+      weather_grid_id = grid_sf$grid_id[nearest_grid_index_for_rail])%>% 
+    dplyr::select(StopName,county_name,development_level,geometry,weather_grid_id)%>%
+    st_drop_geometry()
+  
+  bus_stop_to_grid_map <- bus_stops_sf_utm %>%
+    mutate(
+      weather_grid_id = grid_sf$grid_id[nearest_grid_index_for_bus]
+    ) %>%
+    st_drop_geometry()
+  mrt_stop_to_grid_map <- mrt_stops_sf_utm %>%
+    mutate(
+      weather_grid_id = grid_sf$grid_id[nearest_grid_index_for_mrt]
+    ) %>%
+    st_drop_geometry()
+  
+  #輸出
+  write_fst(rail_stop_to_grid_map,"F:/淡江/研究實習生/台鐵站位資訊/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).fst")
+  write_fst(bus_stop_to_grid_map,"F:/淡江/研究實習生/公車站位資訊/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度與Kriging天氣格點)3.fst")
+  write_fst(mrt_stop_to_grid_map,"F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).fst")
   
 }
 
