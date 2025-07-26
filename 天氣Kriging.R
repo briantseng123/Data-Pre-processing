@@ -39,58 +39,56 @@ coordinates(df) <- ~ StationLongitude + StationLatitude
 proj4string(df) <- CRS("+proj=longlat +datum=WGS84 +no_defs")
 df_utm <- spTransform(df, CRS("+proj=utm +zone=51 +datum=WGS84 +units=m +no_defs"))
 
-# 4. 載入台灣邊界 (Natural Earth) 並投影
+# 載入台灣邊界 (Natural Earth) 並投影
 #devtools::install_github("ropensci/rnaturalearthhires")
 taiwan_ll <- ne_countries(scale = "large", country = "Taiwan", returnclass = "sf")
 taiwan_utm <- st_transform(taiwan_ll, crs = st_crs(df_utm))
-# 轉 sf 成 Spatial 以便用 sp 畫圖
 taiwan_sp <- as(taiwan_utm, "Spatial")
 
 taiwan_islands <- taiwan_utm %>%
-  st_cast("POLYGON") # 將 MULTIPOLYGON 拆解成多個 POLYGON
+  st_cast("POLYGON")
 
-# --- 2. 計算每個獨立島嶼的面積，並找出最大的那個 ---
+# --- 計算每個獨立島嶼的面積，並找出最大的那個 ---
 taiwan_main_island <- taiwan_islands %>%
-  mutate(area = st_area(.)) %>% # 新增一欄叫 area，計算每個島嶼的面積
-  arrange(desc(area)) %>%      # 依據面積由大到小排序
+  mutate(area = st_area(.)) %>% 
+  arrange(desc(area)) %>%      
   slice(1)      
 
 # 建立 5km 等距網格
 grid_sf <- st_make_grid(
-  taiwan_main_island,     # 以台灣地圖為範圍
-  cellsize = 5000,  # 網格大小 5000x5000 公尺
-  what = "centers"  # 我們需要網格的中心點
+  taiwan_main_island,     
+  cellsize = 5000,  
+  what = "centers" 
 )
 
-# 3. (可選) st_make_grid 預設只回傳幾何資訊，我們可以把它轉成完整的 sf 物件
+# 轉成完整的 sf 物件
 grid_sf <- st_sf(geometry = grid_sf)
 
-# 現在 grid_sf 就是您需要的、覆蓋全台灣的網格點 (sf 格式)
-# 如果後續的 krige 函數需要 sp 格式，可以再轉換
+if (!"grid_id" %in% names(grid_sf)) {
+  grid_sf <- grid_sf %>%
+    mutate(grid_id = 1:nrow(.))
+}
+
+#匯入交通工具站點
+{
+  
+}
+
 grid_utm_from_sf <- as(grid_sf, "Spatial")
 
 df_utm_sf <- st_as_sf(df_utm)
 
-# --- 2. 使用 ggplot2 繪圖 ---
-# 現在所有傳入 geom_sf 的資料都是 sf 格式了
+# 台灣grid劃分
 ggplot() +
-  # 畫出新的、完整的網格點 (灰色)
   geom_sf(data = grid_sf, color = "grey80", size = 0.5) +
-  
-  # 疊上台灣的輪廓 (黑色框線)
   geom_sf(data = taiwan_main_island, fill = NA, color = "black") +
-  
-  # 疊上您原始的資料點 (紅色)，注意這裡使用的是轉換後的 df_utm_sf
   geom_sf(data = df_utm_sf, color = "red", size = 1.5) +
-  
-  # coord_sf(crs = st_crs(df_utm)) + # 這行通常可以省略，因為 geom_sf 會自動處理
   labs(
     title = "網格覆蓋範圍檢查",
     subtitle = "新網格 (灰色) 完整覆蓋台灣，而原始資料點 (紅色) 則沒有"
   ) +
   theme_bw()
 
-# 按小時迴圈：variogram + kriging
 df@data <- df@data %>%
   mutate(datetime = as.POSIXct(datetime),
          hour = format(datetime, "%Y-%m-%d %H"))
