@@ -19,6 +19,7 @@ library(viridis)
 library(stars)
 library(magick)
 library(av)
+library(arrow)
 
 # A5000
 {
@@ -64,13 +65,34 @@ grid_sf <- st_make_grid(
 # 轉成完整的 sf 物件
 grid_sf <- st_sf(geometry = grid_sf)
 
-if (!"grid_id" %in% names(grid_sf)) {
-  grid_sf <- grid_sf %>%
-    mutate(grid_id = 1:nrow(.))
-}
-
 #匯入交通工具站點
 {
+  railstop <- read_parquet("F:/淡江/研究實習生/台鐵站位資訊/全臺臺鐵站點(加入鄉鎮市區數位發展分類).parquet")
+  busstop <- read_fst("F:/淡江/研究實習生/公車站位資訊/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度)3.fst")
+  mrtstop <- read_parquet("F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類).parquet")
+  rail_stop_sf_ll <- st_as_sf(railstop, 
+                              coords = c("Longitude", "Latitude"), 
+                              crs = 4326)
+  bus_stop_sf_ll <- st_as_sf(busstop, 
+                              coords = c("Longitude", "Latitude"), 
+                              crs = 4326)
+  mrt_stop_sf_ll <- st_as_sf(mrtstop, 
+                              coords = c("Longitude", "Latitude"), 
+                              crs = 4326)
+  
+  #將經緯度座標轉換成UTM
+  rail_stops_sf_utm <- st_transform(rail_stop_sf_ll, crs = st_crs(grid_sf))
+  bus_stops_sf_utm <- st_transform(bus_stop_sf_ll, crs = st_crs(grid_sf))
+  mrt_stops_sf_utm <- st_transform(mrt_stop_sf_ll, crs = st_crs(grid_sf))
+  
+  # 為grid_sf加上編號
+  if (!"grid_id" %in% names(grid_sf)) {
+    grid_sf <- grid_sf %>%
+      mutate(grid_id = 1:nrow(.))
+  }
+  
+  #找到屬於站點的編號
+  nearest_grid_index_for_bus <- st_nearest_feature(bus_stops_sf_utm, grid_sf)
   
 }
 
