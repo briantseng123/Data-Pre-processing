@@ -878,7 +878,6 @@ merge_stopuid_fast_chunk_dropsamestopname3(KEEbus2023df,ALL,"","E:/brain/解壓�
 
 NWTbus2023df <- read_fst("E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(NWTbus2023df,ALL,"","E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(經緯度刪除相同站名)3.fst")
-```
 
 ### 2022資料
 ```{r}
