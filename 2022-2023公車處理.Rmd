@@ -1309,3 +1309,95 @@ merge_stopuid_track_deletions_removed_only <- function(inputfile,
   return(removed_dt)
 }
 ```
+
+## function套用
+
+### 清空RAM用
+```{r}
+rm(list = ls())
+gc()
+```
+
+### 2023資料
+```{r}
+  TPEbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023臺北市公車.fst"
+  NTWbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023新北市公車.fst"
+  TAObus2023fst <- "E:/brain/解壓縮data/fst/2023/2023桃園市公車.fst"
+  KEEbus2023fst <- "E:/brain/解壓縮data/fst/2023/2023基隆市公車.fst"
+  nrow(fst(TPEbus2023fst))
+  nrow(fst(NTWbus2023fst))
+  nrow(fst(TAObus2023fst))
+  nrow(fst(KEEbus2023fst))
+  
+  TPEbus2023df <- process_bus_data(TPEbus2023fst,col_for_read,"2023")
+  NTWbus2023df <- process_bus_data(NTWbus2023csv,col_for_read,"2023")
+  TAObus2023df <- process_bus_data(TAObus2023csv,col_for_read,"2023")
+  KEEbus2023df <- process_bus_data(KEEbus2023csv,col_for_read,"2023")
+  KEEbus2023 <- read_fst(KEEbus2023fst,as.data.table = TRUE)%>%
+    dplyr::select(BoardingTime)%>%
+    mutate(Year = year(BoardingTime)) %>%
+    count(Year)
+  KEEbus2023D <- read_fst(KEEbus2023fst,as.data.table = TRUE)%>%
+    dplyr::select(DeboardingTime)%>%
+    mutate(Year = year(DeboardingTime)) %>%
+    count(Year)
+  nrow(TAObus2023df)
+  nrow(KEEbus2023df) #相同站名站碼:21322734-6357248=14965486
+  
+  TPEbus2023df <- fill_missing_stops(TPEbus2023df,"E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值填補).fst")
+  NTWbus2023df <- fill_missing_stops(NTWbus2023df,"E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(遺失值填補).fst")
+  TAObus2023df <- fill_missing_stops(TAObus2023df,"E:/brain/解壓縮data/資料處理/2023/公車處理/桃園市公車(遺失值填補).fst")
+  KEEbus2023df <- fill_missing_stops(KEEbus2023df,"E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值填補).fst")
+  
+  NTPbus2023df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  TYCbus2023df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/桃園市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2023/公車處理/桃園市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  KLCbus2023df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  TPCbus2023df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值填補).fst", "E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+```
+
+### 2022資料
+```{r}
+TPEbus2022fst <- "E:/brain/解壓縮data/fst/2022/2022臺北市公車.fst"
+  NTWbus2022fst <- "E:/brain/解壓縮data/fst/2022/2022新北市公車.fst"
+  TAObus2022fst <- "E:/brain/解壓縮data/fst/2022/2022桃園市公車.fst"
+  KEEbus2022fst <- "E:/brain/解壓縮data/fst/2022/2022基隆市公車.fst"
+  nrow(fst(TPEbus2022fst))
+  nrow(fst(NTWbus2022fst))
+  nrow(fst(TAObus2022fst))
+  nrow(fst(KEEbus2022fst))
+  
+  TPEbus2022df <- process_bus_data(TPEbus2022_1_6csv ,col_for_read,"2022")
+  TPEbus2022df <- process_bus_data(TPEbus2022_7_12csv ,col_for_read,"2022")
+  NTWbus2022df <- process_bus_data(NTWbus2022csv ,col_for_read,"2022")
+  TAObus2022df <- process_bus_data(TAObus2022csv ,col_for_read,"2022")
+  KEEbus2022df <- process_bus_data(KEEbus2022csv ,col_for_read,"2022")
+  KEEbus2022 <- read_fst(KEEbus2022fst,as.data.table = TRUE)%>%
+    dplyr::select(BoardingTime)%>%
+    mutate(Year = year(BoardingTime)) %>%
+    count(Year)
+  KEEbus2022D <- read_fst(KEEbus2022fst,as.data.table = TRUE)%>%
+    dplyr::select(DeboardingTime)%>%
+    mutate(Year = year(DeboardingTime)) %>%
+    count(Year)
+  nrow(TAObus2022df)
+  nrow(KEEbus2022df) #相同站名站碼:21322734-6357248=14965486
+  
+  TPEbus2022df <- fill_missing_stops(TPEbus2022df,"E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值填補).fst")
+  TPEbus2022df <- fill_missing_stops(TPEbus2022df,"E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值填補).fst")
+  NTWbus2022df <- fill_missing_stops(NTWbus2022df,"E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(遺失值填補).fst")
+  TAObus2022df <- fill_missing_stops(TAObus2022df,"E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(遺失值填補).fst")
+  KEEbus2022df <- fill_missing_stops(KEEbus2022df,"E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(遺失值填補).fst")
+  
+  NTPbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  TYCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  KLCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  TPCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+  
+  TPCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
+```
