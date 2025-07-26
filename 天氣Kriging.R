@@ -121,6 +121,20 @@ grid_sf <- st_sf(geometry = grid_sf)
   
 }
 
+#kriging grid_id
+kriging <- read_rds("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2022天氣站格點(Kriging).rds")
+first_hour_key <- names(kriging)[1]
+first_var_key <- names(kriging[[first_hour_key]])[1]
+grid_total_points <- nrow(kriging[[first_hour_key]][[first_var_key]])
+grid_ids_vector <- 1:grid_total_points
+for (h_key in names(kriging)) {
+  if (length(kriging[[h_key]]) > 0) {
+    for (v_key in names(kriging[[h_key]])) {
+      kriging[[h_key]][[v_key]]@data$grid_id <- grid_ids_vector
+    }
+  }
+}
+
 grid_utm_from_sf <- as(grid_sf, "Spatial")
 
 df_utm_sf <- st_as_sf(df_utm)
