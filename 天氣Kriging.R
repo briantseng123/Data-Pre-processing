@@ -20,6 +20,8 @@ library(stars)
 library(magick)
 library(av)
 library(arrow)
+library(tidyr) 
+library(lubridate)
 
 # A5000
 {
@@ -72,13 +74,13 @@ grid_sf <- st_sf(geometry = grid_sf)
   mrtstop <- read_parquet("F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類).parquet")
   rail_stop_sf_ll <- st_as_sf(railstop, 
                               coords = c("Longitude", "Latitude"), 
-                              crs = 4326)
+                              crs = 4326, remove = FALSE)
   bus_stop_sf_ll <- st_as_sf(busstop, 
                               coords = c("Longitude", "Latitude"), 
-                              crs = 4326)
+                              crs = 4326, remove = FALSE)
   mrt_stop_sf_ll <- st_as_sf(mrtstop, 
                               coords = c("Longitude", "Latitude"), 
-                              crs = 4326)
+                              crs = 4326, remove = FALSE)
   
   #將經緯度座標轉換成UTM
   rail_stops_sf_utm <- st_transform(rail_stop_sf_ll, crs = st_crs(grid_sf))
@@ -115,10 +117,9 @@ grid_sf <- st_sf(geometry = grid_sf)
     st_drop_geometry()
   
   #輸出
-  write_fst(rail_stop_to_grid_map,"F:/淡江/研究實習生/台鐵站位資訊/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).fst")
-  write_fst(bus_stop_to_grid_map,"F:/淡江/研究實習生/公車站位資訊/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度與Kriging天氣格點)3.fst")
-  write_fst(mrt_stop_to_grid_map,"F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).fst")
-  
+  write_csv(rail_stop_to_grid_map,"F:/淡江/研究實習生/台鐵站位資訊/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).csv")
+  write_csv(bus_stop_to_grid_map,"F:/淡江/研究實習生/公車站位資訊/站牌、站位、組站位/北北基桃公車站群(添加鄉政市區&發展程度與Kriging天氣格點)3.csv")
+  write_csv(mrt_stop_to_grid_map,"F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv")
 }
 
 #kriging grid_id
@@ -205,9 +206,13 @@ for (h in all_hours) {
   }
 }
 
-
+saveRDS(filled_results,"E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2024天氣站格點(Kriging).rds")
+saveRDS(filled_results,"E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2023天氣站格點(Kriging).rds")
 saveRDS(filled_results,"E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2022天氣站格點(Kriging).rds")
 filled_results <- readRDS("E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2022天氣站格點(Kriging).rds")
+filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2024天氣站格點(Kriging).rds")
+filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2023天氣站格點(Kriging).rds")
+filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2022天氣站格點(Kriging).rds")
 
 filled_results_clean <- purrr::compact(filled_results)
 names(filled_results_clean)
@@ -223,6 +228,25 @@ global_ranges_df <- hourly_ranges_df %>%
   summarise(global_min = min(min_pred, na.rm = TRUE), global_max = max(max_pred, na.rm = TRUE)) %>%
   ungroup()
 
+#檢查filled_result結果
+{
+  complete_grid <- expand_grid(
+    hour_str = all_hours,
+    variable = vars
+  )
+  
+  # 檢查 filled_results 中是否存在對應的結果
+  status_list <- sapply(1:nrow(complete_grid), function(i) {
+    h_key <- gsub("[: ]", "_", complete_grid$hour_str[i])
+    v_key <- complete_grid$variable[i]
+    !is.null(filled_results[[h_key]][[v_key]])
+  })
+  status_df <- complete_grid %>%
+    mutate(
+      kriging_status = ifelse(status_list, "Success", "Missing"),
+      datetime = ymd_hms(hour_str)
+    )
+}
 
 plot_kriging_map <- function(v_to_plot, h_to_plot, 
                              kriging_results, global_ranges, map_outline) {
@@ -479,58 +503,116 @@ plot_kriging_map(
 )
 
 gif_file <- "E:/brain/weather_kriging_mp4/"
+gif_file <- "F:/淡江/研究實習生/天氣Kriging_mp4/"
 create_kriging_video(
-  start_datetime = "2022-01-01 01",
-  end_datetime = "2022-12-31 23",
+  start_datetime = "2023-01-01 01",
+  end_datetime = "2023-12-31 23",
   v_to_plot = "temperature_c",
   kriging_results = filled_results_clean,
   global_ranges = global_ranges_df,
   map_outline = taiwan_main_island,
-  output_filename = paste0(gif_file,"temperature_c", "_", "2022", ".mp4"), 
+  output_filename = paste0(gif_file,"temperature_c", "_", "2023", ".mp4"), 
   framerate = 50
 )
 gc()
 create_kriging_video(
-  start_datetime = "2022-01-01 01",
-  end_datetime = "2022-12-31 23",
+  start_datetime = "2023-01-01 01",
+  end_datetime = "2023-12-31 23",
   v_to_plot = "relative_humidity_percent",
   kriging_results = filled_results_clean,
   global_ranges = global_ranges_df,
   map_outline = taiwan_main_island,
-  output_filename = paste0(gif_file,"relative_humidity_percent", "_", "2022", ".mp4"), 
+  output_filename = paste0(gif_file,"relative_humidity_percent", "_", "2023", ".mp4"), 
   framerate = 50 
 )
 gc()
 create_kriging_video(
-  start_datetime = "2022-01-01 01",
-  end_datetime = "2022-12-31 23",
+  start_datetime = "2023-01-01 01",
+  end_datetime = "2023-12-31 23",
   v_to_plot = "wind_speed_m_s",
   kriging_results = filled_results_clean,
   global_ranges = global_ranges_df,
   map_outline = taiwan_main_island,
-  output_filename = paste0(gif_file,"wind_speed_m_s", "_", "2022", ".mp4"), 
+  output_filename = paste0(gif_file,"wind_speed_m_s", "_", "2023", ".mp4"), 
   framerate =  50
 )
 gc()
 create_kriging_video(
-  start_datetime = "2022-01-01 01",
-  end_datetime = "2022-12-31 23",
+  start_datetime = "2023-01-01 01",
+  end_datetime = "2023-12-31 23",
   v_to_plot = "precipitation_mm",
   kriging_results = filled_results_clean,
   global_ranges = global_ranges_df,
   map_outline = taiwan_main_island,
-  output_filename = paste0(gif_file,"precipitation_mm", "_", "2022", ".mp4"), 
+  output_filename = paste0(gif_file,"precipitation_mm", "_", "2023", ".mp4"), 
   framerate = 50
 )
 gc()
 create_kriging_video(
-  start_datetime = "2022-01-01 01",
-  end_datetime = "2022-12-31 23",
+  start_datetime = "2023-01-01 01",
+  end_datetime = "2023-12-31 23",
   v_to_plot = "uv_index",
   kriging_results = filled_results_clean,
   global_ranges = global_ranges_df,
   map_outline = taiwan_main_island,
-  output_filename = paste0(gif_file,"uv_index", "_", "2022", ".mp4"), 
+  output_filename = paste0(gif_file,"uv_index", "_", "2023", ".mp4"), 
+  framerate = 50
+)
+gc()
+
+gif_file <- "F:/淡江/研究實習生/天氣Kriging_mp4/"
+create_kriging_video(
+  start_datetime = "2024-01-01 01",
+  end_datetime = "2024-12-31 23",
+  v_to_plot = "temperature_c",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"temperature_c", "_", "2024", ".mp4"), 
+  framerate = 50
+)
+gc()
+create_kriging_video(
+  start_datetime = "2024-01-01 01",
+  end_datetime = "2024-12-31 23",
+  v_to_plot = "relative_humidity_percent",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"relative_humidity_percent", "_", "2024", ".mp4"), 
+  framerate = 50 
+)
+gc()
+create_kriging_video(
+  start_datetime = "2024-01-01 01",
+  end_datetime = "2024-12-31 23",
+  v_to_plot = "wind_speed_m_s",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"wind_speed_m_s", "_", "2024", ".mp4"), 
+  framerate =  50
+)
+gc()
+create_kriging_video(
+  start_datetime = "2024-01-01 01",
+  end_datetime = "2024-12-31 23",
+  v_to_plot = "precipitation_mm",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"precipitation_mm", "_", "2024", ".mp4"), 
+  framerate = 50
+)
+gc()
+create_kriging_video(
+  start_datetime = "2024-01-01 01",
+  end_datetime = "2024-12-31 23",
+  v_to_plot = "uv_index",
+  kriging_results = filled_results_clean,
+  global_ranges = global_ranges_df,
+  map_outline = taiwan_main_island,
+  output_filename = paste0(gif_file,"uv_index", "_", "2024", ".mp4"), 
   framerate = 50
 )
 gc()
