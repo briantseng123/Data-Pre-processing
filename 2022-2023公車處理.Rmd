@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 title: "R 2022-2023公車處理"
 author: "Brian Tseng"
@@ -116,10 +115,11 @@ write_fst(KEEbus2023,KEEbus2023fst)
 ```
 # 匯入上下車站點資料
 ```{r}
-ALL <- fread("E:/brain/解壓縮data/資料處理/公車站點資料/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度)3.csv",encoding="UTF-8")
+ALL <- fread("E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北北基桃公車站群(添加鄉政市區&發展程度與Kriging天氣格點)3.csv",encoding="UTF-8")
 ALL <- ALL%>%
   dplyr::select(StopUID,StopName,City,StationUID,Latitude,Longitude,
-                StationGroupID,development_level)
+                StationGroupID,development_level,weather_grid_id)
+
 ```
 # 開始處理資料
 ## 定義function
@@ -826,6 +826,11 @@ rm(list = ls())
 gc()
 ```
 
+### 讀取資料
+```{r}
+col_for_read <- c("Authority","HolderType","TicketType","SubTicketType","BoardingStopUID","BoardingStopName","BoardingStopSequence","BoardingTime","DeboardingStopUID","DeboardingStopName","DeboardingStopSequence","DeboardingTime","TransferCode","IsAbnormal","ErrorCode","Result")
+```
+
 ### 2024資料
 ```{r}
   TPEbus2024fst <- "E:/brain/解壓縮data/fst/2024/2024臺北市公車.fst"
@@ -838,9 +843,9 @@ gc()
   nrow(fst(KEEbus2024fst))
   
   TPEbus2024df <- process_bus_data(TPEbus2024fst,col_for_read,"2024")
-  NTWbus2024df <- process_bus_data(NTWbus2024csv,col_for_read,"2024")
-  TAObus2024df <- process_bus_data(TAObus2024csv,col_for_read,"2024")
-  KEEbus2024df <- process_bus_data(KEEbus2024csv,col_for_read,"2024")
+  NTWbus2024df <- process_bus_data(NTWbus2024fst,col_for_read,"2024")
+  TAObus2024df <- process_bus_data(TAObus2024fst,col_for_read,"2024")
+  KEEbus2024df <- process_bus_data(KEEbus2024fst,col_for_read,"2024")
   KEEbus2024 <- read_fst(KEEbus2024fst,as.data.table = TRUE)%>%
     dplyr::select(BoardingTime)%>%
     mutate(Year = year(BoardingTime)) %>%
@@ -852,10 +857,10 @@ gc()
   nrow(TAObus2024df)
   nrow(KEEbus2024df) #相同站名站碼:21322734-6357248=14965486
   
-  TPEbus2024df <- fill_missing_stops(TPEbus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/臺北市公車(遺失值填補).fst")
-  NTWbus2024df <- fill_missing_stops(NTWbus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/新北市公車(遺失值填補).fst")
-  TAObus2024df <- fill_missing_stops(TAObus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/桃園市公車(遺失值填補).fst")
-  KEEbus2024df <- fill_missing_stops(KEEbus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/基隆市公車(遺失值填補).fst")
+TPEbus2024df <- fill_missing_stops(TPEbus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/臺北市公車(遺失值填補).fst")
+NTWbus2024df <- fill_missing_stops(NTWbus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/新北市公車(遺失值填補).fst")
+TAObus2024df <- fill_missing_stops(TAObus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/桃園市公車(遺失值填補).fst")
+KEEbus2024df <- fill_missing_stops(KEEbus2024df,"E:/brain/解壓縮data/資料處理/2024/公車處理/基隆市公車(遺失值填補).fst")
   
   NTPbus2024df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2024/公車處理/新北市公車(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2024/公車處理/新北市公車(遺失值刪除及相同站名站碼)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
   
@@ -878,7 +883,8 @@ merge_stopuid_fast_chunk_dropsamestopname3(KEEbus2024df,ALL,"","E:/brain/解壓�
 
 NWTbus2024df <- read_fst("E:/brain/解壓縮data/資料處理/2024/公車處理/新北市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(NWTbus2024df,ALL,"","E:/brain/解壓縮data/資料處理/2024/公車處理/新北市公車(經緯度刪除相同站名)3.fst")
-
+rm(TAObus2024df, KEEbus2024df, NWTbus2024df)
+gc()
 ```
 
 
@@ -925,16 +931,19 @@ col=c("Authority","HolderType","TicketType","SubTicketType","BoardingStopUID","B
 
 TPCbus2023df <- read_fst("E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3_outputchunk(TPCbus2023df,ALL,"","E:/brain/解壓縮data/資料處理/2023/公車處理/臺北市公車(經緯度刪除相同站名)3")
+gc()
 
 TAObus2023df <- read_fst("E:/brain/解壓縮data/資料處理/2023/公車處理/桃園市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(TAObus2023df,ALL,"","E:/brain/解壓縮data/資料處理/2023/公車處理/桃園市公車(經緯度刪除相同站名)3.fst")
 
 KEEbus2023df <- read_fst("E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(KEEbus2023df,ALL,"","E:/brain/解壓縮data/資料處理/2023/公車處理/基隆市公車(經緯度刪除相同站名)3.fst")
-
+rm(TPCbus2023df, TAObus2023df, KEEbus2023df)
+gc()
 NWTbus2023df <- read_fst("E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(NWTbus2023df,ALL,"","E:/brain/解壓縮data/資料處理/2023/公車處理/新北市公車(經緯度刪除相同站名)3.fst")
-
+rm(NWTbus2023df)
+gc()
 ```
 
 
@@ -980,20 +989,33 @@ TPEbus2022fst <- "E:/brain/解壓縮data/fst/2022/2022臺北市公車.fst"
   TPCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE) 
   
   TPCbus2022df <- process_stop_codes("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值填補).fst","E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值刪除)2.fst", drop_na_rows = TRUE, verbose = TRUE)
+
   col=c("Authority","HolderType","TicketType","SubTicketType","BoardingStopUID","BoardingStopName","BoardingTime","DeboardingStopUID","DeboardingStopName","DeboardingTime","TransferCode")
 
+```
+
+```{r}
 TPCbus2022df <- read_fst("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3_outputchunk(TPCbus2022df,ALL,"","E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車1-6月(經緯度刪除相同站名)3")
+rm(TPCbus2022df)
+gc()
 
 TPCbus2022df <- read_fst("E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3_outputchunk(TPCbus2022df,ALL,"","E:/brain/解壓縮data/資料處理/2022/公車處理/臺北市公車7-12月(經緯度刪除相同站名)3")
+rm(TPCbus2022df)
+gc()
 
 TAObus2022df <- read_fst("E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(TAObus2022df,ALL,"","E:/brain/解壓縮data/資料處理/2022/公車處理/桃園市公車(經緯度刪除相同站名)3.fst")
+gc()
 
 KEEbus2022df <- read_fst("E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(KEEbus2022df,ALL,"","E:/brain/解壓縮data/資料處理/2022/公車處理/基隆市公車(經緯度刪除相同站名)3.fst")
+rm(TAObus2022df, KEEbus2022df)
+gc()
 
 NWTbus2022df <- read_fst("E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(遺失值刪除及相同站名站碼)2.fst",columns = col, as.data.table=TRUE)
 merge_stopuid_fast_chunk_dropsamestopname3(NWTbus2022df,ALL,"","E:/brain/解壓縮data/資料處理/2022/公車處理/新北市公車(經緯度刪除相同站名)3.fst")
+rm(NWTbus2022df)
+gc()
 ```
