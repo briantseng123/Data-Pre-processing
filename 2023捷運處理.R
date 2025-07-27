@@ -36,7 +36,7 @@ TPCmrt2023df_output_fst_1_6_3_v2<- file.path(base_path, "資料處理", "2023", 
 TPCmrt2023df_output_fst_1_6_3_chunk <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站)chunk")
 TPCmrt2023df_output_fst_1_6_3_chunkv2 <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)chunk")
 TPCmrt2023df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk")
-nrow(fst(TPCmrt2023df_output_fst_1_6))
+names(fst(TPCmrt2023df_output_fst_1_6))
 nrow(fst(TPCmrt2023df_output_fst_1_6_2))
 
 TPCmrt2023df_input_csv_7_12 <- "E:/brain/解壓縮data/csv/2023/臺北捷運電子票證資料(TO2A)_2023年7~12月/臺北捷運電子票證資料(TO2A).csv"
@@ -93,8 +93,29 @@ names(fst(rail2023df_output_fst5))
 mrtstop_path <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
 mrtstop_path_TPC <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v2_for TPC).csv"
 railstop_path <- "E:/brain/解壓縮data/資料處理/臺鐵站點資料/全臺臺鐵站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
+
+mrtstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv"
+
+mrt <- fread(mrtstop_path, encoding = "UTF-8")
 mrt <- fread(mrtstop_path_TPC)
 mrt <- read_parquet(mrtstop_path)
+
+#新增mrtstop可以適用在TPCmrt
+{
+  transfer_map <- data.frame(
+    Original_ID = c("BL11", "G09", "G10", "O06"),
+    New_ID      = c("BL11 / G12",  "G09 / O05", "G10 / R08", "O06 / R07")
+  )
+  rows_to_duplicate <- mrt %>%
+    semi_join(transfer_map, by = c("StationID" = "Original_ID"))
+  newly_created_rows <- rows_to_duplicate %>%
+    left_join(transfer_map, by = c("StationID" = "Original_ID")) %>%
+    mutate(StationID = New_ID) %>%
+    select(-New_ID)
+  mrt_final <- bind_rows(mrt, newly_created_rows)
+  write_csv(mrt_final,"E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv")
+  
+}
 
 csventry1_6 <- fread(TPCmrt2023df_input_csv_1_6 , skip = 1, header = TRUE, encoding = "UTF-8", select = "EntryTime")
 csventry7_12 <- fread(TPCmrt2023df_input_csv_7_12 , skip = 1, header = TRUE, encoding = "UTF-8", select = "EntryTime")
