@@ -19,6 +19,7 @@ library(viridis)
 library(stars)
 library(magick)
 library(av)
+library(arrow)
 
 # A5000
 {
@@ -39,58 +40,102 @@ coordinates(df) <- ~ StationLongitude + StationLatitude
 proj4string(df) <- CRS("+proj=longlat +datum=WGS84 +no_defs")
 df_utm <- spTransform(df, CRS("+proj=utm +zone=51 +datum=WGS84 +units=m +no_defs"))
 
-# 4. 載入台灣邊界 (Natural Earth) 並投影
+# 載入台灣邊界 (Natural Earth) 並投影
 #devtools::install_github("ropensci/rnaturalearthhires")
 taiwan_ll <- ne_countries(scale = "large", country = "Taiwan", returnclass = "sf")
 taiwan_utm <- st_transform(taiwan_ll, crs = st_crs(df_utm))
-# 轉 sf 成 Spatial 以便用 sp 畫圖
 taiwan_sp <- as(taiwan_utm, "Spatial")
 
 taiwan_islands <- taiwan_utm %>%
-  st_cast("POLYGON") # 將 MULTIPOLYGON 拆解成多個 POLYGON
+  st_cast("POLYGON")
 
-# --- 2. 計算每個獨立島嶼的面積，並找出最大的那個 ---
+# --- 計算每個獨立島嶼的面積，並找出最大的那個 ---
 taiwan_main_island <- taiwan_islands %>%
-  mutate(area = st_area(.)) %>% # 新增一欄叫 area，計算每個島嶼的面積
-  arrange(desc(area)) %>%      # 依據面積由大到小排序
+  mutate(area = st_area(.)) %>% 
+  arrange(desc(area)) %>%      
   slice(1)      
 
 # 建立 5km 等距網格
 grid_sf <- st_make_grid(
-  taiwan_main_island,     # 以台灣地圖為範圍
-  cellsize = 5000,  # 網格大小 5000x5000 公尺
-  what = "centers"  # 我們需要網格的中心點
+  taiwan_main_island,     
+  cellsize = 5000,  
+  what = "centers" 
 )
 
-# 3. (可選) st_make_grid 預設只回傳幾何資訊，我們可以把它轉成完整的 sf 物件
+# 轉成完整的 sf 物件
 grid_sf <- st_sf(geometry = grid_sf)
 
-# 現在 grid_sf 就是您需要的、覆蓋全台灣的網格點 (sf 格式)
-# 如果後續的 krige 函數需要 sp 格式，可以再轉換
+#匯入交通工具站點
+{
+  railstop <- read_parquet("F:/淡江/研究實習生/台鐵站位資訊/全臺臺鐵站點(加入鄉鎮市區數位發展分類).parquet")
+  busstop <- read_fst("F:/淡江/研究實習生/公車站位資訊/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度)3.fst")
+  mrtstop <- read_parquet("F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類).parquet")
+  rail_stop_sf_ll <- st_as_sf(railstop, 
+                              coords = c("Longitude", "Latitude"), 
+                              crs = 4326)
+  bus_stop_sf_ll <- st_as_sf(busstop, 
+                              coords = c("Longitude", "Latitude"), 
+                              crs = 4326)
+  mrt_stop_sf_ll <- st_as_sf(mrtstop, 
+                              coords = c("Longitude", "Latitude"), 
+                              crs = 4326)
+  
+  #將經緯度座標轉換成UTM
+  rail_stops_sf_utm <- st_transform(rail_stop_sf_ll, crs = st_crs(grid_sf))
+  bus_stops_sf_utm <- st_transform(bus_stop_sf_ll, crs = st_crs(grid_sf))
+  mrt_stops_sf_utm <- st_transform(mrt_stop_sf_ll, crs = st_crs(grid_sf))
+  
+  # 為grid_sf加上編號
+  if (!"grid_id" %in% names(grid_sf)) {
+    grid_sf <- grid_sf %>%
+      mutate(grid_id = 1:nrow(.))
+  }
+  
+  #找到屬於站點的編號
+  nearest_grid_index_for_rail <- st_nearest_feature(rail_stops_sf_utm, grid_sf)
+  nearest_grid_index_for_bus <- st_nearest_feature(bus_stops_sf_utm, grid_sf)
+  nearest_grid_index_for_mrt <- st_nearest_feature(mrt_stops_sf_utm, grid_sf)
+  
+  # 站點網格對應表
+  rail_stop_to_grid_map <- rail_stops_sf_utm %>%
+    mutate(
+      weather_grid_id = grid_sf$grid_id[nearest_grid_index_for_rail])%>% 
+    dplyr::select(StopName,county_name,development_level,geometry,weather_grid_id)%>%
+    st_drop_geometry()
+  
+  bus_stop_to_grid_map <- bus_stops_sf_utm %>%
+    mutate(
+      weather_grid_id = grid_sf$grid_id[nearest_grid_index_for_bus]
+    ) %>%
+    st_drop_geometry()
+  mrt_stop_to_grid_map <- mrt_stops_sf_utm %>%
+    mutate(
+      weather_grid_id = grid_sf$grid_id[nearest_grid_index_for_mrt]
+    ) %>%
+    st_drop_geometry()
+  
+  #輸出
+  write_fst(rail_stop_to_grid_map,"F:/淡江/研究實習生/台鐵站位資訊/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).fst")
+  write_fst(bus_stop_to_grid_map,"F:/淡江/研究實習生/公車站位資訊/站牌、站位、組站位/北北基桃站群(添加鄉政市區&發展程度與Kriging天氣格點)3.fst")
+  write_fst(mrt_stop_to_grid_map,"F:/淡江/研究實習生/捷運站位資訊/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).fst")
+  
+}
+
 grid_utm_from_sf <- as(grid_sf, "Spatial")
 
 df_utm_sf <- st_as_sf(df_utm)
 
-# --- 2. 使用 ggplot2 繪圖 ---
-# 現在所有傳入 geom_sf 的資料都是 sf 格式了
+# 台灣grid劃分
 ggplot() +
-  # 畫出新的、完整的網格點 (灰色)
   geom_sf(data = grid_sf, color = "grey80", size = 0.5) +
-  
-  # 疊上台灣的輪廓 (黑色框線)
   geom_sf(data = taiwan_main_island, fill = NA, color = "black") +
-  
-  # 疊上您原始的資料點 (紅色)，注意這裡使用的是轉換後的 df_utm_sf
   geom_sf(data = df_utm_sf, color = "red", size = 1.5) +
-  
-  # coord_sf(crs = st_crs(df_utm)) + # 這行通常可以省略，因為 geom_sf 會自動處理
   labs(
     title = "網格覆蓋範圍檢查",
     subtitle = "新網格 (灰色) 完整覆蓋台灣，而原始資料點 (紅色) 則沒有"
   ) +
   theme_bw()
 
-# 按小時迴圈：variogram + kriging
 df@data <- df@data %>%
   mutate(datetime = as.POSIXct(datetime),
          hour = format(datetime, "%Y-%m-%d %H"))
