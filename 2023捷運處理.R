@@ -31,11 +31,7 @@ TPCmrt2023df_input_csv_1_6 <- "E:/brain/解壓縮data/csv/2023/臺北捷運電�
 TPCmrt2023df_output_parquet_1_6 <- file.path(base_path, "fst", "2023", "2023臺北市捷運1-6月.parquet")
 TPCmrt2023df_output_fst_1_6 <- file.path(base_path, "fst", "2023", "2023臺北市捷運1-6月.fst")
 TPCmrt2023df_output_fst_1_6_2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(去除異常值)2.fst")
-TPCmrt2023df_output_fst_1_6_3<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站)3.fst")
-TPCmrt2023df_output_fst_1_6_3_v2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)3.fst")
-TPCmrt2023df_output_fst_1_6_3_chunk <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站)chunk")
-TPCmrt2023df_output_fst_1_6_3_chunkv2 <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)chunk")
-TPCmrt2023df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk")
+TPCmrt2023df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk")
 names(fst(TPCmrt2023df_output_fst_1_6))
 nrow(fst(TPCmrt2023df_output_fst_1_6_2))
 
@@ -43,25 +39,23 @@ TPCmrt2023df_input_csv_7_12 <- "E:/brain/解壓縮data/csv/2023/臺北捷運電�
 TPCmrt2023df_output_parquet_7_12 <- file.path(base_path, "fst", "2023", "2023臺北市捷運7-12月.parquet")
 TPCmrt2023df_output_fst_7_12 <- file.path(base_path, "fst", "2023", "2023臺北市捷運7-12月.fst")
 TPCmrt2023df_output_fst_7_12_2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(去除異常值)2.fst")
-TPCmrt2023df_output_fst_7_12_3_chunk<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站)3chunk")
-TPCmrt2023df_output_fst_7_12_3_chunkv2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)3chunk")
-TPCmrt2023df_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3chunk")
+TPCmrt2023df_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk")
 nrow(fst(TPCmrt2023df_output_fst_7_12))
 nrow(fst(TPCmrt2023df_output_fst_7_12_2))
 
 NTPmrt2023df_input_csv <- "E:/brain/解壓縮data/csv/2023/新北捷運電子票證資料(TO2A)2023-01-01 ~ 2023-12-31/新北捷運電子票證資料(TO2A).csv"
 NTPmrt2023df_output_fst <- file.path(base_path, "fst", "2023", "2023新北市捷運.fst")
 NTPmrt2023df_output_fst2 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(去除異常值)2.fst")
-NTPmrt2023df_output_fst3v3 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3.fst")
-NTPmrt2023df_output_fst4v3 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(加入直線距離_voronoi_v3)4.fst")
-NTPmrt2023df_output_fst5v3 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(發展程度移動_voronoi_v3)5.fst")
+NTPmrt2023df_output_fst3v3 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(加入鄉政市區數位發展分類與氣象站_kriging_v3)3.fst")
+NTPmrt2023df_output_fst4v3 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(加入直線距離_kriging_v3)4.fst")
+NTPmrt2023df_output_fst5v3 <- file.path(base_path, "資料處理", "2023", "2023新北市捷運(發展程度移動_kriging_v3)5.fst")
 names(fst(NTPmrt2023df_output_fst5v3))
 
 rail2023df_input_csv <- "E:/brain/解壓縮data/csv/2023/臺鐵電子票證資料(TO2A)2023-01-01 ~ 2023-12-31/臺鐵電子票證資料(TO2A).csv"
 rail2023df_output_fst <- "E:/brain/解壓縮data/fst/2023/2023臺鐵.fst"
 rail2023df_output_fst2 <- file.path(base_path, "資料處理", "2023", "2023臺鐵(去除異常值)2.fst")
 rail2023df_output_fst3 <- file.path(base_path, "資料處理", "2023", "2023臺鐵(加入鄉政市區數位發展分類與氣象站)3.fst")
-rail2023df_output_fst4 <- file.path(base_path, "資料處理", "2023", "2023臺鐵(加入直線距離_voronoi)4.fst")
+rail2023df_output_fst4 <- file.path(base_path, "資料處理", "2023", "2023臺鐵(加入直線距離_kriging)4.fst")
 rail2023df_output_fst5 <- file.path(base_path, "資料處理", "2023", "2023臺鐵(發展程度移動)5.fst")
 rail2023df_output_fst5_truncated <- file.path(base_path, "資料處理", "2023", "2023臺鐵(發展程度移動_truncated)5.fst")
 
@@ -90,9 +84,9 @@ write_parquet(unique_stops,"E:/brain/解壓縮data/資料處理/臺鐵站點資�
 nrow(fst(rail2023df_output_fst2))
 names(fst(rail2023df_output_fst5))
 
-mrtstop_path <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
-mrtstop_path_TPC <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v2_for TPC).csv"
-railstop_path <- "E:/brain/解壓縮data/資料處理/臺鐵站點資料/全臺臺鐵站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
+mrtstop_path <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_kriging_v3).parquet"
+mrtstop_path_TPC <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_kriging_v2_for TPC).csv"
+railstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).csv"
 
 mrtstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv"
 
@@ -113,21 +107,10 @@ mrt <- read_parquet(mrtstop_path)
     mutate(StationID = New_ID) %>%
     select(-New_ID)
   mrt_final <- bind_rows(mrt, newly_created_rows)
-  write_csv(mrt_final,"E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv")
-  
+  write_csv(mrt,"E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv")
+  mrt$MRT_StationID <- mrt$StationID 
 }
 
-csventry1_6 <- fread(TPCmrt2023df_input_csv_1_6 , skip = 1, header = TRUE, encoding = "UTF-8", select = "EntryTime")
-csventry7_12 <- fread(TPCmrt2023df_input_csv_7_12 , skip = 1, header = TRUE, encoding = "UTF-8", select = "EntryTime")
-TPCmrt2023df_fst_1_6_entrytime <- read_fst(TPCmrt2023df_output_fst_1_6v2, columns = "EntryTime", as.data.table = TRUE)
-TPCmrt2023df_fst_7_12_entrytime <- read_fst(TPCmrt2023df_output_fst_7_12, columns = "EntryTime", as.data.table = TRUE)
-
-TPCmrt2023df <- read_fst(TPCmrt2023df_output_fst_1_6, as.data.table = TRUE)
-TPCmrt2023df[, `:=`(
-  EntryTime = EntryTime - hours(8),
-  ExitTime  = ExitTime  - hours(8)
-)]
-write_fst(TPCmrt2023df, TPCmrt2023df_output_fst_1_6v2,compress0)
 
 #轉成fst
 #2023臺北市捷運
@@ -415,6 +398,7 @@ names(mrtstop)
 TPCmrt2023df_1_6 <- setDT(read.fst(TPCmrt2023df_output_fst_1_6_2))
 mrtstop <- read_parquet(mrtstop_path)
 railstop <- read_parquet(railstop_path)
+railstop <- fread(railstop_path,encoding = "UTF-8")
 names(railstop)
 
 
@@ -708,11 +692,11 @@ mega_preprocess_fst <- function(fst_path,
 }
 
 mega_preprocess_fst(TPCmrt2023df_output_fst_1_6_2,
-                    mrtstop_path_TPC,
+                    mrtstop_path,
                     TPCmrt2023df_output_fst_1_6_3_chunkv3,
                     TPCmrt2023df_output_fst_1_6_3_v3)
 mega_preprocess_fst(TPCmrt2023df_output_fst_7_12_2,
-                    mrtstop_path_TPC,
+                    mrtstop_path,
                     TPCmrt2023df_output_fst_7_12_3_chunkv3,
                     TPCmrt2023df_output_fst_7_12_3v3)
 
@@ -785,12 +769,12 @@ nrow(fst(rail2023df_output_fst5))
 nrow(fst(rail2023df_output_fst5_truncated))
 
 #一次做step4 step5
-TPCmrt2023_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk"              
-TPCmrt2023_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2023_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3chunk"              
-TPCmrt2023_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk" 
-head(fst("E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk/chunk_001.fst"))
-head(fst("E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk/chunk_001.fst"))
+TPCmrt2023_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk"              
+TPCmrt2023_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2023_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk"              
+TPCmrt2023_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+head(fst("E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk/chunk_001.fst"))
+head(fst("E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk/chunk_001.fst"))
 
 
 lonlatdevelop_fst <- function(chunk_dir,
@@ -857,7 +841,6 @@ lonlatdevelop_fst <- function(chunk_dir,
   }
   
   message("所有分塊處理完成，Dataset 存放於：", output_dir)
-  ds <- arrow::open_dataset(output_dir, format = "parquet")
   invisible(ds)
 }
 lonlatdevelop_fst(TPCmrt2023_1_6_chunk_dir,TPCmrt2023_1_6_final_fst)
@@ -895,12 +878,12 @@ mrt_var_select <- c("Authority","IDType","HolderType","TicketType","SubTicketTyp
                     "ExitStationName","ExitTime","TransferCode","Bdevelopment_level",
                     "BStationID","Ddevelopment_level","Distance",
                     "dev_movement","movement_level")
-TPCmrt2023_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2023_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2023_1_6_final_fst_path <- "E:/brain/解壓縮data/資料處理/2023/2023公車捷運合併/2023臺北市捷運1-6月(發展程度移動_voronoi_v3)5.fst"
-TPCmrt2023_7_12_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2023/2023公車捷運合併/2023臺北市捷運7-12月(發展程度移動_voronoi_v3)5.fst"
-TPCmrt2023_final_fst_chunk_path    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運(發展程度移動_voronoi_v3)5"
-TPCmrt2023_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2023/2023整年臺北市捷運(發展程度移動_voronoi_v3)5.fst"
+TPCmrt2023_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2023_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2023_1_6_final_fst_path <- "E:/brain/解壓縮data/資料處理/2023/2023公車捷運合併/2023臺北市捷運1-6月(發展程度移動_kriging_v3)5.fst"
+TPCmrt2023_7_12_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2023/2023公車捷運合併/2023臺北市捷運7-12月(發展程度移動_kriging_v3)5.fst"
+TPCmrt2023_final_fst_chunk_path    <- "E:/brain/解壓縮data/資料處理/2023/2023臺北市捷運(發展程度移動_kriging_v3)5"
+TPCmrt2023_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2023/2023整年臺北市捷運(發展程度移動_kriging_v3)5.fst"
 merge_and_write_fst(TPCmrt2023_1_6_final_fst,mrt_var_select,TPCmrt2023_1_6_final_fst_path)
 merge_and_write_fst(TPCmrt2023_7_12_final_fst,mrt_var_select,TPCmrt2023_7_12_final_fst_path)
 merge_and_write_fst(TPCmrt2023_final_fst_chunk_path,mrt_var_select,TPCmrt2023_final_fst_path)
