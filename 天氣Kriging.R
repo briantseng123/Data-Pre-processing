@@ -176,9 +176,85 @@ all_hours <- sort(unique(df_utm$hour))
 names(df_utm)
 vars <- c("temperature_c", "relative_humidity_percent", "wind_speed_m_s",
           "precipitation_mm","uv_index") 
+# function設定
+# 將整張網格填成常數
+fill_grid_constant <- function(grid, value) {
+  out <- grid
+  if (inherits(out, "sf")) out <- as(out, "Spatial")
+  n <- nrow(out@data)
+  out@data$var1.pred <- rep(value, n)
+  out@data$var1.var  <- rep(0, n)
+  out
+}
+# 安全擬合半變異函數
+fit_variogram_safe <- function(obs, v, max_dist, var_y,
+                               cutoff_ratio = 0.6, n_bins = 15,
+                               psill_min_factor = 0.95, nug_min_factor = 0.05,
+                               eps_psill = 1e-6, eps_nugget = 1e-6) {
+  
+  cutoff <- max_dist * cutoff_ratio
+  width  <- cutoff / n_bins
+  
+  psill0 <- max(var_y * psill_min_factor, eps_psill)
+  nug0   <- max(var_y * nug_min_factor,  eps_nugget)
+  range0 <- max(cutoff * 0.5, 1e-6)
+  
+  sv <- gstat::variogram(as.formula(paste0(v, " ~ 1")), obs,
+                         cutoff = cutoff, width = width)
+  
+  vgminit <- gstat::vgm(psill = psill0, model = "Exp",
+                        range = range0, nugget = nug0)
+  
+  vgm_fit <- try(
+    gstat::fit.variogram(sv, model = vgminit,
+                         fit.sills = TRUE, fit.ranges = TRUE,
+                         fit.method = 6),
+    silent = TRUE
+  )
+  
+  if (inherits(vgm_fit, "try-error") ||
+      !is.data.frame(vgm_fit) ||
+      any(is.na(vgm_fit$psill))) {
+    warning("fit.variogram failed; use initial vgm.")
+    vgm_fit <- vgminit
+  }
+  
+  vgm_fit
+}
+# IDW
+idw_fallback <- function(obs, v, grid, nmax = 50, idp = 2.0) {
+  res <- gstat::idw(as.formula(paste0(v, " ~ 1")),
+                    locations = obs,
+                    newdata   = grid,
+                    idp = idp, nmax = nmax)
+  if (!"var1.var" %in% names(res@data)) res@data$var1.var <- NA_real_
+  res
+}
+
+#參數設定
+{
+  # 變異門檻：判定「幾乎無變異」
+  var_tol   <- 1e-8
+  range_tol <- 1e-8
+  
+  # 鄰居數
+  nmax_set <- 50
+  nmin_set <- 1
+  
+  # 最小 psill / nugget
+  eps_psill  <- 1e-6
+  eps_nugget <- 1e-6
+  
+  # 指定哪些變數要用「全 0 當常數」
+  zero_constant_vars <- c("uv_index", "precipitation_mm") 
+  
+  # 檢查 CRS 一致（若不同請先 transform）
+  stopifnot(identical(proj4string(df_utm), proj4string(grid_utm_from_sf)))
+}
+
 # 初始化儲存容器
 filled_results <- list()
-#non parallel
+# 結論有一些問題，會有需多空白的問題
 for (h in all_hours) {
   message("Processing hour: ", h)
   sub_hr <- df_utm[df_utm$hour == h, ]
@@ -216,6 +292,97 @@ for (h in all_hours) {
     # Kriging 整張 5km 網格
     kr <- krige(as.formula(paste0(v, " ~ 1")), locations = obs,
                 newdata = grid_utm_from_sf, model = vgm_fit)
+    filled_results[[h_str]][[v]] <- kr
+  }
+}
+# 嘗試使用常數填補遺失的部分
+for (h in all_hours) {
+  message("Processing hour: ", h)
+  sub_hr <- df_utm[df_utm$hour == h, ]
+  if (nrow(sub_hr) == 0) next
+  
+  # 去重複座標，避免克里金矩陣奇異
+  sub_hr <- sp::remove.duplicates(sub_hr, zero = 0.0)
+  if (nrow(sub_hr) < 5) next
+  
+  h_str <- gsub("[: ]", "_", h)
+  filled_results[[h_str]] <- list()
+  
+  for (v in vars) {
+    if (!v %in% names(sub_hr@data)) {
+      warning("Variable ", v, " not found in data columns. Skipping.")
+      next
+    }
+    
+    # 去 NA
+    obs <- sub_hr[!is.na(sub_hr[[v]]), ]
+    if (nrow(obs) < 5) {
+      warning("Hour ", h, ", var ", v, ": <5 observations, skip.")
+      next
+    }
+    
+    y <- obs@data[[v]]
+    var_y <- stats::var(y, na.rm = TRUE)
+    rng_y <- diff(range(y, na.rm = TRUE))
+    
+    # 幾乎無變異 → 常數回填
+    if (!is.finite(var_y) || var_y < var_tol || rng_y < range_tol) {
+      # 若屬於指定變數且全部 0，就直接填 0；否則用平均
+      if (v %in% zero_constant_vars && max(y, na.rm = TRUE) == 0) {
+        const_val <- 0
+      } else {
+        const_val <- mean(y, na.rm = TRUE)
+      }
+      message(sprintf("[CONST] hour=%s var=%s var=%.3e range=%.3e const=%.6f",
+                      h, v, var_y, rng_y, const_val))
+      const_res <- fill_grid_constant(grid_utm_from_sf, const_val)
+      filled_results[[h_str]][[v]] <- const_res
+      next
+    }
+    
+    # 計算距離，設定 cutoff
+    coords_obs <- sp::coordinates(obs)
+    dmat <- sp::spDists(coords_obs, longlat = FALSE)
+    max_dist <- max(dmat, na.rm = TRUE)
+    if (!is.finite(max_dist) || max_dist <= 0) {
+      # 退回常數（保險）
+      const_val <- mean(y, na.rm = TRUE)
+      warning(sprintf("Max distance invalid; fallback CONST. hour=%s var=%s const=%.6f",
+                      h, v, const_val))
+      const_res <- fill_grid_constant(grid_utm_from_sf, const_val)
+      filled_results[[h_str]][[v]] <- const_res
+      next
+    }
+    
+    # 擬合半變異函數（穩健）
+    vgm_fit <- fit_variogram_safe(
+      obs, v, max_dist = max_dist, var_y = var_y,
+      eps_psill = eps_psill, eps_nugget = eps_nugget
+    )
+    
+    # 嘗試克里金
+    kr <- try(
+      gstat::krige(as.formula(paste0(v, " ~ 1")),
+                   locations = obs,
+                   newdata   = grid_utm_from_sf,
+                   model     = vgm_fit,
+                   nmax = nmax_set, nmin = nmin_set),
+      silent = TRUE
+    )
+    
+    if (inherits(kr, "try-error")) {
+      warning(sprintf("Kriging failed; fallback IDW. hour=%s var=%s", h, v))
+      kr <- idw_fallback(obs, v, grid_utm_from_sf, nmax = nmax_set)
+    } else {
+      preds <- kr@data$var1.pred
+      na_ratio <- mean(is.na(preds))
+      if (is.na(na_ratio) || na_ratio > 0) {
+        warning(sprintf("Kriging produced NA (ratio=%.3f); fallback IDW. hour=%s var=%s",
+                        na_ratio, h, v))
+        kr <- idw_fallback(obs, v, grid_utm_from_sf, nmax = nmax_set)
+      }
+    }
+    
     filled_results[[h_str]][[v]] <- kr
   }
 }
