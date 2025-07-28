@@ -397,9 +397,9 @@ saveRDS(filled_results,"F:/淡江/研究實習生/天氣資料/天氣Kriging資�
 saveRDS(filled_results,"F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2022天氣站格點(Kriging)v2.rds")
 
 filled_results <- readRDS("E:/brain/解壓縮data/資料處理/天氣資料/Kriging 天氣站格點/2022天氣站格點(Kriging).rds")
-filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2024天氣站格點(Kriging).rds")
-filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2023天氣站格點(Kriging).rds")
-filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2022天氣站格點(Kriging).rds")
+filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2024天氣站格點(Kriging)v2.rds")
+filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2023天氣站格點(Kriging)v2.rds")
+filled_results <- readRDS("F:/淡江/研究實習生/天氣資料/天氣Kriging資料/2022天氣站格點(Kriging)v2.rds")
 
 filled_results_clean <- purrr::compact(filled_results)
 names(filled_results_clean)
