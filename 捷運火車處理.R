@@ -78,7 +78,147 @@ fastcheck <- function(df,target_year){
     print(filtered_rows)
     cat("\n")
 }
-
+fstfastcheck <- function(file,target_year,keycheck=TRUE,is_mrt_rail=TRUE){
+  cat("Names:")
+  print(names(fst(file)))
+  cat("\n")
+  
+  cat("Head:")
+  print(head(fst(file)))
+  cat("\n")
+  
+  if(keycheck==TRUE){
+    if(is_mrt_rail==TRUE){
+      key <- c("EntryStationID","EntryStationName","EntryTime",
+               "ExitStationID","ExitStationName","ExitTime")
+    }else{
+      key <- c("BoardingStopUID","BoardingStopName","BoardingTime",
+               "DeboardingStopUID","DeboardingStopName","DeboardingTime")
+    }
+    
+    df <- read_fst(file,columns=key,as.data.table=TRUE)
+  }else{
+    df <- read_fst(file,as.data.table=TRUE)
+  }
+  if (!inherits(df, "data.table")) {
+    warning("Input 'df' is not a data.table. Converting it to data.table for processing.")
+    df <- as.data.table(df)
+  } 
+  
+  
+  na_counts <- colSums(is.na(df))
+  cat("每列的 NA 數量:\n")
+  print(na_counts) 
+  cat("\n")
+  
+  Entry_exit_same <- NA 
+  
+  if(is_mrt_rail==TRUE){
+    required_cols_for_check <- c("EntryStationID", "ExitStationID", "EntryStationName", "ExitStationName")
+    if (!all(required_cols_for_check %in% names(df))) {
+      warning(paste0("Not all required columns (", paste(required_cols_for_check, collapse = ", "), ") are present for 'Entry==Exit' check. Skipping this check."))
+    } else {
+      Entry_exit_same <- df[EntryStationID == ExitStationID | EntryStationName == ExitStationName, .N]
+    }
+  }else{
+    required_cols_for_check <- c("BoardingStopUID", "DeboardingStopUID", "BoardingStopName", "DeboardingStopName")
+    if (!all(required_cols_for_check %in% names(df))) {
+      warning(paste0("Not all required columns (", paste(required_cols_for_check, collapse = ", "), ") are present for 'Entry==Exit' check. Skipping this check."))
+    } else {
+      Entry_exit_same <- df[BoardingStopUID == DeboardingStopUID | BoardingStopName == DeboardingStopName, .N]
+    }
+      cat("EntryStationID/Name 與 ExitStationID/Name 相同的數量:\n")
+      print(Entry_exit_same)
+      cat("\n")
+  }
+  
+  
+  cat("所有欄位名稱:\n")
+  print(names(df)) 
+  cat("\n")
+  
+  cat("資料框的前幾行 (head):\n")
+  print(head(df)) 
+  cat("\n")
+  
+  cat("資料非當年度的資料:\n")
+  start_of_target_year <- ymd(paste0(target_year, "-01-01"), tz = "UTC") - days(1)
+  end_of_target_year <- ymd(paste0(target_year, "-12-31"), tz = "UTC") + days(1)
+  
+  lower_bound <- start_of_target_year 
+  upper_bound <- end_of_target_year 
+  original_rows <- nrow(df)
+  if(is_mrt_rail==TRUE){
+    df <- df[
+      EntryTime < lower_bound | EntryTime > upper_bound |
+        ExitTime < lower_bound | ExitTime > upper_bound
+    ]
+  }else{
+    df <- df[
+      BoardingTime < lower_bound | BoardingTime > upper_bound |
+        DeboardingTime < lower_bound | DeboardingTime > upper_bound
+    ]
+  }
+  
+  filtered_rows <- nrow(df)
+  print(head(df)) 
+  cat("\n")
+  
+  cat("資料非當年度的資料(筆數):\n")
+  print(filtered_rows)
+  cat("\n")
+  gc()
+}
+folderfastcheck <- function(folder,target_year,keycheck_folder=TRUE,is_mrt_rail=TRUE){
+  if (!dir.exists(folder)) {
+    stop(paste0("錯誤：指定的資料夾路徑不存在: ", folder))
+  }
+  
+  fst_files <- list.files(
+    path = folder,
+    pattern = "\\.fst$",
+    full.names = TRUE,
+    recursive = FALSE
+  )
+  
+  if (length(fst_files) == 0) {
+    message(paste0("在資料夾 '", folder, "' 中沒有找到任何 .fst 檔案。"))
+    return(invisible(NULL)) 
+  }
+  
+  cat(paste0("在 '", folder, "' 中找到以下 FST 檔案準備進行檢查:\n"))
+  print(basename(fst_files))
+  cat("\n")
+  
+  for (i in seq_along(fst_files)) {
+    current_file <- fst_files[i]
+    
+    fstfastcheck(file = current_file,
+                  target_year = target_year,
+                  keycheck = keycheck_folder,
+                 is_mrt_rail = is_mrt_rail)
+    
+    if (i < length(fst_files)) {
+      response <- ""
+      while (!tolower(response) %in% c("y", "n")) {
+        response <- readline(prompt = "是否繼續檢查下一個檔案？(Y/N): ")
+        if (!tolower(response) %in% c("y", "n")) {
+          cat("無效輸入，請輸入 'Y' 或 'N'。\n")
+        }
+      }
+      
+      if (tolower(response) == "n") {
+        cat("使用者選擇停止，終止檔案檢查。\n")
+        break 
+      }
+    }
+  }
+  
+  cat("\n所有 FST 檔案檢查完成或已終止。\n")
+}
+fstfastcheck(raildf_output_fst5_truncated,"2022")
+folderfastcheck(TPCmrt_1_6_final_fst,"2022",keycheck_folder=FALSE)
+folderfastcheck(TPCmrt_7_12_final_fst,"2022",keycheck_folder=FALSE)
 
 #2024
 {
@@ -114,11 +254,11 @@ fastcheck <- function(df,target_year){
 {
   base_path <- "E:/brain/解壓縮data"
   TPCmrtdf_output_fst_1_6 <- file.path(base_path, "fst", "2023", "2023臺北市捷運1-6月.fst")
-  TPCmrtdf_output_fst_1_6_2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(去除異常值)2.fst")
+  TPCmrtdf_output_fst_1_6_2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(去除異常值)2")
   TPCmrtdf_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2023", "2023臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk")
   
   TPCmrtdf_output_fst_7_12 <- file.path(base_path, "fst", "2023", "2023臺北市捷運7-12月.fst")
-  TPCmrtdf_output_fst_7_12_2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(去除異常值)2.fst")
+  TPCmrtdf_output_fst_7_12_2<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(去除異常值)2")
   TPCmrtdf_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2023", "2023臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk")
   
   NTPmrtdf_output_fst <- file.path(base_path, "fst", "2023", "2023新北市捷運.fst")
@@ -143,11 +283,11 @@ fastcheck <- function(df,target_year){
 {
   base_path <- "E:/brain/解壓縮data"
   TPCmrtdf_output_fst_1_6 <- file.path(base_path, "fst", "2022", "2022臺北市捷運1-6月.fst")
-  TPCmrtdf_output_fst_1_6_2<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運1-6月(去除異常值)2.fst")
+  TPCmrtdf_output_fst_1_6_2<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運1-6月(去除異常值)2")
   TPCmrtdf_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2022", "2022臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk")
   
   TPCmrtdf_output_fst_7_12 <- file.path(base_path, "fst", "2022", "2022臺北市捷運7-12月.fst")
-  TPCmrtdf_output_fst_7_12_2<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運7-12月(去除異常值)2.fst")
+  TPCmrtdf_output_fst_7_12_2<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運7-12月(去除異常值)2")
   TPCmrtdf_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk")
   
   NTPmrtdf_output_fst <- file.path(base_path, "fst", "2022", "2022新北市捷運.fst")
@@ -163,10 +303,10 @@ fastcheck <- function(df,target_year){
   raildf_output_fst5 <- file.path(base_path, "資料處理", "2022", "2022臺鐵(發展程度移動)5.fst")
   raildf_output_fst5_truncated <- file.path(base_path, "資料處理", "2022", "2022臺鐵(發展程度移動_truncated)5.fst")
   
-  TPCmrt_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk"              
-  TPCmrt_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
-  TPCmrt_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk"              
-  TPCmrt_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+  TPCmrt_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk"              
+  TPCmrt_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+  TPCmrt_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk"              
+  TPCmrt_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
 }
 
 mrtstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv"
@@ -264,13 +404,7 @@ cleanproblemmrt_dt_opti <- function(df) {
   df[, ExitTime := as.POSIXct(ExitTime, format = "%Y-%m-%d %H:%M:%S", tz = "Asia/Taipei")]
   
   df[, `:=`(
-    BDayOfWeek        = weekdays(EntryTime),
-    BWeekendOrWeekday = fifelse(wday(EntryTime) %in% c(1, 7), "Weekend", "Weekday"),
-    BHour             = hour(EntryTime),
-    BMonth            = month(EntryTime),
-    BYear             = year(EntryTime),
-    DYear             = year(ExitTime),
-    Duration          = as.numeric(difftime(ExitTime, EntryTime, units = "hours")) # 確保為數值
+    Duration          = as.numeric(difftime(ExitTime, EntryTime, units = "hours")) 
   )]
   
   df_filtered <- df[!is.na(Duration) & Duration <= 12 &
@@ -281,8 +415,9 @@ cleanproblemmrt_dt_opti <- function(df) {
   return(df_filtered) 
 }
 process_fst_chunks_direct <- function(fst_file_path, 
+                                      output_folder,
                                       processing_function, 
-                                      chunk_size = 10000000L) {
+                                      chunk_size = 50000L) {
   
   if (!file.exists(fst_file_path)) {
     stop(paste("FST 檔案不存在:", fst_file_path))
@@ -294,6 +429,10 @@ process_fst_chunks_direct <- function(fst_file_path,
     stop("請先安裝並載入 'fst' 套件: install.packages('fst'); library(fst)")
   }
   
+  if (!dir.exists(output_folder)) {
+    message(paste("輸出資料夾不存在，正在建立:", output_folder))
+    dir.create(output_folder, recursive = TRUE)
+  }
   message(paste("準備從 FST 檔案直接分塊讀取:", fst_file_path))
   fst_meta <- metadata_fst(fst_file_path)
   n_total_rows <- fst_meta$nrOfRows
@@ -320,22 +459,22 @@ process_fst_chunks_direct <- function(fst_file_path,
                                    as.data.table = TRUE) 
     
     processed_chunk <- processing_function(current_chunk_data) 
-    processed_list[[i]] <- processed_chunk
+    
+    output_file_path <- file.path(output_folder, paste0("_chunk_", i, ".fst"))
+    
+    message(paste(" -> 正在儲存至:", output_file_path))
+    fst::write_fst(processed_chunk, path = output_file_path)
+    rm(current_chunk_data)
+    rm(processed_chunk)
+    gc()
   }
-  
-  message("所有分塊處理完畢。正在合併結果...")
-  final_result <- rbindlist(processed_list, use.names = TRUE, fill = TRUE)
-  message("合併完成。")
-  
-  return(final_result)
 }
-TPCmrtdf_1_6 <- read.fst(TPCmrtdf_output_fst_1_6,as.data.table = TRUE)
-TPCmrtdf_1_6 <- process_fst_chunks_direct(TPCmrtdf_output_fst_1_6,cleanproblemmrt_dt_opti)
-write.fst(TPCmrtdf_1_6,TPCmrtdf_output_fst_1_6_2, compress=0)
+TPCmrtdf_1_6 <- process_fst_chunks_direct(TPCmrtdf_output_fst_1_6,TPCmrtdf_output_fst_1_6_2,
+                                          cleanproblemmrt_dt_opti)
 
-TPCmrtdf_7_12 <- read.fst(TPCmrtdf_output_fst_7_12, as.data.table = TRUE)
-TPCmrtdf_7_12 <- process_fst_chunks_direct(TPCmrtdf_output_fst_7_12,cleanproblemmrt_dt_opti)
-write.fst(TPCmrtdf_7_12,TPCmrtdf_output_fst_7_12_2, compress=0)
+TPCmrtdf_7_12 <- process_fst_chunks_direct(TPCmrtdf_output_fst_7_12,TPCmrtdf_output_fst_7_12_2,
+                                           cleanproblemmrt_dt_opti)
+
 
 raildf <- read.fst(raildf_output_fst ,as.data.table = TRUE)
 raildf <- process_fst_chunks_direct(raildf_output_fst ,cleanproblemmrt_dt_opti)
@@ -348,7 +487,7 @@ write.fst(NTPmrtdf,NTPmrtdf_output_fst2)
 rm(list = ls())
 gc()
 
-merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_size = 10000000) {
+merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_size = 50000) {
   library(data.table)
   library(fst)
   
@@ -448,7 +587,7 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
   return(final_dt)
 }
 raildf <- read_fst(raildf_output_fst2,
-                   columns=c("Authority","IDType","HolderType","TicketType",
+                   columns=c("Authority","HolderType","TicketType",
                              "SubTicketType","EntryStationName","EntryStationID",
                              "EntryTime","ExitStationName","ExitStationID","ExitTime","TransferCode"), 
                    as.data.table = TRUE)
@@ -564,7 +703,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
 NTPmrtdf <- setDT(read.fst(NTPmrtdf_output_fst2))
 merge_stopuid_fast_chunk_dropsamestopname3(NTPmrtdf,mrt,NTPmrtdf_output_fst3v3)
 
-mega_preprocess_fst <- function(fst_path,
+mega_preprocess_fst <- function(fst_dir_path,
                                 stopuid_path,
                                 out_dir,
                                 chunk_size = 10000000,
@@ -587,23 +726,22 @@ mega_preprocess_fst <- function(fst_path,
            old = setdiff(names(stopuid_D), "StationID"),
            new = paste0("D", setdiff(names(stopuid_D), "StationID")))
   
-  meta     <- fst::fst.metadata(fst_path)
-  n_rows   <- meta$nrOfRows
-  parts    <- ceiling(n_rows / chunk_size)
-  message("[2] 檔案總列數: ", format(n_rows, big.mark = ","), 
-          " | chunk 數: ", parts)
-  
+  files_to_process <- list.files(path = fst_dir_path,
+                                 pattern = "\\.fst$", 
+                                 full.names = TRUE,  
+                                 recursive = TRUE)
+  files_to_process <- mixedsort(files_to_process)
+  message(sprintf("[2] 找到 %d 個 .fst 檔案準備處理。", length(files_to_process)))
   dir_create(out_dir, recurse = TRUE)
   
-  for (part in seq_len(parts)) {
-    from <- (part - 1) * chunk_size + 1L
-    to   <- min(part * chunk_size, n_rows)
-    msg <- sprintf("%s | Part %d [%d-%d] 讀檔…",
-                   Sys.time(),
-                   part, from, to)
-    message(msg)
+  for (i in seq_along(files_to_process)) {
     
-    dt <- as.data.table(fst::read_fst(fst_path, from = from, to = to))
+    current_file_path <- files_to_process[i]
+    original_filename <- basename(current_file_path)
+    
+    message(sprintf("\n--- (%d/%d) 開始處理檔案: %s ---", i, length(files_to_process), original_filename))
+    
+    dt <- read_fst(current_file_path, as.data.table = TRUE)
     
     dt[stopuid_B, on = .(EntryStationID = StationID),
        names(stopuid_B)[-1] := mget(paste0("i.", names(stopuid_B)[-1]))]
@@ -619,9 +757,15 @@ mega_preprocess_fst <- function(fst_path,
     dt <- dt[!is.na(BLongitude) & !is.na(BLatitude) &
                !is.na(DLongitude) & !is.na(DLatitude)]
     
-    out_file <- file.path(out_dir, sprintf("chunk_%03d.fst", part))
-    fst::write_fst(dt, out_file, compress = compress)
-    rm(dt); gc()
+    if (nrow(dt) > 0) {
+      out_file_path <- file.path(out_dir, original_filename)
+      fst::write_fst(dt, out_file_path, compress = compress)
+      message(sprintf(" -> 處理完成，已儲存至 %s", out_file_path))
+    } else {
+      message(" -> 處理完成，沒有符合條件的資料可儲存。")
+    }
+    
+    rm(dt); gc() 
   }
   
 }
@@ -752,3 +896,32 @@ lonlatdevelop_fst <- function(chunk_dir,
 }
 lonlatdevelop_fst(TPCmrt_1_6_chunk_dir,TPCmrt_1_6_final_fst)
 lonlatdevelop_fst(TPCmrt_7_12_chunk_dir,TPCmrt_7_12_final_fst)
+
+read_fst_folder <- function(folder, cols, pattern = "\\.fst$") {
+  files <- list.files(path = folder, pattern = pattern, full.names = TRUE)
+  
+  dt_list <- lapply(files, function(f) {
+    cat("讀取", f, "…\n")
+    df <- read_fst(f, columns = cols)
+    df <- as.data.table(df)
+    
+    if ("BoardingTime" %in% names(df)) {
+      cur_tz <- attr(df$BoardingTime, "tzone") %||% ""
+      
+      if (cur_tz != "Asia/Taipei") {
+        df[, BoardingTime := with_tz(BoardingTime, tzone = "Asia/Taipei")]
+        df[, BoardingTime := BoardingTime - hours(8)]
+      }
+      attr(df$BoardingTime, "tzone") <- "Asia/Taipei"
+    }
+    
+    return(df)
+  })
+  
+  cat("合併中...\n")
+  combined <- rbindlist(dt_list, use.names = TRUE)
+  return(combined)
+}
+maincheck <- c("EntryStationID","ExitStationID","EntryStationName","ExitStationName","EntryTime","ExitTime")
+checkTPE <- read_fst_folder(TPCmrt_1_6_final_fst,maincheck)
+fastcheck(checkTPE,"2024")
