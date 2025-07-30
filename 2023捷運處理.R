@@ -84,15 +84,10 @@ write_parquet(unique_stops,"E:/brain/解壓縮data/資料處理/臺鐵站點資�
 nrow(fst(rail2023df_output_fst2))
 names(fst(rail2023df_output_fst5))
 
-mrtstop_path <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_kriging_v3).parquet"
-mrtstop_path_TPC <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_kriging_v2_for TPC).csv"
-railstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).csv"
-
 mrtstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv"
 
 mrt <- fread(mrtstop_path, encoding = "UTF-8")
-mrt <- fread(mrtstop_path_TPC)
-mrt <- read_parquet(mrtstop_path)
+
 
 #新增mrtstop可以適用在TPCmrt
 {
@@ -515,12 +510,12 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
   
   cat("[2/9] 處理 stopuid...\n")
   stopuid <- as.data.table(stopuid)
-  stopuid[, MRT_StationID := as.character(MRT_StationID)]
-  stopuid <- unique(stopuid, by = "MRT_StationID")
+  stopuid[, StationID  := as.character(StationID)]
+  stopuid <- unique(stopuid, by = "StationID")
   
   cat("[3/9] 建立 stopuid_B / stopuid_D...\n")
   safe_prefix_rename <- function(dt, prefix) {
-    cols <- setdiff(names(dt), "MRT_StationID")
+    cols <- setdiff(names(dt), "StationID")
     cols_to_rename <- cols[!startsWith(cols, prefix)]
     newnames <- paste0(prefix, cols_to_rename)
     setnames(dt, cols_to_rename, newnames)
@@ -548,13 +543,13 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
     cat(nrow(dt_chunk),"\n")
     # 合併 Boarding 標籤資訊
     setkey(dt_chunk, EntryStationID)
-    setkey(stopuid_B, MRT_StationID)
-    dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(EntryStationID = MRT_StationID)]
+    setkey(stopuid_B, StationID)
+    dt_chunk[stopuid_B, (B_cols) := mget(paste0("i.", B_cols)), on = .(EntryStationID = StationID)]
     
     # 合併 Deboarding 標籤資訊
     setkey(dt_chunk, ExitStationID)
-    setkey(stopuid_D, MRT_StationID)
-    dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(ExitStationID = MRT_StationID)]
+    setkey(stopuid_D, StationID)
+    dt_chunk[stopuid_D, (D_cols) := mget(paste0("i.", D_cols)), on = .(ExitStationID = StationID)]
     cat(nrow(dt_chunk),"\n")
     # 如果標籤與現有名稱不符，使用標籤取代名稱
     dt_chunk[(BStationNameCh != EntryStationName | EntryStationName=="")  & !is.na(BStationNameCh), EntryStationName := BStationNameCh]
@@ -612,7 +607,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
   cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
   return(final_dt)
 }
-merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2023df,mrtstop,NTPmrt2023df_output_fst3v3)
+merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2023df,mrt,NTPmrt2023df_output_fst3v3)
 mega_preprocess_fst <- function(fst_path,
                                 stopuid_path,
                                 out_dir,

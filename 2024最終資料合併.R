@@ -310,14 +310,14 @@ head(fst("E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併/台北
 nrow(fst("E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併/2024臺鐵(加入天氣資料)2.fst"))
 combined_dt <- read.fst(combined_dt_path2v2, as.data.table=TRUE)
 
-mrtbus2024df_path <- "E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併"
+mrtbus2024df_path <- "E:/brain/解壓縮data/資料處理/2024/2024公車捷運火車合併"
 temperature_var <- c("Authority","BoardingTime","HolderType","TicketType",
                      "precipitation_mm","Ddevelopment_level","temperature_c")
 sub_temperature_var <- c("BoardingTime","HolderType","temperature_c")
 sub_temperature_var2 <- c("BoardingTime","TicketType","temperature_c")
 sub_temperature_var3 <- c("BoardingTime","movement_level","temperature_c")
 sub_temperature_var4 <- c("BoardingTime","Authority","temperature_c")
-sub_auth <- c("HolderType","TicketType")
+sub_auth <- c("HolderType","TicketType","SubTicketType")
 precip_var <- c("Authority","BoardingTime","HolderType","TicketType",
             "movement_level","precipitation_mm")
 sub_precip_var <- c("BoardingTime","HolderType","precipitation_mm")

@@ -31,7 +31,7 @@ TPCmrt2022df_input_csv_1_6 <- "E:/brain/解壓縮data/csv/2022/臺北捷運電�
 TPCmrt2022df_output_parquet_1_6 <- file.path(base_path, "fst", "2022", "2022臺北市捷運1-6月.parquet")
 TPCmrt2022df_output_fst_1_6 <- file.path(base_path, "fst", "2022", "2022臺北市捷運1-6月.fst")
 TPCmrt2022df_output_fst_1_6_2<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運1-6月(去除異常值)2.fst")
-TPCmrt2022df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2022", "2022臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk")
+TPCmrt2022df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2022", "2022臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk")
 nrow(fst(TPCmrt2022df_output_fst_1_6))
 nrow(fst(TPCmrt2022df_output_fst_1_6_2))
 
@@ -39,23 +39,23 @@ TPCmrt2022df_input_csv_7_12 <- "E:/brain/解壓縮data/csv/2022/臺北捷運電�
 TPCmrt2022df_output_parquet_7_12 <- file.path(base_path, "fst", "2022", "2022臺北市捷運7-12月.parquet")
 TPCmrt2022df_output_fst_7_12 <- file.path(base_path, "fst", "2022", "2022臺北市捷運7-12月.fst")
 TPCmrt2022df_output_fst_7_12_2<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運7-12月(去除異常值)2.fst")
-TPCmrt2022df_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3chunk")
+TPCmrt2022df_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2022", "2022臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk")
 nrow(fst(TPCmrt2022df_output_fst_7_12))
 nrow(fst(TPCmrt2022df_output_fst_7_12_2))
 
 NTPmrt2022df_input_csv <- "E:/brain/解壓縮data/csv/2022/新北捷運電子票證資料(TO2A)2022-01-01 ~ 2022-12-31/新北捷運電子票證資料(TO2A).csv"
 NTPmrt2022df_output_fst <- file.path(base_path, "fst", "2022", "2022新北市捷運.fst")
 NTPmrt2022df_output_fst2 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(去除異常值)2.fst")
-NTPmrt2022df_output_fst3v3 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3.fst")
-NTPmrt2022df_output_fst4v3 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(加入直線距離_voronoi_v3)4.fst")
-NTPmrt2022df_output_fst5v3 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(發展程度移動_voronoi_v3)5.fst")
+NTPmrt2022df_output_fst3v3 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(加入鄉政市區數位發展分類與氣象站_kriging_v3)3.fst")
+NTPmrt2022df_output_fst4v3 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(加入直線距離_kriging_v3)4.fst")
+NTPmrt2022df_output_fst5v3 <- file.path(base_path, "資料處理", "2022", "2022新北市捷運(發展程度移動_kriging_v3)5.fst")
 names(fst(NTPmrt2022df_output_fst5v3))
 
 rail2022df_input_csv <- "E:/brain/解壓縮data/csv/2022/臺鐵電子票證資料(TO2A)2022-01-01 ~ 2022-12-31/臺鐵電子票證資料(TO2A).csv"
 rail2022df_output_fst <- "E:/brain/解壓縮data/fst/2022/2022臺鐵.fst"
 rail2022df_output_fst2 <- file.path(base_path, "資料處理", "2022", "2022臺鐵(去除異常值)2.fst")
 rail2022df_output_fst3 <- file.path(base_path, "資料處理", "2022", "2022臺鐵(加入鄉政市區數位發展分類與氣象站)3.fst")
-rail2022df_output_fst4 <- file.path(base_path, "資料處理", "2022", "2022臺鐵(加入直線距離_voronoi)4.fst")
+rail2022df_output_fst4 <- file.path(base_path, "資料處理", "2022", "2022臺鐵(加入直線距離_kriging)4.fst")
 rail2022df_output_fst5 <- file.path(base_path, "資料處理", "2022", "2022臺鐵(發展程度移動)5.fst")
 rail2022df_output_fst5_truncated <- file.path(base_path, "資料處理", "2022", "2022臺鐵(發展程度移動_truncated)5.fst")
 
@@ -84,11 +84,11 @@ write_parquet(unique_stops,"E:/brain/解壓縮data/資料處理/臺鐵站點資�
 nrow(fst(rail2022df_output_fst2))
 names(fst(rail2022df_output_fst5))
 
-mrtstop_path <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
-mrtstop_path_TPC <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v2_for TPC).csv"
-railstop_path <- "E:/brain/解壓縮data/資料處理/臺鐵站點資料/全臺臺鐵站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
-mrt <- fread(mrtstop_path_TPC)
-mrt <- read_parquet(mrtstop_path)
+mrtstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv"
+rail_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).csv"
+
+mrt <- fread(mrtstop_path, encoding = "UTF-8")
+rail <- fread(rail_path, encoding = "UTF-8")
 
 csventry1_6 <- fread(TPCmrt2022df_input_csv_1_6 , skip = 1, header = TRUE, encoding = "UTF-8", select = "EntryTime")
 csventry7_12 <- fread(TPCmrt2022df_input_csv_7_12 , skip = 1, header = TRUE, encoding = "UTF-8", select = "EntryTime")
@@ -278,6 +278,9 @@ cleanproblemmrt <- function(df){
       EntryStationName != ExitStationName
     )
 }
+col_fr=c("Authority","HolderType","TicketType","SubTicketType",
+         "EntryStationID","EntryStationName","EntryTime",
+         "ExitStationID","ExitStationName","ExitTime","TransferCode")
 cleanproblemmrt_dt_opti <- function(df) {
   if (!is.data.table(df)) setDT(df)
   
@@ -288,8 +291,6 @@ cleanproblemmrt_dt_opti <- function(df) {
   df[, ExitTime := as.POSIXct(ExitTime, format = "%Y-%m-%d %H:%M:%S", tz = "Asia/Taipei")]
   
   df[, `:=`(
-    BDayOfWeek        = weekdays(EntryTime),
-    BWeekendOrWeekday = fifelse(wday(EntryTime) %in% c(1, 7), "Weekend", "Weekday"),
     BHour             = hour(EntryTime),
     BMonth            = month(EntryTime),
     BYear             = year(EntryTime),
@@ -306,7 +307,7 @@ cleanproblemmrt_dt_opti <- function(df) {
 }
 process_fst_chunks_direct <- function(fst_file_path, 
                                       processing_function, 
-                                      chunk_size = 10000000L) {
+                                      chunk_size = 10000000L,col=col_fr) {
   
   if (!file.exists(fst_file_path)) {
     stop(paste("FST 檔案不存在:", fst_file_path))
@@ -341,10 +342,12 @@ process_fst_chunks_direct <- function(fst_file_path,
     current_chunk_data <- read_fst(fst_file_path, 
                                    from = start_row, 
                                    to = end_row, 
-                                   as.data.table = TRUE) 
+                                   as.data.table = TRUE,
+                                   columns = col) 
     
     processed_chunk <- processing_function(current_chunk_data) 
     processed_list[[i]] <- processed_chunk
+    gc()
   }
   
   message("所有分塊處理完畢。正在合併結果...")
@@ -373,11 +376,13 @@ write.fst(TPCmrt2022df_1_6,TPCmrt2022df_output_fst_1_6_2, compress=0)
 write.fst(TPCmrt2022df_7_12,TPCmrt2022df_output_fst_7_12_2, compress=0)
 write.fst(rail2022df ,rail2022df_output_fst2, compress=0)
 rm(list = ls())
+rm(TPCmrt2022df_1_6)
+rm(TPCmrt2022df_7_12)
 gc()
 
 head(fst(rail2022df_output_fst2))
 rail2022df <- read_fst(rail2022df_output_fst2,
-                       columns=c("Authority","IDType","HolderType","TicketType",
+                       columns=c("Authority","HolderType","TicketType",
                                  "SubTicketType","EntryStationName","EntryStationID",
                                  "EntryTime","ExitStationName","ExitStationID","ExitTime","TransferCode"), 
                        as.data.table = TRUE)
@@ -391,7 +396,9 @@ railstop <- read_parquet(railstop_path)
 names(railstop)
 
 
-merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_size = 10000000) {
+rail2022df_temp <- "E:/brain/解壓縮data/資料處理/2022/2022臺鐵(temp)"
+rail2022df_output_fst3 <- "E:/brain/解壓縮data/資料處理/2022/2022臺鐵(加入鄉政市區數位發展分類與氣象站)3.fst"
+merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, temp_dir, outputpath, chunk_size = 10000000) {
   library(data.table)
   library(fst)
   
@@ -423,7 +430,11 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
   num_chunks <- ceiling(total_rows / chunk_size)
   cat(sprintf("[分塊處理] 總筆數: %d, 每區塊: %d 筆, 共分 %d 區塊\n", total_rows, chunk_size, num_chunks))
   
-  result_list <- vector("list", num_chunks)
+  if (!dir.exists(temp_dir)) {
+    dir.create(temp_dir)
+  }
+  
+  #result_list <- vector("list", num_chunks)
   total_removed <- 0
   
   for (i in 1:num_chunks) {
@@ -445,8 +456,9 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     
     cat("[6/9] 刪除缺失或同站資料列...\n")
     # 只刪除缺少名稱或上下站相同的列
-    
+    dt_chunk <- dt_chunk%>%filter(EntryStationName!=ExitStationName)
     cat(nrow(dt_chunk),"\n")
+    
     # 確認必要座標欄位存在
     required_fields <- c("BLongitude", "BLatitude", "DLongitude", "DLatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
@@ -473,24 +485,167 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     cat(sprintf("Chunk %d/%d：原始列數 %d，移除 %d 列 NA，剩下 %d 列\n",
                 i, num_chunks, n_before, removed, n_after))
     
-    result_list[[i]] <- dt_chunk
-    cat(nrow(result_list))
+    if (nrow(dt_chunk) > 0) {
+      chunk_file_path <- file.path(temp_dir, sprintf("chunk_%d.fst", i))
+      write_fst(dt_chunk, chunk_file_path)
+    }
+    
     rm(dt_chunk)
     gc()
   }
+  rm(rail2022df)
+  gc()
+  cat("[合併區塊] 正在從暫存檔合併所有區塊...\n")
+  chunk_files <- list.files(temp_dir, pattern = "chunk_.*\\.fst", full.names = TRUE)
   
-  cat("[合併區塊] 正在合併所有區塊...\n")
-  final_dt <- rbindlist(result_list)
+  final_dt <- rbindlist(lapply(chunk_files, read_fst, as.data.table = TRUE))
+  gc()
+  
   cat(nrow(final_dt),"\n")
   cat(sprintf("總共移除缺失資料列數：%d\n", total_removed))
   cat(sprintf("[9/9] 寫出結果至 %s ...\n", outputpath))
-  write_fst(as.data.frame(final_dt), outputpath)
+  write_fst(as.data.frame(final_dt), outputpath) 
+  
+  unlink(temp_dir, recursive = TRUE)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
   cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
-  return(final_dt)
+  
+  #return(final_dt)
 }
-merge_stopuid_fast_chunk_rail(rail2022df,railstop,rail2022df_output_fst3)
+merge_stopuid_fast_chunk_rail(rail2022df,rail,rail2022df_temp,rail2022df_output_fst3)
+merge_fst_chunks <- function(temp_dir_path, output_path, file_pattern = "chunk_.*\\.fst") {
+  library(fst)
+  library(data.table)
+  
+  if (!dir.exists(temp_dir_path)) {
+    stop(sprintf("錯誤：找不到來源資料夾 '%s'", temp_dir_path))
+  }
+  
+  cat(sprintf("在 '%s' 中尋找符合 '%s' 模式的檔案...\n", temp_dir_path, file_pattern))
+  chunk_files <- list.files(temp_dir_path, pattern = file_pattern, full.names = TRUE)
+  
+  if (length(chunk_files) == 0) {
+    stop("在指定的來源資料夾中找不到任何匹配的 chunk 檔案！")
+  } else {
+    cat(sprintf("找到 %d 個檔案，準備開始合併...\n", length(chunk_files)))
+  }
+  
+  output_dir <- dirname(output_path)
+  if (!dir.exists(output_dir)) {
+    cat(sprintf("輸出目錄 '%s' 不存在，正在建立...\n", output_dir))
+    dir.create(output_dir, recursive = TRUE)
+  }
+  
+  start_time <- Sys.time()
+  
+  cat(sprintf("[1/%d] 處理第一個檔案: %s\n", length(chunk_files), basename(chunk_files[1])))
+  first_chunk <- read_fst(chunk_files[1], as.data.table = TRUE)
+  write_fst(first_chunk, output_path)
+  rm(first_chunk)
+  
+  if (length(chunk_files) > 1) {
+    for (i in 2:length(chunk_files)) {
+      cat(sprintf("[%d/%d] 附加檔案: %s\n", i, length(chunk_files), basename(chunk_files[i])))
+      chunk_to_append <- read_fst(chunk_files[i], as.data.table = TRUE)
+      write_fst(chunk_to_append, output_path, append = TRUE)
+      rm(chunk_to_append)
+      gc() 
+    }
+  }
+  
+  end_time <- Sys.time()
+  elapsed <- round(difftime(end_time, start_time, units = "secs"), 2)
+  
+  cat("\n======================================================\n")
+  cat("✅ 所有分塊檔案已成功合併！\n")
+  cat("🕒 總耗時:", elapsed, "秒\n")
+  cat("📄 最終檔案儲存於:", output_path, "\n")
+  cat("======================================================\n")
+  
+  return(invisible(output_path))
+}
+merge_fst_chunks_in_memory <- function(temp_dir_path, output_path, file_pattern = "chunk_.*\\.fst") {
+  
+  # --- 1. 載入必要的套件 ---
+  if (!requireNamespace("fst", quietly = TRUE)) stop("請安裝 'fst' 套件")
+  if (!requireNamespace("data.table", quietly = TRUE)) stop("請安裝 'data.table' 套件")
+  library(fst)
+  library(data.table)
+  
+  # --- 2. 【重要】對輸入參數進行嚴格檢查 ---
+  # 檢查來源路徑
+  if (!dir.exists(temp_dir_path)) {
+    stop(sprintf("錯誤：找不到來源資料夾 '%s'", temp_dir_path))
+  }
+  
+  # 檢查輸出路徑是否為單一的字串
+  if (!is.character(output_path) || length(output_path) != 1) {
+    # 這個檢查是為了解決最可能發生的問題
+    stop(paste(
+      "錯誤：'output_path' 參數必須是一個「單一的字串」來代表檔案路徑。",
+      "您傳入的變數類型是 '", class(output_path), "'，而不是 'character'。",
+      "請提供一個像 'C:/data/final.fst' 這樣的路徑。",
+      sep = "\n"
+    ))
+  }
+  
+  # --- 3. 取得檔案列表 ---
+  cat(sprintf("在 '%s' 中尋找符合 '%s' 模式的檔案...\n", temp_dir_path, file_pattern))
+  chunk_files <- list.files(temp_dir_path, pattern = file_pattern, full.names = TRUE)
+  
+  if (length(chunk_files) == 0) {
+    stop("在指定的來源資料夾中找不到任何匹配的 chunk 檔案！")
+  } else {
+    cat(sprintf("找到 %d 個檔案，準備將它們全部讀入記憶體...\n", length(chunk_files)))
+  }
+  
+  start_time <- Sys.time()
+  
+  # --- 4. 【高記憶體消耗步驟】一次性讀取所有檔案 ---
+  cat("正在讀取所有分塊... (此步驟可能非常耗時且消耗大量記憶體)\n")
+  tryCatch({
+    # lapply 會創建一個 list，每個元素都是一個 data.table
+    list_of_chunks <- lapply(chunk_files, read_fst, as.data.table = TRUE)
+  }, error = function(e) {
+    stop("在讀取其中一個 FST 檔案時發生錯誤: ", e$message)
+  })
+  
+  # --- 5. 【高記憶體消耗步驟】合併所有 data.table ---
+  cat("正在合併所有資料... (此步驟會再次消耗大量記憶體)\n")
+  tryCatch({
+    # rbindlist 會將 list 中的所有 data.table 合併成一個
+    final_dt <- rbindlist(list_of_chunks)
+  }, error = function(e) {
+    stop("在合併資料時發生記憶體不足或其他錯誤: ", e$message)
+  })
+  
+  # 釋放不再需要的 list
+  rm(list_of_chunks)
+  gc()
+  
+  cat(sprintf("合併完成，總共有 %d 列資料。準備寫入檔案...\n", nrow(final_dt)))
+  
+  # --- 6. 一次性寫入檔案 ---
+  tryCatch({
+    write_fst(final_dt, output_path)
+  }, error = function(e) {
+    # 如果在這裡出錯，幾乎可以肯定是輸出路徑的權限或格式問題
+    stop(sprintf("最終寫入檔案到 '%s' 時失敗！請檢查路徑是否正確以及您是否有寫入權限。\n原始錯誤訊息: %s", output_path, e$message))
+  })
+  
+  end_time <- Sys.time()
+  elapsed <- round(difftime(end_time, start_time, units = "secs"), 2)
+  
+  cat("\n======================================================\n")
+  cat("✅ 所有分塊檔案已成功在記憶體中合併並寫出！\n")
+  cat("🕒 總耗時:", elapsed, "秒\n")
+  cat("📄 最終檔案儲存於:", output_path, "\n")
+  cat("======================================================\n")
+  
+  return(invisible(output_path))
+}
+merge_fst_chunks_in_memory(rail2022df_temp,"E:/brain/2022臺鐵(加入鄉政市區數位發展分類與氣象站)3.fst")
 head(fst(rail2022df_output_fst3))
 names(rail2022df)
 
@@ -555,7 +710,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
     cat(nrow(dt_chunk),"\n")
     cat("[6/9] 刪除缺失或同站資料列...\n")
     # 只刪除缺少名稱或上下站相同的列
-    dt_chunk <- dt_chunk[ !(EntryStationName == ExitStationName)]
+    dt_chunk <- dt_chunk[ !(EntryStationName == ExitStationName | EntryStationID == ExitStationID)]
     cat(nrow(dt_chunk),"\n")
     # 確認必要座標欄位存在
     required_fields <- c("BLongitude", "BLatitude", "DLongitude", "DLatitude")
@@ -601,7 +756,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
   cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
   return(final_dt)
 }
-merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2022df,mrtstop,NTPmrt2022df_output_fst3v3)
+merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2022df,mrt,NTPmrt2022df_output_fst3v3)
 mega_preprocess_fst <- function(fst_path,
                                 stopuid_path,
                                 out_dir,
@@ -613,7 +768,7 @@ mega_preprocess_fst <- function(fst_path,
   library(fs)
   
   message("[1] 讀取 stopuid …")
-  stopuid <- fread(stopuid_path, colClasses = list(character = "MRT_StationID"))
+  stopuid <- fread(stopuid_path, colClasses = list(character = "MRT_StationID"), encoding = "UTF-8")
   setkey(stopuid, MRT_StationID)
   
   stopuid_B <- copy(stopuid)
@@ -657,15 +812,17 @@ mega_preprocess_fst <- function(fst_path,
     dt <- dt[EntryStationName != ExitStationName]
     dt <- dt[!is.na(BLongitude) & !is.na(BLatitude) &
                !is.na(DLongitude) & !is.na(DLatitude)]
-    
+    head(dt)%>%print()
     out_file <- file.path(out_dir, sprintf("chunk_%03d.fst", part))
     fst::write_fst(dt, out_file, compress = compress)
+    
     rm(dt); gc()
   }
   
   message("[4] 串流合併 chunk → ", final_path)
   chunk_files <- dir_ls(out_dir, glob = "*.fst", recurse = FALSE)
   if (!length(chunk_files)) stop("找不到任何 chunk 檔，流程疑似失敗。")
+  
   
   first <- TRUE
   for (f in chunk_files) {
@@ -676,16 +833,16 @@ mega_preprocess_fst <- function(fst_path,
       fst::write_fst(read_fst(f), final_path, append = TRUE, compress = compress)
     }
   }
-  message("???  DONE.   Rows written: ", format(n_rows, big.mark = ","), 
+  message("✅  DONE.   Rows written: ", format(n_rows, big.mark = ","), 
           " → ", final_path)
 }
 
 mega_preprocess_fst(TPCmrt2022df_output_fst_1_6_2,
-                    mrtstop_path_TPC,
+                    mrtstop_path,
                     TPCmrt2022df_output_fst_1_6_3_chunkv3,
                     TPCmrt2022df_output_fst_1_6_3_v3)
 mega_preprocess_fst(TPCmrt2022df_output_fst_7_12_2,
-                    mrtstop_path_TPC,
+                    mrtstop_path,
                     TPCmrt2022df_output_fst_7_12_3_chunkv3,
                     TPCmrt2022df_output_fst_7_12_3v3)
 
@@ -758,12 +915,12 @@ nrow(fst(rail2022df_output_fst5))
 nrow(fst(rail2022df_output_fst5_truncated))
 
 #一次做step4 step5
-TPCmrt2022_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk"              
-TPCmrt2022_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2022_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3chunk"              
-TPCmrt2022_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk" 
-head(fst("E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk/chunk_001.fst"))
-head(fst("E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk/chunk_001.fst"))
+TPCmrt2022_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk"              
+TPCmrt2022_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2022_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk"              
+TPCmrt2022_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+head(fst("E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk/chunk_001.fst"))
+head(fst("E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk/chunk_001.fst"))
 
 
 lonlatdevelop_fst <- function(chunk_dir,
@@ -868,12 +1025,12 @@ mrt_var_select <- c("Authority","IDType","HolderType","TicketType","SubTicketTyp
                     "ExitStationName","ExitTime","TransferCode","Bdevelopment_level",
                     "BStationID","Ddevelopment_level","Distance",
                     "dev_movement","movement_level")
-TPCmrt2022_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2022_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2022_1_6_final_fst_path <- "E:/brain/解壓縮data/資料處理/2022/2022公車捷運合併/2022臺北市捷運1-6月(發展程度移動_voronoi_v3)5.fst"
-TPCmrt2022_7_12_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2022/2022公車捷運合併/2022臺北市捷運7-12月(發展程度移動_voronoi_v3)5.fst"
-TPCmrt2022_final_fst_chunk_path    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運(發展程度移動_voronoi_v3)5"
-TPCmrt2022_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2022/2022整年臺北市捷運(發展程度移動_voronoi_v3)5.fst"
+TPCmrt2022_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2022_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2022_1_6_final_fst_path <- "E:/brain/解壓縮data/資料處理/2022/2022公車捷運合併/2022臺北市捷運1-6月(發展程度移動_kriging_v3)5.fst"
+TPCmrt2022_7_12_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2022/2022公車捷運合併/2022臺北市捷運7-12月(發展程度移動_kriging_v3)5.fst"
+TPCmrt2022_final_fst_chunk_path    <- "E:/brain/解壓縮data/資料處理/2022/2022臺北市捷運(發展程度移動_kriging_v3)5"
+TPCmrt2022_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2022/2022整年臺北市捷運(發展程度移動_kriging_v3)5.fst"
 merge_and_write_fst(TPCmrt2022_1_6_final_fst,mrt_var_select,TPCmrt2022_1_6_final_fst_path)
 merge_and_write_fst(TPCmrt2022_7_12_final_fst,mrt_var_select,TPCmrt2022_7_12_final_fst_path)
 merge_and_write_fst(TPCmrt2022_final_fst_chunk_path,mrt_var_select,TPCmrt2022_final_fst_path)

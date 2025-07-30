@@ -28,13 +28,9 @@ library(fasttime)
 base_path <- "E:/brain/解壓縮data"
 TPCmrt2024df_input_csv_1_6 <- file.path(base_path, "csv", "2024", "臺北捷運電子票證資料(TO2A)_2024年1~6月\\臺北捷運電子票證資料(TO2A).csv")
 TPCmrt2024df_output_parquet_1_6 <- file.path(base_path, "fst", "2024", "2024臺北市捷運1-6月.parquet")
-TPCmrt2024df_output_fst_1_6 <- file.path(base_path, "fst", "2024", "2024臺北市捷運1-6月v2.fst")
+TPCmrt2024df_output_fst_1_6 <- file.path(base_path, "fst", "2024", "2024臺北市捷運1-6月.fst")
 TPCmrt2024df_output_fst_1_6_2<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(去除異常值)2.fst")
-TPCmrt2024df_output_fst_1_6_3<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站)3.fst")
-TPCmrt2024df_output_fst_1_6_3_v2<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)3.fst")
-TPCmrt2024df_output_fst_1_6_3_chunk <- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站)chunk")
-TPCmrt2024df_output_fst_1_6_3_chunkv2 <- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)chunk")
-TPCmrt2024df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk")
+TPCmrt2024df_output_fst_1_6_3_chunkv3 <- file.path(base_path, "資料處理", "2024", "2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk")
 names(fst("E:/brain/解壓縮data/fst/2024/2024臺北市捷運1-6月.fst"))
 nrow(fst(TPCmrt2024df_output_fst_1_6_2))
 read_fst("E:/brain/解壓縮data/fst/2024/2024臺北市捷運1-6月.fst",columns = "ExitStationID")%>%
@@ -46,29 +42,21 @@ TPCmrt2024df_input_csv_7_12 <- file.path(base_path, "csv", "2024", "臺北捷運
 TPCmrt2024df_output_parquet_7_12 <- file.path(base_path, "fst", "2024", "2024臺北市捷運7-12月.parquet")
 TPCmrt2024df_output_fst_7_12 <- file.path(base_path, "fst", "2024", "2024臺北市捷運7-12月.fst")
 TPCmrt2024df_output_fst_7_12_2<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運7-12月(去除異常值)2.fst")
-TPCmrt2024df_output_fst_7_12_3_chunk<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站)3chunk")
-TPCmrt2024df_output_fst_7_12_3_chunkv2<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v2)3chunk")
-TPCmrt2024df_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3chunk")
+TPCmrt2024df_output_fst_7_12_3_chunkv3<- file.path(base_path, "資料處理", "2024", "2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk")
 nrow(fst(TPCmrt2024df_output_fst_7_12))
 nrow(fst(TPCmrt2024df_output_fst_7_12_2))
 
 NTPmrt2024df_output_fst <- file.path(base_path, "fst", "2024", "2024新北市捷運.fst")
 NTPmrt2024df_output_fst2 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(去除異常值)2.fst")
-NTPmrt2024df_output_fst3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入鄉政市區數位發展分類與氣象站)3.fst")
-NTPmrt2024df_output_fst3v2 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入鄉政市區數位發展分類與氣象站_voronoi_v2)3.fst")
-NTPmrt2024df_output_fst3v3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3.fst")
-NTPmrt2024df_output_fst4 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入直線距離)4.fst")
-NTPmrt2024df_output_fst4v2 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入直線距離_voronoi_v2)4.fst")
-NTPmrt2024df_output_fst4v3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入直線距離_voronoi_v3)4.fst")
-NTPmrt2024df_output_fst5 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(發展程度移動)5.fst")
-NTPmrt2024df_output_fst5v2 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(發展程度移動_voronoi_v2)5.fst")
-NTPmrt2024df_output_fst5v3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(發展程度移動_voronoi_v3)5.fst")
+NTPmrt2024df_output_fst3v3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入鄉政市區數位發展分類與氣象站_kriging_v3)3.fst")
+NTPmrt2024df_output_fst4v3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(加入直線距離_kriging_v3)4.fst")
+NTPmrt2024df_output_fst5v3 <- file.path(base_path, "資料處理", "2024", "2024新北市捷運(發展程度移動_kriging_v3)5.fst")
 names(fst(NTPmrt2024df_output_fst5v3))
 
 rail2024df_output_fst <- "E:/brain/解壓縮data/fst/2024/2024臺鐵.fst"
 rail2024df_output_fst2 <- file.path(base_path, "資料處理", "2024", "2024臺鐵(去除異常值)2.fst")
 rail2024df_output_fst3 <- file.path(base_path, "資料處理", "2024", "2024臺鐵(加入鄉政市區數位發展分類與氣象站)3.fst")
-rail2024df_output_fst4 <- file.path(base_path, "資料處理", "2024", "2024臺鐵(加入直線距離_voronoi)4.fst")
+rail2024df_output_fst4 <- file.path(base_path, "資料處理", "2024", "2024臺鐵(加入直線距離_kriging)4.fst")
 rail2024df_output_fst5 <- file.path(base_path, "資料處理", "2024", "2024臺鐵(發展程度移動)5.fst")
 rail2024df_output_fst5_truncated <- file.path(base_path, "資料處理", "2024", "2024臺鐵(發展程度移動_truncated)5.fst")
 
@@ -97,9 +85,12 @@ write_parquet(unique_stops,"E:/brain/解壓縮data/資料處理/臺鐵站點資�
 nrow(fst(rail2024df_output_fst2))
 names(fst(rail2024df_output_fst5))
 
-mrtstop_path <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
-mrtstop_path_TPC <- "E:/brain/解壓縮data/資料處理/捷運站點資料/北台灣捷運站點(加入鄉政市區數位發展分類與氣象站_voronoi_v2_for TPC).csv"
-railstop_path <- "E:/brain/解壓縮data/資料處理/臺鐵站點資料/全臺臺鐵站點(加入鄉政市區數位發展分類與氣象站_voronoi_v3).parquet"
+mrtstop_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/北台灣捷運站點(加入鄉政市區數位發展分類與Kriging天氣格點).csv"
+rail_path <- "E:/brain/解壓縮data/資料處理/交通站點資料/Kriging格點/全臺臺鐵站點(加入鄉鎮市區數位發展分類與Kriging天氣格點).csv"
+
+mrt <- fread(mrtstop_path, encoding = "UTF-8")
+rail <- fread(rail_path, encoding = "UTF-8")
+
 mrt <- fread(mrtstop_path_TPC)
 mrt <- read_parquet(mrtstop_path)
 
@@ -525,6 +516,9 @@ cleanproblemmrt_dt <- function(df) {
   invisible(df)
 }
 
+col_fr=c("Authority","HolderType","TicketType","SubTicketType",
+      "EntryStationID","EntryStationName","EntryTime",
+      "ExitStationID","ExitStationName","ExitTime","TransferCode")
 cleanproblemmrt_dt_opti <- function(df) {
   if (!is.data.table(df)) setDT(df)
   
@@ -535,8 +529,6 @@ cleanproblemmrt_dt_opti <- function(df) {
   df[, ExitTime := as.POSIXct(ExitTime, format = "%Y-%m-%d %H:%M:%S", tz = "Asia/Taipei")]
  
   df[, `:=`(
-    BDayOfWeek        = weekdays(EntryTime),
-    BWeekendOrWeekday = fifelse(wday(EntryTime) %in% c(1, 7), "Weekend", "Weekday"),
     BHour             = hour(EntryTime),
     BMonth            = month(EntryTime),
     BYear             = year(EntryTime),
@@ -553,7 +545,7 @@ cleanproblemmrt_dt_opti <- function(df) {
 }
 process_fst_chunks_direct <- function(fst_file_path, 
                                       processing_function, 
-                                      chunk_size = 10000000L) {
+                                      chunk_size = 10000000L,col=col_fr) {
 
   if (!file.exists(fst_file_path)) {
     stop(paste("FST 檔案不存在:", fst_file_path))
@@ -588,10 +580,12 @@ process_fst_chunks_direct <- function(fst_file_path,
     current_chunk_data <- read_fst(fst_file_path, 
                                    from = start_row, 
                                    to = end_row, 
-                                   as.data.table = TRUE) 
+                                   as.data.table = TRUE,
+                                   columns = col) 
     
     processed_chunk <- processing_function(current_chunk_data) 
     processed_list[[i]] <- processed_chunk
+    gc()
   }
   
   message("所有分塊處理完畢。正在合併結果...")
@@ -607,8 +601,6 @@ rail2024df <- process_fst_chunks_direct(rail2024df_output_fst ,cleanproblemmrt_d
 
 
 cleanproblemmrt(NTPmrt2024df)
-TPCmrt2024df_1_6 <- cleanproblemmrt_dt(TPCmrt2024df_1_6)
-TPCmrt2024df_7_12 <- cleanproblemmrt_dt(TPCmrt2024df_7_12)
 rail2024df <- cleanproblemrail_dt(rail2024df)
 nrow(rail2024df)
 nrow(fst(TPCmrt2024df_output_fst_1_6))
@@ -619,12 +611,13 @@ write.fst(NTPmrt2024df,NTPmrt2024df_output_fst2)
 write.fst(TPCmrt2024df_1_6,TPCmrt2024df_output_fst_1_6_2, compress=0)
 write.fst(TPCmrt2024df_7_12,TPCmrt2024df_output_fst_7_12_2, compress=0)
 write.fst(rail2024df ,rail2024df_output_fst2, compress=0)
-rm(list = ls())
+rm(TPCmrt2024df_1_6)
+rm(TPCmrt2024df_7_12)
 gc()
 
 head(fst(rail2024df_output_fst2))
 rail2024df <- read_fst(rail2024df_output_fst2,
-                       columns=c("Authority","IDType","HolderType","TicketType",
+                       columns=c("Authority","HolderType","TicketType",
                                  "SubTicketType","EntryStationName","EntryStationID",
                                  "EntryTime","ExitStationName","ExitStationID","ExitTime","TransferCode"), 
                        as.data.table = TRUE)
@@ -633,8 +626,6 @@ NTPmrt2024df <- setDT(read.fst(NTPmrt2024df_output_fst2))
 names(fst(NTPmrt2024df_output_fst2))
 names(mrtstop)
 TPCmrt2024df_1_6 <- setDT(read.fst(TPCmrt2024df_output_fst_1_6_2))
-mrtstop <- read_parquet(mrtstop_path)
-railstop <- read_parquet(railstop_path)
 names(railstop)
 
 TPCmrtstop <- read_parquet(mrtstop_path) %>%
@@ -649,7 +640,7 @@ TPCmrtstop <- read_parquet(mrtstop_path) %>%
   )
 write.csv(TPCmrtstop,mrtstop_path_TPC)
 
-merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_size = 10000000) {
+merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, temp_dir, outputpath, chunk_size = 10000000) {
   library(data.table)
   library(fst)
   
@@ -681,7 +672,11 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
   num_chunks <- ceiling(total_rows / chunk_size)
   cat(sprintf("[分塊處理] 總筆數: %d, 每區塊: %d 筆, 共分 %d 區塊\n", total_rows, chunk_size, num_chunks))
   
-  result_list <- vector("list", num_chunks)
+  if (!dir.exists(temp_dir)) {
+    dir.create(temp_dir)
+  }
+  
+  #result_list <- vector("list", num_chunks)
   total_removed <- 0
   
   for (i in 1:num_chunks) {
@@ -703,8 +698,9 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     
     cat("[6/9] 刪除缺失或同站資料列...\n")
     # 只刪除缺少名稱或上下站相同的列
-    
+    dt_chunk <- dt_chunk%>%filter(EntryStationName!=ExitStationName)
     cat(nrow(dt_chunk),"\n")
+    
     # 確認必要座標欄位存在
     required_fields <- c("BLongitude", "BLatitude", "DLongitude", "DLatitude")
     missing_fields <- setdiff(required_fields, names(dt_chunk))
@@ -717,7 +713,7 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     cat(nrow(dt_chunk),"\n")
     cat("[7/9] 清除不必要欄位並移除 NA (保留 address)...\n")
     cat(nrow(dt_chunk),"\n")
-    # 定義「必須 non‑NA」的欄位
+    # 定義「必須 non???NA」的欄位
     keep_cols <- c("EntryStationName","ExitStationName",
                    "BLongitude","BLatitude","DLongitude","DLatitude")
     
@@ -731,24 +727,34 @@ merge_stopuid_fast_chunk_rail <- function(inputfile, stopuid, outputpath, chunk_
     cat(sprintf("Chunk %d/%d：原始列數 %d，移除 %d 列 NA，剩下 %d 列\n",
                 i, num_chunks, n_before, removed, n_after))
     
-    result_list[[i]] <- dt_chunk
-    cat(nrow(result_list))
+    if (nrow(dt_chunk) > 0) {
+      chunk_file_path <- file.path(temp_dir, sprintf("chunk_%d.fst", i))
+      write_fst(dt_chunk, chunk_file_path)
+    }
+    
     rm(dt_chunk)
     gc()
   }
+  gc()
+  cat("[合併區塊] 正在從暫存檔合併所有區塊...\n")
+  chunk_files <- list.files(temp_dir, pattern = "chunk_.*\\.fst", full.names = TRUE)
   
-  cat("[合併區塊] 正在合併所有區塊...\n")
-  final_dt <- rbindlist(result_list)
+  final_dt <- rbindlist(lapply(chunk_files, read_fst, as.data.table = TRUE))
+  gc()
+  
   cat(nrow(final_dt),"\n")
   cat(sprintf("總共移除缺失資料列數：%d\n", total_removed))
   cat(sprintf("[9/9] 寫出結果至 %s ...\n", outputpath))
-  write_fst(as.data.frame(final_dt), outputpath)
+  write_fst(as.data.frame(final_dt), outputpath) 
+  
+  unlink(temp_dir, recursive = TRUE)
   
   elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
   cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
-  return(final_dt)
+  
+  #return(final_dt)
 }
-merge_stopuid_fast_chunk_rail(rail2024df,railstop,rail2024df_output_fst3)
+merge_stopuid_fast_chunk_rail(rail2024df,rail,rail2024df_temp_fst3 ,rail2024df_output_fst3)
 head(fst(rail2024df_output_fst3))
 names(rail2024df)
 
@@ -859,7 +865,7 @@ merge_stopuid_fast_chunk_dropsamestopname3 <- function(inputfile, stopuid, outpu
   cat(sprintf("完成！總耗時：%s 秒。\n", elapsed))
   return(final_dt)
 }
-merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2024df,mrtstop,NTPmrt2024df_output_fst3v3)
+merge_stopuid_fast_chunk_dropsamestopname3(NTPmrt2024df,mrt,NTPmrt2024df_output_fst3v3)
 mega_preprocess_fst <- function(fst_path,
                                 stopuid_path,
                                 out_dir,
@@ -871,7 +877,7 @@ mega_preprocess_fst <- function(fst_path,
   library(fs)
   
   message("[1] 讀取 stopuid …")
-  stopuid <- fread(stopuid_path, colClasses = list(character = "MRT_StationID"))
+  stopuid <- fread(stopuid_path, colClasses = list(character = "MRT_StationID"), encoding = "UTF-8")
   setkey(stopuid, MRT_StationID)
   
   stopuid_B <- copy(stopuid)
@@ -915,15 +921,17 @@ mega_preprocess_fst <- function(fst_path,
     dt <- dt[EntryStationName != ExitStationName]
     dt <- dt[!is.na(BLongitude) & !is.na(BLatitude) &
                !is.na(DLongitude) & !is.na(DLatitude)]
-    
+    head(dt)%>%print()
     out_file <- file.path(out_dir, sprintf("chunk_%03d.fst", part))
     fst::write_fst(dt, out_file, compress = compress)
+
     rm(dt); gc()
   }
   
   message("[4] 串流合併 chunk → ", final_path)
   chunk_files <- dir_ls(out_dir, glob = "*.fst", recurse = FALSE)
   if (!length(chunk_files)) stop("找不到任何 chunk 檔，流程疑似失敗。")
+  
   
   first <- TRUE
   for (f in chunk_files) {
@@ -939,15 +947,15 @@ mega_preprocess_fst <- function(fst_path,
 }
 
 mega_preprocess_fst(TPCmrt2024df_output_fst_1_6_2,
-                    mrtstop_path_TPC,
+                    mrtstop_path,
                     TPCmrt2024df_output_fst_1_6_3_chunkv3,
                     TPCmrt2024df_output_fst_1_6_3_v3)
 mega_preprocess_fst(TPCmrt2024df_output_fst_7_12_2,
-                    mrtstop_path_TPC,
+                    mrtstop_path,
                     TPCmrt2024df_output_fst_7_12_3_chunkv3,
                     TPCmrt2024df_output_fst_7_12_3v3)
 
-nrow(fst(NTPmrt2024df_output_fst3))
+Fnrow(fst(NTPmrt2024df_output_fst3))
 NTPmrt2024df <- read.fst(NTPmrt2024df_output_fst3v3)
 colSums(is.na(NTPmrt2024df))
 print(NTPmrt2024df[!complete.cases(NTPmrt2024df), ])
@@ -1016,12 +1024,12 @@ nrow(fst(rail2024df_output_fst5))
 nrow(fst(rail2024df_output_fst5_truncated))
 
 #一次做step4 step5
-TPCmrt2024_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)chunk"              
-TPCmrt2024_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2024_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_voronoi_v3)3chunk"              
-TPCmrt2024_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk" 
-head(fst("E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk/chunk_001.fst"))
-head(fst("E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk/chunk_001.fst"))
+TPCmrt2024_1_6_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(加入鄉政市區數位發展分類與氣象站_kriging_v3)chunk"              
+TPCmrt2024_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2024_7_12_chunk_dir    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(加入鄉政市區數位發展分類與氣象站_kriging_v3)3chunk"              
+TPCmrt2024_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+head(fst("E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk/chunk_001.fst"))
+head(fst("E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk/chunk_001.fst"))
 
 
 lonlatdevelop_fst <- function(chunk_dir,
@@ -1088,8 +1096,6 @@ lonlatdevelop_fst <- function(chunk_dir,
   }
   
   message("所有分塊處理完成，Dataset 存放於：", output_dir)
-  ds <- arrow::open_dataset(output_dir, format = "parquet")
-  invisible(ds)
 }
 lonlatdevelop_fst(TPCmrt2024_1_6_chunk_dir,TPCmrt2024_1_6_final_fst)
 lonlatdevelop_fst(TPCmrt2024_7_12_chunk_dir,TPCmrt2024_7_12_final_fst)
@@ -1126,12 +1132,12 @@ mrt_var_select <- c("Authority","IDType","HolderType","TicketType","SubTicketTyp
                     "ExitStationName","ExitTime","TransferCode","Bdevelopment_level",
                     "BStationID","Ddevelopment_level","Distance",
                     "dev_movement","movement_level")
-TPCmrt2024_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2024_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_voronoi_v3)5chunk" 
-TPCmrt2024_1_6_final_fst_path <- "E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併/2024臺北市捷運1-6月(發展程度移動_voronoi_v3)5.fst"
-TPCmrt2024_7_12_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併/2024臺北市捷運7-12月(發展程度移動_voronoi_v3)5.fst"
-TPCmrt2024_final_fst_chunk_path    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運(發展程度移動_voronoi_v3)5"
-TPCmrt2024_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2024/2024整年臺北市捷運(發展程度移動_voronoi_v3)5.fst"
+TPCmrt2024_1_6_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運1-6月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2024_7_12_final_fst    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運7-12月(發展程度移動_kriging_v3)5chunk" 
+TPCmrt2024_1_6_final_fst_path <- "E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併/2024臺北市捷運1-6月(發展程度移動_kriging_v3)5.fst"
+TPCmrt2024_7_12_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2024/2024公車捷運合併/2024臺北市捷運7-12月(發展程度移動_kriging_v3)5.fst"
+TPCmrt2024_final_fst_chunk_path    <- "E:/brain/解壓縮data/資料處理/2024/2024臺北市捷運(發展程度移動_kriging_v3)5"
+TPCmrt2024_final_fst_path    <- "E:/brain/解壓縮data/資料處理/2024/2024整年臺北市捷運(發展程度移動_kriging_v3)5.fst"
 merge_and_write_fst(TPCmrt2024_1_6_final_fst,mrt_var_select,TPCmrt2024_1_6_final_fst_path)
 merge_and_write_fst(TPCmrt2024_7_12_final_fst,mrt_var_select,TPCmrt2024_7_12_final_fst_path)
 merge_and_write_fst(TPCmrt2024_final_fst_chunk_path,mrt_var_select,TPCmrt2024_final_fst_path)
